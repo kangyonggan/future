@@ -1,5 +1,6 @@
 package com.kangyonggan.app.future.web.controller.web;
 
+import com.kangyonggan.app.future.biz.service.DictionaryService;
 import com.kangyonggan.app.future.biz.service.MenuService;
 import com.kangyonggan.app.future.biz.service.RoleService;
 import com.kangyonggan.app.future.biz.service.UserService;
@@ -26,6 +27,9 @@ public class ValidateController {
 
     @Autowired
     private MenuService menuService;
+
+    @Autowired
+    private DictionaryService dictionaryService;
 
     /**
      * 校验手机号是否可用
@@ -79,6 +83,24 @@ public class ValidateController {
         }
 
         return !menuService.existsMenuCode(code);
+    }
+
+    /**
+     * 校验字典代码是否可用
+     *
+     * @param code
+     * @param oldCode
+     * @return
+     */
+    @RequestMapping(value = "dictionary", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean validateDictionaryCode(@RequestParam("code") String code,
+                                          @RequestParam(value = "oldCode", required = false, defaultValue = "") String oldCode) {
+        if (code.equals(oldCode)) {
+            return true;
+        }
+
+        return !dictionaryService.existsDictionaryCode(code);
     }
 
 }

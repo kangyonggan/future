@@ -2,6 +2,7 @@ package com.kangyonggan.app.future.biz.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.RoleService;
+import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.mapper.RoleMapper;
 import com.kangyonggan.app.future.model.annotation.CacheDelete;
 import com.kangyonggan.app.future.model.annotation.CacheDeleteAll;
@@ -59,10 +60,10 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
         Example.Criteria criteria = example.createCriteria();
         if (StringUtils.isNotEmpty(code)) {
-            criteria.andLike("code", String.format("%%%s%%", code));
+            criteria.andLike("code", StringUtil.toLikeString(code));
         }
         if (StringUtils.isNotEmpty(name)) {
-            criteria.andLike("name", String.format("%%%s%%", name));
+            criteria.andLike("name", StringUtil.toLikeString(name));
         }
 
         example.setOrderByClause("id desc");
