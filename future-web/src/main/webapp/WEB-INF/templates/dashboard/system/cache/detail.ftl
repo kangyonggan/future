@@ -8,7 +8,7 @@
     <div class="space-10"></div>
     </#list>
 <#else>
-${cache}
+${cache!'空值'}
 </#if>
 
 <script src="${ctx}/static/app/js/dashboard/system/cache/detail.js"></script>

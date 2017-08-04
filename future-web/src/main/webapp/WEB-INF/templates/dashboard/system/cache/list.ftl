@@ -1,11 +1,11 @@
 <#assign ctx="${(rca.contextPath)!''}">
-<#assign merchCo = RequestParameters.merchCo!'' />
+<#assign key = RequestParameters.key!'' />
 
 <div class="page-header">
     <h1>
         缓存列表
         <small class="pull-right">
-            <a href="${ctx}/dashboard/system/cache/clearall?merchCo=${merchCo}" id="clearall" class="btn btn-sm btn-danger">清空列表</a>
+            <a href="${ctx}/dashboard/system/cache/clearall?key=${key}" id="clearall" class="btn btn-sm btn-danger">清空列表</a>
         </small>
     </h1>
 </div>
@@ -14,7 +14,7 @@
 
 <form class="form-inline" method="get" novalidate>
     <div class="form-group">
-        <input type="text" name="merchCo" value="${merchCo}" class="form-control" placeholder="商户号"/>
+        <input type="text" name="key" value="${key}" class="form-control" placeholder="缓存的键"/>
     </div>
 
     <button class="btn btn-sm btn-inverse" data-toggle="search-submit">
@@ -28,14 +28,13 @@
 <table id="cache-table" class="table table-striped table-bordered table-hover">
     <thead>
     <tr>
-        <th>商户号</th>
-        <th>键</th>
+        <th>缓存的键</th>
         <th>操作</th>
     </tr>
     </thead>
     <tbody>
     <#if keys?size gt 0>
-        <#list keys as key>
+        <#list keys as k>
             <#include "table-tr.ftl"/>
         </#list>
     <#else>
