@@ -74,7 +74,7 @@ public class MyShiroRealm extends AuthorizingRealm {
             AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 
-        log.info("Shiro登录认证, merchCo={}", token.getUsername());
+        log.info("Shiro登录认证, username={}", token.getUsername());
 
         String username = token.getUsername();
         User user = userService.findUserByUsername(username);

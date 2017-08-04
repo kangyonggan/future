@@ -143,8 +143,6 @@ CREATE INDEX type_ix
 CREATE INDEX sort_ix
   ON dictionary (sort);
 
-# fpay相关表
-
 -- ----------------------------
 --  Table structure for user
 -- ----------------------------
@@ -192,7 +190,7 @@ CREATE UNIQUE INDEX username_UNIQUE
 INSERT INTO user
 (username, realname, password, salt, email)
 VALUES
-  ('15121149571', '管理员', '9606b0029ba4a8c9369f288cced0dc465eb5eabd', '3685072edcf8aad8', 'java@kangyonggan.com');
+  ('15121149571', '管理员', '73905d6309ff111668671f2dea975cf30e3a05ae', 'fee043a9a167f462', 'java@kangyonggan.com');
 
 -- ----------------------------
 --  data for role

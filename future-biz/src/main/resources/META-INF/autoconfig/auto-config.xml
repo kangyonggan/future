@@ -20,7 +20,7 @@
 
         <!--jdbc-->
         <property name="future.jdbc.driver" description="jdbc驱动" defaultValue="com.mysql.jdbc.Driver"/>
-        <property name="future.jdbc.url" description="jdbc地址-dev" defaultValue="jdbc:mysql://127.0.0.1:3306/future_dev?useUnicode=true&amp;amp;characterEncoding=UTF-8"/>
+        <property name="future.jdbc.url" description="jdbc地址-dev" defaultValue="jdbc:mysql://127.0.0.1:3306/future?useUnicode=true&amp;amp;characterEncoding=UTF-8"/>
         <property name="future.jdbc.username" description="jdbc用户名-dev" defaultValue="root"/>
         <property name="future.jdbc.password" description="jdbc密码-dev" defaultValue="123456"/>
 
@@ -49,12 +49,14 @@
         <property name="future.slow.interface.time" description="慢接口时间(秒)" defaultValue="2"/>
         <property name="future.cache.open" description="是否开启缓存,Y:开启,N:不开启" defaultValue="Y"/>
     </group>
+
     <script>
         <generate template="applicationContext-datasource.xml" charset="UTF-8"/>
         <generate template="applicationContext-redis.xml" charset="UTF-8"/>
         <generate template="applicationContext-mail.xml" charset="UTF-8"/>
         <generate template="messages_en_US.properties" charset="UTF-8"/>
         <generate template="messages_zh_CN.properties" charset="UTF-8"/>
+        <generate template="applicationContext-sms.xml" charset="UTF-8"/>
         <generate template="log4j2.xml"/>
     </script>
 </config>

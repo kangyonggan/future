@@ -32,16 +32,16 @@
 
 //下面是自定义校验
 $.extend($.validator.addMethod("isPassword", function (value) {
-    var str = /[a-zA-Z0-9]{6,20}$/;
+    var str = /[a-zA-Z0-9]{8,20}$/;
     return str.test(value);
-}, "请输入6至20位字母和数字的组合"));
+}, "请输入8至20位字母和数字的组合"));
 
 $.extend($.validator.addMethod("isCaptcha", function (value) {
     var str = /^[0-9]{4}$/;
     return str.test(value);
 }, "请输入4位数字的验证码"));
 
-$.extend($.validator.addMethod("isName", function (value) {
+$.extend($.validator.addMethod("isRealName", function (value) {
     var str = /^[\u4E00-\u9FA5]{2,12}$/;
     return str.test(value);
 }, "请输入2至12个汉字"));

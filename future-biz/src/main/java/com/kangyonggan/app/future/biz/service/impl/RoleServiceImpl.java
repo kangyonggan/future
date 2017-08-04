@@ -1,7 +1,12 @@
 package com.kangyonggan.app.future.biz.service.impl;
 
 import com.kangyonggan.app.future.biz.service.RoleService;
+import com.kangyonggan.app.future.mapper.RoleMapper;
+import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
+import com.kangyonggan.app.future.model.annotation.LogTime;
+import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Role;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +18,14 @@ import java.util.List;
 @Service
 public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
+    @Autowired
+    private RoleMapper roleMapper;
+
     @Override
+    @LogTime
+    @CacheGetOrSave("role:username:{0}")
     public List<Role> findRolesByUsername(String username) {
-        return null;
+        return roleMapper.selectRolesByUsername(username);
     }
 
     @Override
@@ -24,8 +34,13 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
     }
 
     @Override
+    @LogTime
+    @CacheGetOrSave("role:all")
     public List<Role> findAllRoles() {
-        return null;
+        Role role = new Role();
+        role.setIsDeleted(AppConstants.IS_DELETED_NO);
+
+        return myMapper.select(role);
     }
 
     @Override
