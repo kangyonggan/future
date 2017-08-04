@@ -1,5 +1,6 @@
 package com.kangyonggan.app.future.web.controller.web;
 
+import com.kangyonggan.app.future.biz.service.MenuService;
 import com.kangyonggan.app.future.biz.service.RoleService;
 import com.kangyonggan.app.future.biz.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class ValidateController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private MenuService menuService;
 
     /**
      * 校验手机号是否可用
@@ -57,6 +61,24 @@ public class ValidateController {
         }
 
         return !roleService.existsRoleCode(code);
+    }
+
+    /**
+     * 校验菜单代码是否可用
+     *
+     * @param code
+     * @param oldCode
+     * @return
+     */
+    @RequestMapping(value = "menu", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean validateMenuCode(@RequestParam("code") String code,
+                                    @RequestParam(value = "oldCode", required = false, defaultValue = "") String oldCode) {
+        if (code.equals(oldCode)) {
+            return true;
+        }
+
+        return !menuService.existsMenuCode(code);
     }
 
 }

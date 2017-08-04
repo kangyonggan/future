@@ -43,8 +43,12 @@ public class MenuServiceImpl extends BaseService<Menu> implements MenuService {
     }
 
     @Override
+    @LogTime
     public boolean existsMenuCode(String code) {
-        return false;
+        Menu menu = new Menu();
+        menu.setCode(code);
+
+        return super.exists(menu);
     }
 
     @Override
@@ -62,6 +66,7 @@ public class MenuServiceImpl extends BaseService<Menu> implements MenuService {
 
     @Override
     @LogTime
+    @CacheDelete("menu:all")
     public void saveMenu(Menu menu) {
         myMapper.insertSelective(menu);
     }
