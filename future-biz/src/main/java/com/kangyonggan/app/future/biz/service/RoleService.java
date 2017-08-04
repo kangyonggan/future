@@ -72,4 +72,11 @@ public interface RoleService {
      * @param menuCodes
      */
     void updateRoleMenus(String code, String menuCodes);
+
+    /**
+     * 删除角色
+     *
+     * @param id
+     */
+    void deleteRoleById(Long id);
 }

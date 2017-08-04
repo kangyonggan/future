@@ -8,7 +8,6 @@ import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.mapper.RoleMapper;
 import com.kangyonggan.app.future.mapper.UserMapper;
 import com.kangyonggan.app.future.model.annotation.CacheDelete;
-import com.kangyonggan.app.future.model.annotation.CacheDeleteAll;
 import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.AppConstants;

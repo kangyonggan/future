@@ -1,5 +1,6 @@
 package com.kangyonggan.app.future.web.controller.web;
 
+import com.kangyonggan.app.future.biz.service.RoleService;
 import com.kangyonggan.app.future.biz.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,9 @@ public class ValidateController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
     /**
      * 校验手机号是否可用
      *
@@ -35,6 +39,24 @@ public class ValidateController {
         }
 
         return !userService.existsUsername(username);
+    }
+
+    /**
+     * 校验角色代码是否可用
+     *
+     * @param code
+     * @param oldCode
+     * @return
+     */
+    @RequestMapping(value = "role", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean validateRoleCode(@RequestParam("code") String code,
+                                    @RequestParam(value = "oldCode", required = false, defaultValue = "") String oldCode) {
+        if (code.equals(oldCode)) {
+            return true;
+        }
+
+        return !roleService.existsRoleCode(code);
     }
 
 }

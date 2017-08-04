@@ -23,6 +23,14 @@
                     <a href="${ctx}/dashboard/system/role/${role.id}/menus" data-toggle="modal" data-target="#myModal"
                        data-backdrop="static">设置权限</a>
                 </li>
+                <#if role.isDeleted==1>
+                    <li>
+                        <a href="javascript:" data-role="role-remove" title="物理删除角色"
+                           data-url="${ctx}/dashboard/system/role/${role.id}/remove">
+                            物理删除
+                        </a>
+                    </li>
+                </#if>
             </ul>
         </div>
     </td>

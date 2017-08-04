@@ -42,14 +42,6 @@ public interface MenuService {
     List<Menu> findAllMenus();
 
     /**
-     * 根据菜单代码查找菜单
-     *
-     * @param code
-     * @return
-     */
-    Menu findMenuByCode(String code);
-
-    /**
      * 保存菜单
      *
      * @param menu
@@ -63,6 +55,14 @@ public interface MenuService {
      * @return
      */
     Menu findMenuById(Long id);
+
+    /**
+     * 根据菜单代码查找菜单
+     *
+     * @param code
+     * @return
+     */
+    Menu findMenuByCode(String code);
 
     /**
      * 更新菜单
