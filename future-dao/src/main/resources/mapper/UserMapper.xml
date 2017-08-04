@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kangyonggan.app.future.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.kangyonggan.app.future.model.vo.User">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="realname" jdbcType="VARCHAR" property="realname"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="salt" jdbcType="VARCHAR" property="salt"/>
+        <result column="small_avatar" jdbcType="VARCHAR" property="smallAvatar"/>
+        <result column="medium_avatar" jdbcType="VARCHAR" property="mediumAvatar"/>
+        <result column="large_avatar" jdbcType="VARCHAR" property="largeAvatar"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+    </resultMap>
+</mapper>
