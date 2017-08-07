@@ -73,9 +73,15 @@
 
         <div class="toolbar clearfix">
             <div>
-                <a href="#login" class="forgot-password-link pull-right">
-                    <i class="ace-icon fa fa-arrow-right"></i>
+                <a href="#register" class="forgot-password-link">
+                    <i class="ace-icon fa fa-arrow-left"></i>
+                    重新注册
+                </a>
+            </div>
+            <div>
+                <a href="#register" class="user-signup-link">
                     记得密码？去登录
+                    <i class="ace-icon fa fa-arrow-right"></i>
                 </a>
             </div>
         </div>
