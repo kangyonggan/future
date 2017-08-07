@@ -49,7 +49,7 @@
                                     <div class="space-4"></div>
 
                                     <li>
-                                        <i class="ace-icon fa fa-caret-right green"></i>电子邮箱：${(user.email=='')?string('未设置', '${user.email}')}
+                                        <i class="ace-icon fa fa-caret-right green"></i>电子邮箱：${user.email}
                                     </li>
                                 </ul>
                             </div>
