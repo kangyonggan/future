@@ -29,4 +29,13 @@ public interface TokenService {
      * @param id
      */
     void deleteTokenById(Long id);
+
+    /**
+     * 查找60s内是否有发送验证码
+     *
+     * @param mobile
+     * @param type
+     * @return
+     */
+    Token findActiveTokenByMobileAndType(String mobile, String type);
 }

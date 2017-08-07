@@ -20,9 +20,9 @@ import java.util.Map;
  * @since 8/7/17
  */
 @Controller
-@RequestMapping("register")
+@RequestMapping("forgot")
 @Log4j2
-public class RegisterController extends BaseController {
+public class ForgotController extends BaseController {
 
     @Autowired
     private UserService userService;
@@ -46,7 +46,7 @@ public class RegisterController extends BaseController {
                                         @RequestParam("captcha") String captcha) {
         Map<String, Object> resultMap = getResultMap();
 
-        Token token = tokenService.findTokenByMobileAndType(user.getUsername(), TokenType.REGISTER.getType());
+        Token token = tokenService.findTokenByMobileAndType(user.getUsername(), TokenType.FORGOT.getType());
         if (token == null) {
             resultMap.put(ERR_CODE, FAILURE);
             resultMap.put(ERR_MSG, "验证码错误或已失效,请重新获取");
@@ -63,7 +63,7 @@ public class RegisterController extends BaseController {
         }
 
         tokenService.deleteTokenById(token.getId());
-        userService.saveUserWithDefaultRole(user);
+        userService.updateUserPassword(user);
 
         return resultMap;
     }

@@ -110,9 +110,14 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     @LogTime
     @CacheDelete("user:username:{0:username}")
     public void updateUserPassword(User user) {
-        entryptPassword(user);
+        User tUser = new User();
+        tUser.setUsername(user.getUsername());
+        tUser.setPassword(user.getPassword());
+        tUser.setSalt(user.getSalt());
 
-        updateUserByUsername(user);
+        entryptPassword(tUser);
+
+        updateUserByUsername(tUser);
     }
 
     @Override

@@ -1,5 +1,5 @@
 $(function () {
-    var $form = $('#register-form');
+    var $form = $('#forgot-form');
     var $btn = $("#submit");
     document.title = "注册";
 
@@ -14,7 +14,7 @@ $(function () {
                 required: true,
                 isMobile: true,
                 remote: {
-                    url: ctx + "/validate/user",
+                    url: ctx + "/validate/user/exists",
                     type: 'post',
                     data: {
                         'username': function () {
@@ -36,13 +36,16 @@ $(function () {
                 isCaptcha: true
             }
         },
+        messages: {
+            username: "此手机号尚未注册！"
+        },
         submitHandler: function (form, event) {
             $btn.button('loading');
             $(form).ajaxSubmit({
                 dataType: 'json',
                 success: function (response) {
                     if (response.errCode == 'success') {
-                        window.location.href = ctx + "#register/success?mobile=" + $('#username').val();
+                        window.location.href = ctx + "#forgot/success?mobile=" + $('#username').val();
                     } else {
                         Message.error(response.errMsg);
                     }
@@ -69,6 +72,7 @@ $(function () {
             Message.warning("请先填写手机号码");
             return;
         }
+
         var time = 60;
         var code = $(this);
         if (validCode) {
@@ -77,7 +81,7 @@ $(function () {
 
             $.post(ctx + "/sms/send", {
                 mobile: mobile,
-                type: "register"
+                type: "forgot"
             }, function (response) {
                 if (response.errCode == "success") {
                     Message.error("短信发送失败,请稍后重试");

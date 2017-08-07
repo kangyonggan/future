@@ -6,17 +6,17 @@
         <div class="widget-main">
             <h4 class="header grey lighter bigger">
                 <i class="ace-icon fa fa-coffee dark"></i>
-                登录
+                忘记密码
             </h4>
 
             <div class="space-6"></div>
 
-            <form id="login-form" action="${ctx}/login" method="post" novalidate="novalidate">
+            <form id="forgot-form" action="${ctx}/forgot" method="post" novalidate="novalidate">
                 <div>
                     <label for="username">手机号<span class="red">*</span></label>
                     <div class="input-icon input-icon-right">
-                        <input type="text" name="username" class="form-control"
-                               placeholder="请输入可以正常接收短信的手机号" autocomplete="off"/>
+                        <input type="text" id="username" name="username" class="form-control"
+                               placeholder="请输入您要找回密码的手机号" autocomplete="off"/>
                         <i class="ace-icon fa fa-user"></i>
                     </div>
                 </div>
@@ -24,9 +24,9 @@
                 <div class="space space-8"></div>
 
                 <div>
-                    <label for="password">密码<span class="red">*</span></label>
+                    <label for="password">新密码<span class="red">*</span></label>
                     <div class="input-icon input-icon-right">
-                        <input type="password" name="password" class="form-control"
+                        <input type="password" id="password" name="password" class="form-control"
                                placeholder="8至20位的字母和数字的组合" autocomplete="off">
                         <i class="ace-icon fa fa-key"></i>
                     </div>
@@ -35,14 +35,27 @@
                 <div class="space space-8"></div>
 
                 <div>
-                    <label for="captcha">验证码<span class="red">*</span></label>
+                    <label for="password">确认密码<span class="red">*</span></label>
                     <div class="input-icon input-icon-right">
-                        <input type="text" id="captcha" name="captcha" class="col-xs-6" placeholder="请输入4位数字的验证码" autocomplete="off">
-                        <img id="captchaCode" onclick="this.src='${ctx}/captcha?'+Math.random();" src="${ctx}/captcha">
+                        <input type="password" name="rePassword" class="form-control"
+                               placeholder="8至20位的字母和数字的组合" autocomplete="off">
+                        <i class="ace-icon fa fa-key"></i>
                     </div>
                 </div>
 
-                <div class="space-14"></div>
+                <div class="space space-8"></div>
+
+                <div>
+                    <label for="captcha">短信验证码<span class="red">*</span></label>
+                    <div class="input-icon input-icon-right">
+                        <input type="text" id="captcha" name="captcha" class="col-xs-9" placeholder="请输入4位数字的短信验证码"
+                               autocomplete="off">
+                        <a href="javascript:" class="col-xs-3 btn btn-sm btn-grey" id="sendSms"><i
+                                class='ace-icon fa fa-mobile bigger-130'></i>获取</a>
+                    </div>
+                </div>
+
+                <div class="space-14 clearboth"></div>
 
                 <div class="clearfix">
                     <button id="reset" type="reset" class="width-30 pull-left btn btn-sm">
@@ -50,9 +63,9 @@
                         重置
                     </button>
                     <button id="submit" class="width-35 pull-right btn btn-sm btn-inverse"
-                            data-loading-text="登录中...">
+                            data-loading-text="正在找回...">
                         <i class="ace-icon fa fa-key"></i>
-                        登录
+                        找回密码
                     </button>
                 </div>
             </form>
@@ -60,15 +73,9 @@
 
         <div class="toolbar clearfix">
             <div>
-                <a href="#forgot" class="forgot-password-link">
-                    <i class="ace-icon fa fa-arrow-left"></i>
-                    忘记密码？
-                </a>
-            </div>
-            <div>
-                <a href="#register" class="user-signup-link">
-                    注册
+                <a href="#login" class="forgot-password-link pull-right">
                     <i class="ace-icon fa fa-arrow-right"></i>
+                    记得密码？去登录
                 </a>
             </div>
         </div>
@@ -77,7 +84,7 @@
 </@override>
 
 <@override name="script">
-<script src="${ctx}/static/app/js/web/login/index.js"></script>
+<script src="${ctx}/static/app/js/web/forgot/index.js"></script>
 </@override>
 
 <@extends name="../auth-layout.ftl"/>

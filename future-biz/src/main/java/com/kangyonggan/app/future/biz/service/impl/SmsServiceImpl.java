@@ -73,7 +73,7 @@ public class SmsServiceImpl implements SmsService {
 
             // 落库
             Token token = new Token();
-            token.setType(TokenType.REGISTER.getType());
+            token.setType(type);
             token.setCode(code);
             token.setMobile(mobile);
             tokenService.saveToken(token);

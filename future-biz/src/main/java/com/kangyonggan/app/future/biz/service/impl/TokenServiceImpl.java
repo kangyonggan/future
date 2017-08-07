@@ -51,4 +51,21 @@ public class TokenServiceImpl extends BaseService<Token> implements TokenService
 
         myMapper.updateByPrimaryKeySelective(token);
     }
+
+    @Override
+    public Token findActiveTokenByMobileAndType(String mobile, String type) {
+        Example example = new Example(Token.class);
+        example.createCriteria().andEqualTo("mobile", mobile)
+                .andEqualTo("type", type)
+                .andEqualTo("isDeleted", AppConstants.IS_DELETED_NO)
+                .andGreaterThanOrEqualTo("createdTime", DateUtil.plusMinutes(-1));
+        example.setOrderByClause("id desc");
+
+        PageHelper.startPage(1, 1);
+        List<Token> tokens = myMapper.selectByExample(example);
+        if (!tokens.isEmpty()) {
+            return tokens.get(0);
+        }
+        return null;
+    }
 }

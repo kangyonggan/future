@@ -50,6 +50,18 @@ public class ValidateController {
     }
 
     /**
+     * 校验手机号是否存在
+     *
+     * @param username
+     * @return
+     */
+    @RequestMapping(value = "user/exists", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean validateUsername(@RequestParam("username") String username) {
+        return userService.existsUsername(username);
+    }
+
+    /**
      * 校验角色代码是否可用
      *
      * @param code
