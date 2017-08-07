@@ -184,6 +184,35 @@ CREATE INDEX created_time_ix
 CREATE UNIQUE INDEX username_UNIQUE
   ON user (username);
 
+-- ----------------------------
+--  Table structure for token
+-- ----------------------------
+DROP TABLE
+IF EXISTS token;
+
+CREATE TABLE token
+(
+  id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  mobile       VARCHAR(16)                           NOT NULL
+  COMMENT '手机号',
+  code         VARCHAR(16)                           NOT NULL
+  COMMENT '验证码',
+  type         VARCHAR(16)                           NOT NULL
+  COMMENT '类型',
+  is_deleted   TINYINT                               NOT NULL                DEFAULT 0
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time TIMESTAMP                             NOT NULL                DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time TIMESTAMP                             NOT NULL                DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '短信验证码表';
+CREATE UNIQUE INDEX id_UNIQUE
+  ON token (id);
+CREATE INDEX created_time_ix
+  ON token (created_time);
+
 #====================初始数据====================#
 
 # 用户 admin
@@ -214,7 +243,7 @@ VALUES
   ('SYSTEM_ROLE', '角色管理', 'SYSTEM', 'system/role', 1, ''),
   ('SYSTEM_MENU', '菜单管理', 'SYSTEM', 'system/menu', 2, ''),
   ('SYSTEM_CACHE', '缓存管理', 'SYSTEM', 'system/cache', 3, ''),
-  ('SYSTEM_DICTIONARY', '数字字典', 'SYSTEM', 'system/dictionary', 4, ''),
+  ('SYSTEM_DICTIONARY', '字典管理', 'SYSTEM', 'system/dictionary', 4, ''),
 
   ('USER', '用户', 'DASHBOARD', 'user', 1, 'menu-icon fa fa-user'),
   ('USER_INFO', '基本信息', 'USER', 'user/info', 0, '');

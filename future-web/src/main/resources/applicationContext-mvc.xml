@@ -81,6 +81,7 @@
 
     <!-- 定义无需Controller的url<->view直接映射 -->
     <mvc:view-controller path="/404" view-name="/404"/>
+    <mvc:view-controller path="/405" view-name="/405"/>
     <mvc:view-controller path="/500" view-name="/500"/>
 
     <bean id="exceptionResolver" class="com.kangyonggan.app.future.web.exception.CustomSimpleMappingExceptionResolver">

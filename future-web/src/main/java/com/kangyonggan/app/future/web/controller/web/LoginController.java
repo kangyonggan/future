@@ -1,6 +1,5 @@
 package com.kangyonggan.app.future.web.controller.web;
 
-import com.kangyonggan.app.future.biz.service.UserService;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.User;
 import com.kangyonggan.app.future.web.controller.BaseController;
@@ -13,7 +12,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,9 +30,6 @@ import java.util.Map;
 @RequestMapping("/")
 @Log4j2
 public class LoginController extends BaseController {
-
-    @Autowired
-    private UserService userService;
 
     /**
      * 登录界面

@@ -1,6 +1,7 @@
 $(function () {
     var $form = $('#login-form');
     var $btn = $("#login");
+    document.title = "登录";
 
     $("#reset").click(function () {
         $form.find("input").val("");

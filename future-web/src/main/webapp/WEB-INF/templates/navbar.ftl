@@ -26,10 +26,10 @@
                     <li class="dark">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
                             <img class="nav-user-photo" src="${ctx}/static/ace/dist/avatars/profile-pic.jpg"
-                                 alt="${user.realname}">
+                                 alt="${(user.realname!='')?string('${user.realname}', '${user.username}')}">
                             <span class="user-info">
 									<small>欢迎,</small>
-                            <span id="navFullname">${user.realname}</span>
+                            <span id="navFullname">${(user.realname!='')?string('${user.realname}', '${user.username}')}</span>
 								</span>
 
                             <i class="ace-icon fa fa-caret-down"></i>
