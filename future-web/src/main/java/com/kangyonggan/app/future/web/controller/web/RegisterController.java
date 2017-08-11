@@ -49,7 +49,7 @@ public class RegisterController extends BaseController {
         Token token = tokenService.findTokenByMobileAndType(user.getUsername(), TokenType.REGISTER.getType());
         if (token == null) {
             resultMap.put(ERR_CODE, FAILURE);
-            resultMap.put(ERR_MSG, "验证码错误或已失效,请重新获取");
+            resultMap.put(ERR_MSG, "验证码已失效，请重新获取");
             return resultMap;
         }
         String realCaptcha = token.getCode();
@@ -58,7 +58,7 @@ public class RegisterController extends BaseController {
 
         if (!captcha.equalsIgnoreCase(realCaptcha)) {
             resultMap.put(ERR_CODE, FAILURE);
-            resultMap.put(ERR_MSG, "验证码错误或已失效");
+            resultMap.put(ERR_MSG, "验证码错误");
             return resultMap;
         }
 
