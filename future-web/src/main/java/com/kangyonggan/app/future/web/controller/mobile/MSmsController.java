@@ -2,9 +2,12 @@ package com.kangyonggan.app.future.web.controller.mobile;
 
 import com.kangyonggan.app.future.biz.service.SmsService;
 import com.kangyonggan.app.future.biz.service.TokenService;
+import com.kangyonggan.app.future.biz.service.UserService;
 import com.kangyonggan.app.future.model.constants.Resp;
+import com.kangyonggan.app.future.model.constants.TokenType;
 import com.kangyonggan.app.future.model.dto.CommonResponse;
 import com.kangyonggan.app.future.model.vo.Token;
+import com.kangyonggan.app.future.model.vo.User;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ public class MSmsController {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 发送验证码
      *
@@ -42,8 +48,25 @@ public class MSmsController {
 
         if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(type)) {
             response.setRespCo(Resp.FAILURE.getRespCo());
-            response.setRespMsg("手机号或短信类型为空");
+            response.setRespMsg("手机号不能为空");
             return response;
+        }
+
+        // 如果是注册，该手机号已被注册。如果是找回密码，该手机号尚未注册。
+        if (TokenType.REGISTER.getType().equals(type)) {
+            User u = userService.findUserByUsername(mobile);
+            if (u != null) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("该手机号已被注册");
+                return response;
+            }
+        } else if (TokenType.FORGOT.getType().equals(type)) {
+            User u = userService.findUserByUsername(mobile);
+            if (u == null) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("该手机号尚未注册");
+                return response;
+            }
         }
 
         // 60s内不准重复发送

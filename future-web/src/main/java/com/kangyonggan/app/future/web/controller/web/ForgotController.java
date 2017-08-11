@@ -42,14 +42,14 @@ public class ForgotController extends BaseController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> register(@ModelAttribute("user") @Valid User user, BindingResult result,
+    public Map<String, Object> forgot(@ModelAttribute("user") @Valid User user, BindingResult result,
                                         @RequestParam("captcha") String captcha) {
         Map<String, Object> resultMap = getResultMap();
 
         Token token = tokenService.findTokenByMobileAndType(user.getUsername(), TokenType.FORGOT.getType());
         if (token == null) {
             resultMap.put(ERR_CODE, FAILURE);
-            resultMap.put(ERR_MSG, "验证码错误或已失效,请重新获取");
+            resultMap.put(ERR_MSG, "验证码已失效,请重新获取");
             return resultMap;
         }
         String realCaptcha = token.getCode();
@@ -58,7 +58,7 @@ public class ForgotController extends BaseController {
 
         if (!captcha.equalsIgnoreCase(realCaptcha)) {
             resultMap.put(ERR_CODE, FAILURE);
-            resultMap.put(ERR_MSG, "验证码错误或已失效");
+            resultMap.put(ERR_MSG, "验证码错误");
             return resultMap;
         }
 
