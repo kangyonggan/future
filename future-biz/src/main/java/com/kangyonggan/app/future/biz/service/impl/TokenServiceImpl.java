@@ -6,6 +6,7 @@ import com.kangyonggan.app.future.common.util.DateUtil;
 import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Token;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
@@ -16,6 +17,7 @@ import java.util.List;
  * @since 8/7/17
  */
 @Service
+@Log4j2
 public class TokenServiceImpl extends BaseService<Token> implements TokenService {
 
     @Override
@@ -44,6 +46,21 @@ public class TokenServiceImpl extends BaseService<Token> implements TokenService
 
     @Override
     @LogTime
+    public Token findTokenByCodeAndType(String code, String type) {
+        Token token = new Token();
+        token.setCode(code);
+        token.setType(type);
+        try {
+            token = myMapper.selectOne(token);
+        } catch (Exception e) {
+            log.warn("查找登录的token出错", e);
+            return null;
+        }
+        return token;
+    }
+
+    @Override
+    @LogTime
     public void deleteTokenById(Long id) {
         Token token = new Token();
         token.setId(id);
@@ -67,5 +84,15 @@ public class TokenServiceImpl extends BaseService<Token> implements TokenService
             return tokens.get(0);
         }
         return null;
+    }
+
+    @Override
+    @LogTime
+    public void deleteTokensByMobileAndType(String mobile, String type) {
+        Token token = new Token();
+        token.setType(type);
+        token.setMobile(mobile);
+
+        myMapper.delete(token);
     }
 }

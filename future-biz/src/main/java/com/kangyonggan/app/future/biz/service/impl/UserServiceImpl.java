@@ -140,6 +140,16 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         return super.exists(user);
     }
 
+    @Override
+    @LogTime
+    public boolean isEqualPassword(String password, User user) {
+        byte[] salt = Encodes.decodeHex(user.getSalt());
+        byte[] hashPassword = Digests.sha1(password.getBytes(), salt, AppConstants.HASH_INTERATIONS);
+        String reqPassword = Encodes.encodeHex(hashPassword);
+
+        return reqPassword.equals(user.getPassword());
+    }
+
     /**
      * 批量保存用户角色
      *

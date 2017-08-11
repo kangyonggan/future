@@ -9,7 +9,8 @@ import lombok.Getter;
 public enum TokenType {
 
     REGISTER("REGISTER", "注册验证码"),
-    FORGOT("FORGOT", "找回密码验证码");
+    FORGOT("FORGOT", "找回密码验证码"),
+    LOGIN("LOGIN", "登录的token");
 
     /**
      * 类型

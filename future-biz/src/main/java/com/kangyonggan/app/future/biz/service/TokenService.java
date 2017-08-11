@@ -9,19 +9,28 @@ import com.kangyonggan.app.future.model.vo.Token;
 public interface TokenService {
 
     /**
-     * 报错短信验证码
+     * 报错token
      *
      * @param token
      */
     void saveToken(Token token);
 
     /**
-     * 获取上次的短信验证码
+     * 获取上次的token
      *
      * @param mobile
      * @param type
      */
     Token findTokenByMobileAndType(String mobile, String type);
+
+    /**
+     * 查找登录的token
+     *
+     * @param code
+     * @param type
+     * @return
+     */
+    Token findTokenByCodeAndType(String code, String type);
 
     /**
      * 删除验证码
@@ -38,4 +47,12 @@ public interface TokenService {
      * @return
      */
     Token findActiveTokenByMobileAndType(String mobile, String type);
+
+    /**
+     * 清除用户的登录token
+     *
+     * @param mobile
+     * @param type
+     */
+    void deleteTokensByMobileAndType(String mobile, String type);
 }

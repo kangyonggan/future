@@ -21,7 +21,7 @@ public class Token implements Serializable {
     private String mobile;
 
     /**
-     * 验证码
+     * 代码
      */
     private String code;
 

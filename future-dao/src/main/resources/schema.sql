@@ -196,8 +196,8 @@ CREATE TABLE token
   COMMENT '主键, 自增',
   mobile       VARCHAR(16)                           NOT NULL
   COMMENT '手机号',
-  code         VARCHAR(16)                           NOT NULL
-  COMMENT '验证码',
+  code         VARCHAR(64)                           NOT NULL
+  COMMENT '代码',
   type         VARCHAR(16)                           NOT NULL
   COMMENT '类型',
   is_deleted   TINYINT                               NOT NULL                DEFAULT 0
@@ -219,7 +219,7 @@ CREATE INDEX created_time_ix
 INSERT INTO user
 (username, realname, password, salt, email)
 VALUES
-  ('15121149571', '管理员', '73905d6309ff111668671f2dea975cf30e3a05ae', 'fee043a9a167f462', 'java@kangyonggan.com');
+  ('15121149571', '管理员', '25500f5b85a66895e0b99117a12cd51b6d07eb13', '93fab0ba521763fc', 'java@kangyonggan.com');
 
 -- ----------------------------
 --  data for role

@@ -81,4 +81,13 @@ public interface UserService {
      * @return
      */
     boolean existsUsername(String username);
+
+    /**
+     * 判断密码是否一样
+     *
+     * @param password
+     * @param user
+     * @return
+     */
+    boolean isEqualPassword(String password, User user);
 }
