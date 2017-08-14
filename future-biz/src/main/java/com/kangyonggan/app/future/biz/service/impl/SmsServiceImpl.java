@@ -8,6 +8,7 @@ import com.aliyuncs.sms.model.v20160927.SingleSendSmsRequest;
 import com.aliyuncs.sms.model.v20160927.SingleSendSmsResponse;
 import com.kangyonggan.app.future.biz.service.SmsService;
 import com.kangyonggan.app.future.biz.service.TokenService;
+import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.TokenType;
 import com.kangyonggan.app.future.model.vo.Token;
@@ -51,6 +52,12 @@ public class SmsServiceImpl implements SmsService {
     @Override
     @LogTime
     public void sendSms(String mobile, String type) {
+        // 校验手机号是否正确
+        if (!StringUtil.isMobile(mobile)) {
+            log.info("手机号码不正确，停止发短信");
+            return;
+        }
+
         String code = getTokenCode();
 
         SingleSendSmsRequest request = new SingleSendSmsRequest();

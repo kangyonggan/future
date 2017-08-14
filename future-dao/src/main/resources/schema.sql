@@ -161,11 +161,11 @@ CREATE TABLE user
   COMMENT '密码',
   salt          VARCHAR(64)                           NOT NULL
   COMMENT '密码盐',
-  small_avatar  VARCHAR(256)                          NOT NULL                    DEFAULT ''
+  small_avatar  VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-user-small.png'
   COMMENT '小头像',
-  medium_avatar VARCHAR(256)                          NOT NULL                    DEFAULT ''
+  medium_avatar VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-user-medium.png'
   COMMENT '中头像',
-  large_avatar  VARCHAR(256)                          NOT NULL                    DEFAULT ''
+  large_avatar  VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-user-large.png'
   COMMENT '大头像',
   email         VARCHAR(64)                           NOT NULL                    DEFAULT ''
   COMMENT '电子邮箱',
@@ -212,6 +212,134 @@ CREATE UNIQUE INDEX id_UNIQUE
   ON token (id);
 CREATE INDEX created_time_ix
   ON token (created_time);
+
+# 图书馆
+
+-- ----------------------------
+--  Table structure for book
+-- ----------------------------
+DROP TABLE
+IF EXISTS book;
+
+CREATE TABLE book
+(
+  id              BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  name            VARCHAR(32)                           NOT NULL
+  COMMENT '书名',
+  author          VARCHAR(32)                           NOT NULL
+  COMMENT '作者',
+  pic_url         VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-book.png'
+  COMMENT '封面图片地址',
+  descp           VARCHAR(1024)                         NOT NULL
+  COMMENT '描述',
+  isFinished      TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '是否完结{1: 完结, 0: 连载}',
+  isHot           TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '推荐{1: 是, 0: 否}',
+  newSectionId    BIGINT(20)                            NOT NULL                    DEFAULT 0
+  COMMENT '最新章节id',
+  newSectionTitle VARCHAR(256)                          NOT NULL                    DEFAULT ''
+  COMMENT '最新章节标题',
+  is_deleted      TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time    TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time    TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '书籍表';
+CREATE UNIQUE INDEX id_UNIQUE
+  ON book (id);
+CREATE INDEX created_time_ix
+  ON book (created_time);
+
+-- ----------------------------
+--  Table structure for section
+-- ----------------------------
+DROP TABLE
+IF EXISTS section;
+
+CREATE TABLE section
+(
+  id               BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  title            VARCHAR(64)                           NOT NULL
+  COMMENT '标题',
+  content          LONGTEXT                              NOT NULL
+  COMMENT '内容',
+  prevSectionId    BIGINT(20)                            NOT NULL                    DEFAULT 0
+  COMMENT '上一章节ID',
+  prevSectionTitle VARCHAR(64)                           NOT NULL                    DEFAULT ''
+  COMMENT '上一章节标题',
+  nextSectionId    BIGINT(20)                            NOT NULL                    DEFAULT 0
+  COMMENT '下一章节ID',
+  nextSectionTitle VARCHAR(64)                           NOT NULL                    DEFAULT ''
+  COMMENT '下一章节标题',
+  is_deleted       TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time     TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time     TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '章节表';
+CREATE UNIQUE INDEX id_UNIQUE
+  ON section (id);
+CREATE INDEX created_time_ix
+  ON section (created_time);
+
+-- ----------------------------
+--  Table structure for category
+-- ----------------------------
+DROP TABLE
+IF EXISTS category;
+
+CREATE TABLE category
+(
+  id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  code         VARCHAR(16)                           NOT NULL
+  COMMENT '分类代码',
+  name         VARCHAR(32)                           NOT NULL
+  COMMENT '分类名称',
+  type         VARCHAR(16)                           NOT NULL
+  COMMENT '分类类型{"book": "小说", "article": "博客"}',
+  picUrl       VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-category.png'
+  COMMENT '图片地址',
+  sort         INT(11)                               NOT NULL                    DEFAULT 0
+  COMMENT '菜单排序(从0开始)',
+  is_deleted   TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '分类表';
+CREATE UNIQUE INDEX id_UNIQUE
+  ON category (id);
+CREATE UNIQUE INDEX code_type_UNIQUE
+  ON category (code, type);
+CREATE INDEX created_time_ix
+  ON category (created_time);
+
+-- ----------------------------
+--  Table structure for book_category
+-- ----------------------------
+DROP TABLE
+IF EXISTS book_category;
+
+CREATE TABLE book_category
+(
+  book_id       BIGINT(20)  NOT NULL
+  COMMENT '书籍ID',
+  category_code VARCHAR(16) NOT NULL
+  COMMENT '书籍分类代码'
+)
+  COMMENT '书籍分类表';
+CREATE UNIQUE INDEX book_id_category_code_UNIQUE
+  ON book_category (book_id, category_code);
 
 #====================初始数据====================#
 
@@ -269,3 +397,16 @@ INSERT INTO role_menu SELECT
                         code
                       FROM menu
                       WHERE code LIKE 'USER%' OR code = 'DASHBOARD';
+
+# 书籍
+INSERT INTO category
+(code, name, type, sort)
+VALUES
+  ('xuanhuan', '玄幻', 'book', 0),
+  ('xiuzhen', '修真', 'book', 1),
+  ('dushi', '都市', 'book', 2),
+  ('lishi', '历史', 'book', 3),
+  ('wangyou', '网游', 'book', 4),
+  ('kehuan', '科幻', 'book', 5),
+  ('yanqing', '言情', 'book', 6),
+  ('qita', '其他', 'book', 7);
