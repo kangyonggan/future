@@ -9,6 +9,10 @@
 <div class="page-header">
     <h1>
         小说列表
+        <small class="pull-right">
+            <a class="btn btn-sm btn-purple" href="${ctx}/dashboard/book/manager/update" id="book-update">抓取
+            </a>
+        </small>
     </h1>
 </div>
 

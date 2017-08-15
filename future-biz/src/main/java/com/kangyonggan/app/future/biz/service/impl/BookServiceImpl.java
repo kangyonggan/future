@@ -38,8 +38,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     @Override
     @LogTime
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public void updateBooksByCode() {
-        int code = 1;
+    public void updateBooksByCode(int code) {
         while (true) {
             try {
                 parseBookInfo(BI_QU_GE_URL + "book/" + code++);
@@ -98,6 +97,18 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         example.createCriteria().andEqualTo("code", book.getCode());
 
         myMapper.updateByExampleSelective(book, example);
+    }
+
+    @Override
+    @LogTime
+    public Book findLastBook() {
+        Example example = new Example(Book.class);
+        example.setOrderByClause("code desc");
+
+        PageHelper.startPage(1, 1);
+        List<Book> books = myMapper.selectByExample(example);
+
+        return books.isEmpty() ? null : books.get(0);
     }
 
     /**

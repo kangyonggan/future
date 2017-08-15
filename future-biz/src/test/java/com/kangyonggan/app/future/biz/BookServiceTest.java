@@ -15,7 +15,7 @@ public class BookServiceTest extends AbstractServiceTest {
 
     @Test
     public void testUpdateBooks() {
-        bookService.updateBooksByCode();
+        bookService.updateBooksByCode(1);
     }
 
 }

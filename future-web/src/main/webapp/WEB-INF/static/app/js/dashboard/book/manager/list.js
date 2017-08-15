@@ -17,4 +17,17 @@ $(function () {
             })
         });
     });
+
+    $("#book-update").click(function () {
+        var href = $(this).attr("href");
+        $.messager.confirm("提示", "确定抓取小说吗?", function () {
+            $.get(href).success(function () {
+                Message.success("后台正在抓取，请勿重复操作！");
+            }).error(function () {
+                Message.error("网络错误，请稍后重试");
+            })
+        });
+
+        return false;
+    });
 });

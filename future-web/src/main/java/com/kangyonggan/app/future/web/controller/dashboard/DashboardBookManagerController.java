@@ -4,22 +4,18 @@ import com.github.pagehelper.PageInfo;
 import com.kangyonggan.app.future.biz.service.BookService;
 import com.kangyonggan.app.future.biz.service.CategoryService;
 import com.kangyonggan.app.future.model.constants.CategoryType;
-import com.kangyonggan.app.future.model.constants.DictionaryType;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Category;
-import com.kangyonggan.app.future.model.vo.Dictionary;
 import com.kangyonggan.app.future.web.controller.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author kangyonggan
@@ -65,6 +61,26 @@ public class DashboardBookManagerController extends BaseController {
         model.addAttribute("page", page);
         model.addAttribute("categories", categories);
         return getPathList();
+    }
+
+    /**
+     * 抓取书籍
+     *
+     * @return
+     */
+    @RequestMapping(value = "update", method = RequestMethod.GET)
+    @RequiresPermissions("BOOK_MANAGER")
+    @ResponseBody
+    public Map<String, Object> update() {
+        Book book = bookService.findLastBook();
+
+        new Thread() {
+            @Override
+            public void run() {
+                bookService.updateBooksByCode(book.getCode());
+            }
+        }.start();
+        return getResultMap();
     }
 
     /**

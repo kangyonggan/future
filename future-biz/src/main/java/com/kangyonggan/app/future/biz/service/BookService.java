@@ -17,8 +17,10 @@ public interface BookService {
 
     /**
      * 更新小说根据小说代码
+     *
+     * @param code
      */
-    void updateBooksByCode();
+    void updateBooksByCode(int code);
 
     /**
      * 按条件搜索小说
@@ -48,4 +50,12 @@ public interface BookService {
      * @param book
      */
     void updateBook(Book book);
+
+    /**
+     * 查找最后抓取的书籍
+     *
+     * @return
+     */
+    Book findLastBook();
+
 }
