@@ -138,7 +138,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         String picUrl = bookDoc.select("#fmimg img").attr("src");
         author = author.substring(author.indexOf("：") + 1);
         String descp = bookDoc.select("#intro p").get(0).html().trim();
-        boolean isFinished = bookDoc.select("#maininfo #info p").get(1).html().trim().contains("连载");
+        boolean isFinished = !bookDoc.select("#maininfo #info p").get(1).html().trim().contains("连载");
 
         Book book = new Book();
         book.setCode(Integer.parseInt(code));
