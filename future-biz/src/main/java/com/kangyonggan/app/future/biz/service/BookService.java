@@ -1,6 +1,7 @@
 package com.kangyonggan.app.future.biz.service;
 
 import com.kangyonggan.app.future.model.vo.Book;
+import com.kangyonggan.app.future.model.vo.Category;
 
 import java.util.List;
 
@@ -58,4 +59,18 @@ public interface BookService {
      */
     Book findLastBook();
 
+    /**
+     * 查找所有分类，带有小说总数
+     *
+     * @return
+     */
+    List<Category> findAllCategoryWithBookCount();
+
+    /**
+     * 查找推荐小说
+     *
+     * @param pageNum
+     * @return
+     */
+    List<Book> findHotBooks(int pageNum);
 }

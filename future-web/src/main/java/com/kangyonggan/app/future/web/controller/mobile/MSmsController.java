@@ -46,41 +46,47 @@ public class MSmsController {
         log.info("发短信请求入参:mobile:{}, type:{}", mobile, type);
         CommonResponse response = new CommonResponse();
 
-        if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(type)) {
-            response.setRespCo(Resp.FAILURE.getRespCo());
-            response.setRespMsg("手机号不能为空");
-            return response;
-        }
-
-        // 如果是注册，该手机号已被注册。如果是找回密码，该手机号尚未注册。
-        if (TokenType.REGISTER.getType().equals(type)) {
-            User u = userService.findUserByUsername(mobile);
-            if (u != null) {
+        try {
+            if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(type)) {
                 response.setRespCo(Resp.FAILURE.getRespCo());
-                response.setRespMsg("该手机号已被注册");
+                response.setRespMsg("手机号不能为空");
                 return response;
             }
-        } else if (TokenType.FORGOT.getType().equals(type)) {
-            User u = userService.findUserByUsername(mobile);
-            if (u == null) {
+
+            // 如果是注册，该手机号已被注册。如果是找回密码，该手机号尚未注册。
+            if (TokenType.REGISTER.getType().equals(type)) {
+                User u = userService.findUserByUsername(mobile);
+                if (u != null) {
+                    response.setRespCo(Resp.FAILURE.getRespCo());
+                    response.setRespMsg("该手机号已被注册");
+                    return response;
+                }
+            } else if (TokenType.FORGOT.getType().equals(type)) {
+                User u = userService.findUserByUsername(mobile);
+                if (u == null) {
+                    response.setRespCo(Resp.FAILURE.getRespCo());
+                    response.setRespMsg("该手机号尚未注册");
+                    return response;
+                }
+            }
+
+            // 60s内不准重复发送
+            Token token = tokenService.findActiveTokenByMobileAndType(mobile, type);
+            if (token != null) {
                 response.setRespCo(Resp.FAILURE.getRespCo());
-                response.setRespMsg("该手机号尚未注册");
+                response.setRespMsg("请勿频繁发短信");
                 return response;
             }
-        }
 
-        // 60s内不准重复发送
-        Token token = tokenService.findActiveTokenByMobileAndType(mobile, type);
-        if (token != null) {
+            smsService.sendSms(mobile, type);
+
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+        } catch (Exception e) {
+            log.warn("发短信异常", e);
             response.setRespCo(Resp.FAILURE.getRespCo());
-            response.setRespMsg("请勿频繁发短信");
-            return response;
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
         }
-
-        smsService.sendSms(mobile, type);
-
-        response.setRespCo(Resp.SUCCESS.getRespCo());
-        response.setRespMsg(Resp.SUCCESS.getRespMsg());
 
         log.info("发短信请求出参:{}", response);
         return response;

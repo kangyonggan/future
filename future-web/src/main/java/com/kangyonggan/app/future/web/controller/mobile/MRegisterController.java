@@ -47,50 +47,57 @@ public class MRegisterController {
         log.info("用户注册入参：{}, authCode:{}", user, authCode);
         RegisterResponse response = new RegisterResponse();
 
-        Token token = tokenService.findTokenByMobileAndType(user.getUsername(), TokenType.REGISTER.getType());
-        if (token == null) {
-            response.setRespCo(Resp.FAILURE.getRespCo());
-            response.setRespMsg("验证码已失效，请重新获取");
-
-            log.info("用户注册出参：{}", response);
-            return response;
-        }
-        String realCaptcha = token.getCode();
-        log.info("库中的验证码为：{}", realCaptcha);
-        log.info("上送的验证码为：{}", authCode);
-
-        if (!authCode.equalsIgnoreCase(realCaptcha)) {
-            response.setRespCo(Resp.FAILURE.getRespCo());
-            response.setRespMsg("验证码错误");
-
-            log.info("用户注册出参：{}", response);
-            return response;
-        }
-
         try {
-            userService.saveUserWithDefaultRole(user);
+
+            Token token = tokenService.findTokenByMobileAndType(user.getUsername(), TokenType.REGISTER.getType());
+            if (token == null) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("验证码已失效，请重新获取");
+
+                log.info("用户注册出参：{}", response);
+                return response;
+            }
+            String realCaptcha = token.getCode();
+            log.info("库中的验证码为：{}", realCaptcha);
+            log.info("上送的验证码为：{}", authCode);
+
+            if (!authCode.equalsIgnoreCase(realCaptcha)) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("验证码错误");
+
+                log.info("用户注册出参：{}", response);
+                return response;
+            }
+
+            try {
+                userService.saveUserWithDefaultRole(user);
+            } catch (Exception e) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("该手机号已被注册");
+            }
+
+            // 删除短信的token
+            tokenService.deleteTokenById(token.getId());
+
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+            String code = Encodes.encodeHex(Digests.generateSalt(AppConstants.SALT_SIZE));
+            response.setToken(code);
+
+            // 清除此用户的登录token
+            tokenService.deleteTokensByMobileAndType(user.getUsername(), TokenType.LOGIN.getType());
+
+            // 保存登录的token
+            Token tk = new Token();
+            tk.setCode(code);
+            tk.setMobile(user.getUsername());
+            tk.setType(TokenType.LOGIN.getType());
+            tokenService.saveToken(tk);
         } catch (Exception e) {
+            log.warn("注册异常", e);
             response.setRespCo(Resp.FAILURE.getRespCo());
-            response.setRespMsg("该手机号已被注册");
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
         }
-
-        // 删除短信的token
-        tokenService.deleteTokenById(token.getId());
-
-        response.setRespCo(Resp.SUCCESS.getRespCo());
-        response.setRespMsg(Resp.SUCCESS.getRespMsg());
-        String code = Encodes.encodeHex(Digests.generateSalt(AppConstants.SALT_SIZE));
-        response.setToken(code);
-
-        // 清除此用户的登录token
-        tokenService.deleteTokensByMobileAndType(user.getUsername(), TokenType.LOGIN.getType());
-
-        // 保存登录的token
-        Token tk = new Token();
-        tk.setCode(code);
-        tk.setMobile(user.getUsername());
-        tk.setType(TokenType.LOGIN.getType());
-        tokenService.saveToken(tk);
 
         log.info("用户注册出参：{}", response);
         return response;

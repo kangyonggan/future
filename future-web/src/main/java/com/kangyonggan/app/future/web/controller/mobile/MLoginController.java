@@ -46,54 +46,60 @@ public class MLoginController {
         log.info("用户登录入参:{}, token={}", user, token);
         LoginResponse response = new LoginResponse();
 
-        // 使用token登录
-        if (StringUtils.isNotEmpty(token)) {
-            Token tk = tokenService.findTokenByCodeAndType(token, TokenType.LOGIN.getType());
-            if (tk != null) {
-                response.setRespCo(Resp.SUCCESS.getRespCo());
-                response.setRespMsg(Resp.SUCCESS.getRespMsg());
-                response.setToken(token);
+        try {
+            // 使用token登录
+            if (StringUtils.isNotEmpty(token)) {
+                Token tk = tokenService.findTokenByCodeAndType(token, TokenType.LOGIN.getType());
+                if (tk != null) {
+                    response.setRespCo(Resp.SUCCESS.getRespCo());
+                    response.setRespMsg(Resp.SUCCESS.getRespMsg());
+                    response.setToken(token);
 
+                    log.info("用户登录出参：{}", response);
+                    return response;
+                }
+            }
+
+            // 入参校验
+            if (user == null || StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("手机号或密码为空");
                 log.info("用户登录出参：{}", response);
                 return response;
             }
-        }
 
-        // 入参校验
-        if (user == null || StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
+            User u = userService.findUserByUsername(user.getUsername());
+            if (u == null) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("该手机号尚未注册");
+                log.info("用户登录出参：{}", response);
+                return response;
+            }
+
+            boolean idLoginSuccess = userService.isEqualPassword(user.getPassword(), u);
+            if (idLoginSuccess) {
+                response.setRespCo(Resp.SUCCESS.getRespCo());
+                response.setRespMsg(Resp.SUCCESS.getRespMsg());
+                token = Encodes.encodeHex(Digests.generateSalt(AppConstants.SALT_SIZE));
+                response.setToken(token);
+
+                // 清除此用户的登录token
+                tokenService.deleteTokensByMobileAndType(user.getUsername(), TokenType.LOGIN.getType());
+
+                // 保存登录的token
+                Token tk = new Token();
+                tk.setCode(token);
+                tk.setMobile(user.getUsername());
+                tk.setType(TokenType.LOGIN.getType());
+                tokenService.saveToken(tk);
+            } else {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("密码错误");
+            }
+        } catch (Exception e) {
+            log.warn("登录异常", e);
             response.setRespCo(Resp.FAILURE.getRespCo());
-            response.setRespMsg("手机号或密码为空");
-            log.info("用户登录出参：{}", response);
-            return response;
-        }
-
-        User u = userService.findUserByUsername(user.getUsername());
-        if (u == null) {
-            response.setRespCo(Resp.FAILURE.getRespCo());
-            response.setRespMsg("该手机号尚未注册");
-            log.info("用户登录出参：{}", response);
-            return response;
-        }
-
-        boolean idLoginSuccess = userService.isEqualPassword(user.getPassword(), u);
-        if (idLoginSuccess) {
-            response.setRespCo(Resp.SUCCESS.getRespCo());
-            response.setRespMsg(Resp.SUCCESS.getRespMsg());
-            token = Encodes.encodeHex(Digests.generateSalt(AppConstants.SALT_SIZE));
-            response.setToken(token);
-
-            // 清除此用户的登录token
-            tokenService.deleteTokensByMobileAndType(user.getUsername(), TokenType.LOGIN.getType());
-
-            // 保存登录的token
-            Token tk = new Token();
-            tk.setCode(token);
-            tk.setMobile(user.getUsername());
-            tk.setType(TokenType.LOGIN.getType());
-            tokenService.saveToken(tk);
-        } else {
-            response.setRespCo(Resp.FAILURE.getRespCo());
-            response.setRespMsg("密码错误");
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
         }
 
         log.info("用户登录出参：{}", response);

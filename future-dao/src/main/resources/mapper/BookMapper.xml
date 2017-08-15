@@ -21,4 +21,9 @@
         <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
         <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
     </resultMap>
+
+    <select id="selectAllCategoryWithBookCount" resultType="com.kangyonggan.app.future.model.vo.Category">
+        SELECT count(*) AS bookCnt, category_code AS code, category_name AS name
+        FROM book GROUP BY category_code, category_name ORDER BY bookCnt DESC
+    </select>
 </mapper>

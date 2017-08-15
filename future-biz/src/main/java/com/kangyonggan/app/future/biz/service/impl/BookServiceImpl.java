@@ -6,6 +6,7 @@ import com.kangyonggan.app.future.biz.service.CategoryService;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.FileUtil;
 import com.kangyonggan.app.future.common.util.HtmlUtil;
+import com.kangyonggan.app.future.mapper.BookMapper;
 import com.kangyonggan.app.future.model.annotation.CacheDelete;
 import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.annotation.LogTime;
@@ -31,6 +32,9 @@ import java.util.List;
 @Service
 @Log4j2
 public class BookServiceImpl extends BaseService<Book> implements BookService {
+
+    @Autowired
+    private BookMapper bookMapper;
 
     @Autowired
     private CategoryService categoryService;
@@ -109,6 +113,22 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         List<Book> books = myMapper.selectByExample(example);
 
         return books.isEmpty() ? null : books.get(0);
+    }
+
+    @Override
+    @LogTime
+    public List<Category> findAllCategoryWithBookCount() {
+        return bookMapper.selectAllCategoryWithBookCount();
+    }
+
+    @Override
+    @LogTime
+    public List<Book> findHotBooks(int pageNum) {
+        Example example = new Example(Book.class);
+        example.setOrderByClause("updated_time desc");
+
+        PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
+        return myMapper.selectByExample(example);
     }
 
     /**

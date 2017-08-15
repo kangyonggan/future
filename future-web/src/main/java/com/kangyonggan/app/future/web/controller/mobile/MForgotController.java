@@ -44,36 +44,42 @@ public class MForgotController {
         log.info("用户找回密码入参：{}, authCode:{}", user, authCode);
         RegisterResponse response = new RegisterResponse();
 
-        Token token = tokenService.findTokenByMobileAndType(user.getUsername(), TokenType.FORGOT.getType());
-        if (token == null) {
+        try {
+            Token token = tokenService.findTokenByMobileAndType(user.getUsername(), TokenType.FORGOT.getType());
+            if (token == null) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("验证码已失效，请重新获取");
+
+                log.info("用户找回密码出参：{}", response);
+                return response;
+            }
+            String realCaptcha = token.getCode();
+            log.info("库中的验证码为：{}", realCaptcha);
+            log.info("上送的验证码为：{}", authCode);
+
+            if (!authCode.equalsIgnoreCase(realCaptcha)) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("验证码错误");
+
+                log.info("用户找回密码出参：{}", response);
+                return response;
+            }
+
+            userService.updateUserPassword(user);
+
+            // 删除短信的token
+            tokenService.deleteTokenById(token.getId());
+
+            // 清除此用户的登录token
+            tokenService.deleteTokensByMobileAndType(user.getUsername(), TokenType.LOGIN.getType());
+
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+        } catch (Exception e) {
+            log.warn("找回密码异常", e);
             response.setRespCo(Resp.FAILURE.getRespCo());
-            response.setRespMsg("验证码已失效，请重新获取");
-
-            log.info("用户找回密码出参：{}", response);
-            return response;
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
         }
-        String realCaptcha = token.getCode();
-        log.info("库中的验证码为：{}", realCaptcha);
-        log.info("上送的验证码为：{}", authCode);
-
-        if (!authCode.equalsIgnoreCase(realCaptcha)) {
-            response.setRespCo(Resp.FAILURE.getRespCo());
-            response.setRespMsg("验证码错误");
-
-            log.info("用户找回密码出参：{}", response);
-            return response;
-        }
-
-        userService.updateUserPassword(user);
-
-        // 删除短信的token
-        tokenService.deleteTokenById(token.getId());
-
-        // 清除此用户的登录token
-        tokenService.deleteTokensByMobileAndType(user.getUsername(), TokenType.LOGIN.getType());
-
-        response.setRespCo(Resp.SUCCESS.getRespCo());
-        response.setRespMsg(Resp.SUCCESS.getRespMsg());
 
         log.info("用户找回密码出参：{}", response);
         return response;
