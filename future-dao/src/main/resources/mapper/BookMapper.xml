@@ -1,22 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kangyonggan.app.future.mapper.BookMapper">
     <resultMap id="BaseResultMap" type="com.kangyonggan.app.future.model.vo.Book">
         <!--
           WARNING - @mbggenerated
         -->
-        <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
-        <result column="author" property="author" jdbcType="VARCHAR"/>
-        <result column="pic_url" property="picUrl" jdbcType="VARCHAR"/>
-        <result column="code" property="code" jdbcType="VARCHAR"/>
-        <result column="descp" property="descp" jdbcType="VARCHAR"/>
-        <result column="isFinished" property="isfinished" jdbcType="TINYINT"/>
-        <result column="isHot" property="ishot" jdbcType="TINYINT"/>
-        <result column="newSectionId" property="newsectionid" jdbcType="BIGINT"/>
-        <result column="newSectionTitle" property="newsectiontitle" jdbcType="VARCHAR"/>
-        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
-        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
-        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="category_code" jdbcType="VARCHAR" property="categoryCode"/>
+        <result column="category_name" jdbcType="VARCHAR" property="categoryName"/>
+        <result column="pic_url" jdbcType="VARCHAR" property="picUrl"/>
+        <result column="code" jdbcType="INTEGER" property="code"/>
+        <result column="descp" jdbcType="VARCHAR" property="descp"/>
+        <result column="is_finished" jdbcType="TINYINT" property="isFinished"/>
+        <result column="is_hot" jdbcType="TINYINT" property="isHot"/>
+        <result column="new_sectionId" jdbcType="BIGINT" property="newSectionid"/>
+        <result column="new_sectionTitle" jdbcType="VARCHAR" property="newSectiontitle"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
     </resultMap>
 </mapper>

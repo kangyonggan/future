@@ -1,5 +1,6 @@
 package com.kangyonggan.app.future.biz.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.BookService;
 import com.kangyonggan.app.future.biz.service.CategoryService;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
@@ -11,12 +12,15 @@ import com.kangyonggan.app.future.model.constants.CategoryType;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Category;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 /**
  * @author kangyonggan
@@ -32,27 +36,6 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     @Override
     @LogTime
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public void updateBooksBySearch() {
-        int pageNum = 0;
-        while (true) {
-            Document doc = HtmlUtil.parseUrl(ZHAN_NEI_URL + pageNum++);
-
-            Elements elements = doc.select(".result-list .result-item .result-game-item-pic a");
-
-            for (int i = 0; i < elements.size(); i++) {
-                try {
-                    parseBookInfo(elements.get(i).attr("href"));
-                } catch (Exception e) {
-                    log.warn("抓取书籍异常,href=" + elements.get(i).attr("href"), e);
-                    continue;
-                }
-            }
-        }
-    }
-
-    @Override
-    @LogTime
-    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void updateBooksByCode() {
         int code = 1;
         while (true) {
@@ -62,6 +45,35 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
                 log.warn("抓取书籍异常,code=" + (code - 1), e);
             }
         }
+    }
+
+    @Override
+    @LogTime
+    public List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, Byte isFinished, Byte isHot) {
+        Example example = new Example(Book.class);
+        Example.Criteria criteria = example.createCriteria();
+
+        if (StringUtils.isNotEmpty(bookCode)) {
+            criteria.andEqualTo("code", bookCode);
+        }
+        if (StringUtils.isNotEmpty(bookName)) {
+            criteria.andEqualTo("name", bookName);
+        }
+        if (StringUtils.isNotEmpty(author)) {
+            criteria.andEqualTo("author", author);
+        }
+        if (StringUtils.isNotEmpty(categoryCode)) {
+            criteria.andEqualTo("categoryCode", categoryCode);
+        }
+        if (isFinished != null) {
+            criteria.andEqualTo("isFinished", isFinished);
+        }
+        if (isHot != null) {
+            criteria.andEqualTo("isHot", isHot);
+        }
+
+        PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
+        return myMapper.selectByExample(example);
     }
 
     /**
@@ -94,13 +106,13 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         boolean isFinished = bookDoc.select("#maininfo #info p").get(1).html().trim().contains("连载");
 
         Book book = new Book();
-        book.setCode(code);
+        book.setCode(Integer.parseInt(code));
         book.setName(name);
         book.setAuthor(author);
         book.setDescp(descp);
         book.setCategoryCode(categoryCode);
         book.setCategoryName(category.getName());
-        book.setIsfinished((byte) (isFinished ? 1 : 0));
+        book.setIsFinished((byte) (isFinished ? 1 : 0));
 
         String filePath = "cover/" + code + picUrl.substring(picUrl.lastIndexOf("."));
         FileUtil.downloadFromUrl(picUrl, PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filePath);
@@ -118,7 +130,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
      */
     private boolean existBook(String code) {
         Book book = new Book();
-        book.setCode(code);
+        book.setCode(Integer.parseInt(code));
 
         return super.exists(book);
     }

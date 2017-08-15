@@ -1,5 +1,9 @@
 package com.kangyonggan.app.future.biz.service;
 
+import com.kangyonggan.app.future.model.vo.Book;
+
+import java.util.List;
+
 /**
  * @author kangyonggan
  * @since 8/15/17
@@ -12,18 +16,22 @@ public interface BookService {
     String BI_QU_GE_URL = "http://www.biquge.cn/";
 
     /**
-     * 站内搜索url
-     */
-    String ZHAN_NEI_URL = "http://zhannei.baidu.com/cse/search?q=&s=11522483553330821378&nsid=&p=";
-
-    /**
-     * 更新书籍根据站内搜索
-     */
-    void updateBooksBySearch();
-
-    /**
      * 更新书籍根据书籍代码
      */
     void updateBooksByCode();
+
+    /**
+     * 按条件搜索书籍
+     *
+     * @param pageNum
+     * @param bookCode
+     * @param bookName
+     * @param author
+     * @param categoryCode
+     * @param isFinished
+     * @param isHot
+     * @return
+     */
+    List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, Byte isFinished, Byte isHot);
 
 }

@@ -239,13 +239,13 @@ CREATE TABLE book
   COMMENT '书籍代码',
   descp           VARCHAR(1024)                         NOT NULL
   COMMENT '描述',
-  isFinished      TINYINT                               NOT NULL                    DEFAULT 0
+  is_finished      TINYINT                               NOT NULL                    DEFAULT 0
   COMMENT '是否完结{1: 完结, 0: 连载}',
-  isHot           TINYINT                               NOT NULL                    DEFAULT 0
+  is_hot           TINYINT                               NOT NULL                    DEFAULT 0
   COMMENT '推荐{1: 是, 0: 否}',
-  newSectionId    BIGINT(20)                            NOT NULL                    DEFAULT 0
+  new_sectionId    BIGINT(20)                            NOT NULL                    DEFAULT 0
   COMMENT '最新章节id',
-  newSectionTitle VARCHAR(256)                          NOT NULL                    DEFAULT ''
+  new_sectionTitle VARCHAR(256)                          NOT NULL                    DEFAULT ''
   COMMENT '最新章节标题',
   is_deleted      TINYINT                               NOT NULL                    DEFAULT 0
   COMMENT '逻辑删除:{0:未删除, 1:已删除}',
@@ -383,6 +383,9 @@ VALUES
   ('SYSTEM_CACHE', '缓存管理', 'SYSTEM', 'system/cache', 3, ''),
   ('SYSTEM_DICTIONARY', '字典管理', 'SYSTEM', 'system/dictionary', 4, ''),
 
+  ('BOOK', '小说', 'DASHBOARD', 'book', 2, 'menu-icon fa fa-book'),
+  ('BOOK_MANAGER', '小说管理', 'BOOK', 'book/manager', 0, ''),
+
   ('USER', '用户', 'DASHBOARD', 'user', 1, 'menu-icon fa fa-user'),
   ('USER_INFO', '基本信息', 'USER', 'user/info', 0, '');
 
@@ -399,8 +402,7 @@ VALUES
 INSERT INTO role_menu SELECT
                         'ROLE_ADMIN',
                         code
-                      FROM menu
-                      WHERE code LIKE 'SYSTEM%' OR code = 'DASHBOARD';
+                      FROM menu;
 
 INSERT INTO role_menu SELECT
                         'ROLE_USER',
