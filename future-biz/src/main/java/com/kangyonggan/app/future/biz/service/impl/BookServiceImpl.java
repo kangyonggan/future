@@ -3,6 +3,7 @@ package com.kangyonggan.app.future.biz.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.BookService;
 import com.kangyonggan.app.future.biz.service.CategoryService;
+import com.kangyonggan.app.future.biz.service.RedisService;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.FileUtil;
 import com.kangyonggan.app.future.common.util.HtmlUtil;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
@@ -33,23 +35,46 @@ import java.util.List;
 @Log4j2
 public class BookServiceImpl extends BaseService<Book> implements BookService {
 
+    private static final String BOOK_UPDATE_FLAG = "book:update:flag";
+
     @Autowired
     private BookMapper bookMapper;
 
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private RedisService redisService;
+
+    private String prefix = PropertiesUtil.getProperties("redis.prefix") + ":";
+
+    @PostConstruct
+    public void init() {
+        redisService.delete(prefix + BOOK_UPDATE_FLAG);
+        log.info("小说更新标识已重置");
+    }
+
     @Override
     @LogTime
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void updateBooksByCode(int code) {
+        Object flag = redisService.get(prefix + BOOK_UPDATE_FLAG);
+
+        if (flag != null) {
+            log.info("小说已经正在更新中,此处更新终止");
+            return;
+        }
+
         while (true) {
             try {
                 parseBookInfo(BI_QU_GE_URL + "book/" + code++);
             } catch (Exception e) {
                 log.warn("抓取小说异常,code=" + (code - 1), e);
+                break;
             }
         }
+
+        redisService.delete(prefix + BOOK_UPDATE_FLAG);
     }
 
     @Override
@@ -140,7 +165,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
      * @throws Exception
      */
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    private void parseBookInfo(String bookUrl) throws Exception {
+    public void parseBookInfo(String bookUrl) throws Exception {
         Document bookDoc = HtmlUtil.parseUrl(bookUrl);
 
         String code = bookUrl.substring(bookUrl.indexOf("book") + 5, bookUrl.length());

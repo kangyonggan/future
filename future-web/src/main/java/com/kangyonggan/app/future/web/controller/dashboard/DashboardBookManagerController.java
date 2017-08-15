@@ -73,11 +73,12 @@ public class DashboardBookManagerController extends BaseController {
     @ResponseBody
     public Map<String, Object> update() {
         Book book = bookService.findLastBook();
+        int code = book == null ? 1 : book.getCode();
 
         new Thread() {
             @Override
             public void run() {
-                bookService.updateBooksByCode(book.getCode());
+                bookService.updateBooksByCode(code);
             }
         }.start();
         return getResultMap();

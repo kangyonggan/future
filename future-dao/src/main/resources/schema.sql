@@ -383,10 +383,10 @@ VALUES
   ('SYSTEM_CACHE', '缓存管理', 'SYSTEM', 'system/cache', 3, ''),
   ('SYSTEM_DICTIONARY', '字典管理', 'SYSTEM', 'system/dictionary', 4, ''),
 
-  ('BOOK', '小说', 'DASHBOARD', 'book', 1, 'menu-icon fa fa-book'),
+  ('BOOK', '小说', 'DASHBOARD', 'book', 2, 'menu-icon fa fa-book'),
   ('BOOK_MANAGER', '小说管理', 'BOOK', 'book/manager', 0, ''),
 
-  ('USER', '用户', 'DASHBOARD', 'user', 2, 'menu-icon fa fa-user'),
+  ('USER', '用户', 'DASHBOARD', 'user', 3, 'menu-icon fa fa-user'),
   ('USER_INFO', '基本信息', 'USER', 'user/info', 0, '');
 
 -- ----------------------------
