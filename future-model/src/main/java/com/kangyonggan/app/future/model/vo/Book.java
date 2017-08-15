@@ -32,9 +32,26 @@ public class Book implements Serializable {
     private String picUrl;
 
     /**
+     * 书籍代码
+     */
+    private String code;
+
+    /**
      * 描述
      */
     private String descp;
+
+    /**
+     * 分类代码
+     */
+    @Column(name = "category_code")
+    private String categoryCode;
+
+    /**
+     * 分类名称
+     */
+    @Column(name = "category_name")
+    private String categoryName;
 
     /**
      * 是否完结{1: 完结, 0: 连载}

@@ -229,8 +229,14 @@ CREATE TABLE book
   COMMENT '书名',
   author          VARCHAR(32)                           NOT NULL
   COMMENT '作者',
+  category_code   VARCHAR(16)                           NOT NULL
+  COMMENT '分类代码',
+  category_name   VARCHAR(32)                           NOT NULL
+  COMMENT '分类名称',
   pic_url         VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-book.png'
   COMMENT '封面图片地址',
+  code            INT(11)                               NOT NULL
+  COMMENT '书籍代码',
   descp           VARCHAR(1024)                         NOT NULL
   COMMENT '描述',
   isFinished      TINYINT                               NOT NULL                    DEFAULT 0
@@ -251,6 +257,8 @@ CREATE TABLE book
   COMMENT '书籍表';
 CREATE UNIQUE INDEX id_UNIQUE
   ON book (id);
+CREATE UNIQUE INDEX code_UNIQUE
+  ON book (code);
 CREATE INDEX created_time_ix
   ON book (created_time);
 
@@ -304,9 +312,11 @@ CREATE TABLE category
   name         VARCHAR(32)                           NOT NULL
   COMMENT '分类名称',
   type         VARCHAR(16)                           NOT NULL
-  COMMENT '分类类型{"book": "小说", "article": "博客"}',
+  COMMENT '分类类型{"book": "小说", "blog": "博客"}',
   picUrl       VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-category.png'
   COMMENT '图片地址',
+  book_cnt     INT(11)                               NOT NULL                    DEFAULT 0
+  COMMENT '书籍数量',
   sort         INT(11)                               NOT NULL                    DEFAULT 0
   COMMENT '菜单排序(从0开始)',
   is_deleted   TINYINT                               NOT NULL                    DEFAULT 0
