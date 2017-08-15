@@ -24,8 +24,14 @@ $(function () {
         var title = $trigger.attr("title");
 
         $.messager.confirm("提示", "确定" + title + "吗?", function () {
-            $.get(url).success(function () {
-                Message.success("后台正在抓取，请稍后刷新查看！");
+            $.get(url).success(function (data) {
+                data = eval('(' + data + ')');
+
+                if (data.errCode == "success") {
+                    Message.success("后台正在抓取，请稍后刷新查看！");
+                } else {
+                    Message.warning(data.errMsg);
+                }
             }).error(function () {
                 Message.error("网络错误，请稍后重试");
             })
@@ -35,8 +41,14 @@ $(function () {
     $("#book-update").click(function () {
         var href = $(this).attr("href");
         $.messager.confirm("提示", "确定抓取小说吗?", function () {
-            $.get(href).success(function () {
-                Message.success("后台正在抓取，请稍后刷新查看！");
+            $.get(href).success(function (data) {
+                data = eval('(' + data + ')');
+
+                if (data.errCode == "success") {
+                    Message.success("后台正在抓取，请稍后刷新查看！");
+                } else {
+                    Message.warning(data.errMsg);
+                }
             }).error(function () {
                 Message.error("网络错误，请稍后重试");
             })
