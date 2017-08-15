@@ -7,6 +7,8 @@ import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Category;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author kangyonggan
  * @since 8/15/17
@@ -24,5 +26,16 @@ public class CategoryServiceImpl extends BaseService<Category> implements Catego
         category.setIsDeleted(AppConstants.IS_DELETED_NO);
 
         return myMapper.selectOne(category);
+    }
+
+    @Override
+    @LogTime
+    @CacheGetOrSave("category:type:{0}")
+    public List<Category> findCategoriesByType(String type) {
+        Category category = new Category();
+        category.setType(type);
+        category.setIsDeleted(AppConstants.IS_DELETED_NO);
+
+        return myMapper.select(category);
     }
 }

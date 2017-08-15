@@ -6,6 +6,8 @@ import com.kangyonggan.app.future.biz.service.CategoryService;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.FileUtil;
 import com.kangyonggan.app.future.common.util.HtmlUtil;
+import com.kangyonggan.app.future.model.annotation.CacheDelete;
+import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.constants.CategoryType;
@@ -42,14 +44,14 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
             try {
                 parseBookInfo(BI_QU_GE_URL + "book/" + code++);
             } catch (Exception e) {
-                log.warn("抓取书籍异常,code=" + (code - 1), e);
+                log.warn("抓取小说异常,code=" + (code - 1), e);
             }
         }
     }
 
     @Override
     @LogTime
-    public List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, Byte isFinished, Byte isHot) {
+    public List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, String isFinished, String isHot) {
         Example example = new Example(Book.class);
         Example.Criteria criteria = example.createCriteria();
 
@@ -65,19 +67,41 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         if (StringUtils.isNotEmpty(categoryCode)) {
             criteria.andEqualTo("categoryCode", categoryCode);
         }
-        if (isFinished != null) {
+        if (StringUtils.isNotEmpty(isFinished)) {
             criteria.andEqualTo("isFinished", isFinished);
         }
-        if (isHot != null) {
+        if (StringUtils.isNotEmpty(isHot)) {
             criteria.andEqualTo("isHot", isHot);
         }
+
+        example.setOrderByClause("id desc");
 
         PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
         return myMapper.selectByExample(example);
     }
 
+    @Override
+    @LogTime
+    @CacheGetOrSave("book:code:{0}")
+    public Book findBookByCode(int code) {
+        Book book = new Book();
+        book.setCode(code);
+
+        return myMapper.selectOne(book);
+    }
+
+    @Override
+    @LogTime
+    @CacheDelete("book:code:{0:code}")
+    public void updateBook(Book book) {
+        Example example = new Example(Book.class);
+        example.createCriteria().andEqualTo("code", book.getCode());
+
+        myMapper.updateByExampleSelective(book, example);
+    }
+
     /**
-     * 解析书籍详情
+     * 解析小说详情
      *
      * @param bookUrl
      * @throws Exception
@@ -90,7 +114,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
 
         // 判断库中是否已存在
         if (existBook(code)) {
-            log.info("书籍{}已存在", code);
+            log.info("小说{}已存在", code);
             return;
         }
 
@@ -118,12 +142,12 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         FileUtil.downloadFromUrl(picUrl, PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filePath);
         book.setPicUrl(filePath);
 
-        log.info("抓取书籍{}", book);
+        log.info("抓取小说{}", book);
         saveBook(book);
     }
 
     /**
-     * 判断书籍是否存在
+     * 判断小说是否存在
      *
      * @param code
      * @return
@@ -136,7 +160,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     /**
-     * 保存书籍
+     * 保存小说
      *
      * @param book
      */

@@ -16,12 +16,12 @@ public interface BookService {
     String BI_QU_GE_URL = "http://www.biquge.cn/";
 
     /**
-     * 更新书籍根据书籍代码
+     * 更新小说根据小说代码
      */
     void updateBooksByCode();
 
     /**
-     * 按条件搜索书籍
+     * 按条件搜索小说
      *
      * @param pageNum
      * @param bookCode
@@ -32,6 +32,20 @@ public interface BookService {
      * @param isHot
      * @return
      */
-    List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, Byte isFinished, Byte isHot);
+    List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, String isFinished, String isHot);
 
+    /**
+     * 查找小说
+     *
+     * @param code
+     * @return
+     */
+    Book findBookByCode(int code);
+
+    /**
+     * 更新小说
+     *
+     * @param book
+     */
+    void updateBook(Book book);
 }
