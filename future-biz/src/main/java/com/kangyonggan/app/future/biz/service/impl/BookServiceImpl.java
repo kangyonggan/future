@@ -57,24 +57,32 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     @Override
     @LogTime
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public void updateBooksByCode(int code) {
+    public boolean updateBooksByCode(final int code) {
         Object flag = redisService.get(prefix + BOOK_UPDATE_FLAG);
 
         if (flag != null) {
             log.info("小说已经正在更新中,此处更新终止");
-            return;
+            return false;
         }
 
-        while (true) {
-            try {
-                parseBookInfo(BI_QU_GE_URL + "book/" + code++);
-            } catch (Exception e) {
-                log.warn("抓取小说异常,code=" + (code - 1), e);
-                break;
+        new Thread(){
+            @Override
+            public void run() {
+                int c = code;
+                while (true) {
+                    try {
+                        parseBookInfo(BI_QU_GE_URL + "book/" + c++);
+                    } catch (Exception e) {
+                        log.warn("抓取小说异常,code=" + (c - 1), e);
+                        break;
+                    }
+                }
+
+                redisService.delete(prefix + BOOK_UPDATE_FLAG);
             }
-        }
+        }.start();
 
-        redisService.delete(prefix + BOOK_UPDATE_FLAG);
+        return true;
     }
 
     @Override

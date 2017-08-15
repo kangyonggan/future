@@ -24,7 +24,7 @@
             <ul class="dropdown-menu dropdown-menu-right dropdown-inverse">
                 <li>
                     <a href="javascript:" data-role="book-update" title="更新章节"
-                       data-url="${ctx}/dashboard/book/manager/${book.id}/update">
+                       data-url="${ctx}/dashboard/book/manager/${book.code}/update">
                         更新章节
                     </a>
                 </li>

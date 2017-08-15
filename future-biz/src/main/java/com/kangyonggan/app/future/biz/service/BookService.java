@@ -20,8 +20,9 @@ public interface BookService {
      * 更新小说根据小说代码
      *
      * @param code
+     * @return
      */
-    void updateBooksByCode(int code);
+    boolean updateBooksByCode(final int code);
 
     /**
      * 按条件搜索小说

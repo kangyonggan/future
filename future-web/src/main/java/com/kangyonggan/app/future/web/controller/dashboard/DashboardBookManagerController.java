@@ -3,6 +3,7 @@ package com.kangyonggan.app.future.web.controller.dashboard;
 import com.github.pagehelper.PageInfo;
 import com.kangyonggan.app.future.biz.service.BookService;
 import com.kangyonggan.app.future.biz.service.CategoryService;
+import com.kangyonggan.app.future.biz.service.SectionService;
 import com.kangyonggan.app.future.model.constants.CategoryType;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Category;
@@ -30,6 +31,9 @@ public class DashboardBookManagerController extends BaseController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private SectionService sectionService;
 
     /**
      * 小说列表
@@ -72,16 +76,17 @@ public class DashboardBookManagerController extends BaseController {
     @RequiresPermissions("BOOK_MANAGER")
     @ResponseBody
     public Map<String, Object> update() {
+        Map<String, Object> resultMap = getResultMap();
+
         Book book = bookService.findLastBook();
         int code = book == null ? 1 : book.getCode();
 
-        new Thread() {
-            @Override
-            public void run() {
-                bookService.updateBooksByCode(code);
-            }
-        }.start();
-        return getResultMap();
+        if (!bookService.updateBooksByCode(code)) {
+            resultMap.put(ERR_CODE, FAILURE);
+            resultMap.put(ERR_MSG, "小说正在更新中，重复更新无效");
+        }
+
+        return resultMap;
     }
 
     /**
@@ -104,6 +109,33 @@ public class DashboardBookManagerController extends BaseController {
         model.addAttribute("book", book);
         model.addAttribute("categories", categories);
         return getPathTableTr();
+    }
+
+    /**
+     * 更新章节
+     *
+     * @param code
+     * @return
+     */
+    @RequestMapping(value = "{code:[\\d]+}/update", method = RequestMethod.GET)
+    @RequiresPermissions("BOOK_MANAGER")
+    @ResponseBody
+    public Map<String, Object> updateSection(@PathVariable("code") int code) {
+        Map<String, Object> resultMap = getResultMap();
+        Book book = bookService.findBookByCode(code);
+
+        if (book == null) {
+            resultMap.put(ERR_CODE, FAILURE);
+            resultMap.put(ERR_MSG, "欲更新的小说不存在");
+            return resultMap;
+        }
+
+        if (!sectionService.updateBookSections(code)) {
+            resultMap.put(ERR_CODE, FAILURE);
+            resultMap.put(ERR_MSG, "其他小说正在更新中，请等待！");
+        }
+
+        return resultMap;
     }
 
 }
