@@ -207,7 +207,11 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         book.setIsFinished((byte) (isFinished ? 1 : 0));
 
         String filePath = "cover/" + code + picUrl.substring(picUrl.lastIndexOf("."));
-        FileUtil.downloadFromUrl(picUrl, PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filePath);
+        try {
+            FileUtil.downloadFromUrl(picUrl, PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filePath);
+        } catch (Exception e) {
+            filePath = "cover/nocover.jpg";
+        }
         book.setPicUrl(filePath);
 
         log.info("抓取小说{}", book);
