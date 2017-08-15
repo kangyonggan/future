@@ -41,6 +41,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
             log.info("其他小说正在更新, 此处更新终止");
             return false;
         }
+        redisService.set(prefix + SECTION_UPDATE_FLAG, "1");
 
         new Thread(){
             @Override

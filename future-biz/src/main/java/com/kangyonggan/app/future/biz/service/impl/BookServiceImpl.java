@@ -65,6 +65,8 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
             return false;
         }
 
+        redisService.set(prefix + BOOK_UPDATE_FLAG, "1");
+
         new Thread(){
             @Override
             public void run() {
