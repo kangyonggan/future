@@ -18,7 +18,7 @@
 
                         <div class="col-sm-4">
                             <div>
-                                <img class="nav-user-photo" src="${ctx}/${user.largeAvatar}"
+                                <img class="nav-user-photo" src="${ctx}${user.largeAvatar}"
                                      alt="${user.realname}">
                             </div>
                         </div>
