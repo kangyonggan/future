@@ -1,9 +1,10 @@
 package com.kangyonggan.app.future.model.vo;
 
+import lombok.Data;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
-import lombok.Data;
 
 @Data
 @Table(name = "section")
@@ -16,33 +17,32 @@ public class Section implements Serializable {
     private Long id;
 
     /**
+     * 章节代码
+     */
+    private Integer code;
+
+    /**
      * 标题
      */
     private String title;
 
     /**
-     * 上一章节ID
+     * 书籍代码
      */
-    @Column(name = "prevSectionId")
-    private Long prevsectionid;
+    @Column(name = "book_code")
+    private Integer bookCode;
 
     /**
-     * 上一章节标题
+     * 上一章节代码
      */
-    @Column(name = "prevSectionTitle")
-    private String prevsectiontitle;
+    @Column(name = "prev_section_code")
+    private Integer prevSectionCode;
 
     /**
-     * 下一章节ID
+     * 下一章节代码
      */
-    @Column(name = "nextSectionId")
-    private Long nextsectionid;
-
-    /**
-     * 下一章节标题
-     */
-    @Column(name = "nextSectionTitle")
-    private String nextsectiontitle;
+    @Column(name = "next_section_code")
+    private Integer nextSectionCode;
 
     /**
      * 逻辑删除:{0:未删除, 1:已删除}

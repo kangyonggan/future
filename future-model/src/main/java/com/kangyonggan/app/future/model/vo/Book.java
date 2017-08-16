@@ -66,16 +66,16 @@ public class Book implements Serializable {
     private Byte isHot;
 
     /**
-     * 最新章节id
+     * 最新章节代码
      */
-    @Column(name = "new_sectionId")
-    private Long newSectionid;
+    @Column(name = "new_section_code")
+    private Integer newSectionCode;
 
     /**
      * 最新章节标题
      */
-    @Column(name = "new_sectionTitle")
-    private String newSectiontitle;
+    @Column(name = "new_section_title")
+    private String newSectionTitle;
 
     /**
      * 逻辑删除:{0:未删除, 1:已删除}

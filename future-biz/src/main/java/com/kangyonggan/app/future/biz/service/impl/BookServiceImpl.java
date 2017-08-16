@@ -168,6 +168,18 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         return myMapper.selectByExample(example);
     }
 
+    @Override
+    public void updateBookNewSection(int bookCode, int sectionCode, String title) {
+        Book book = new Book();
+        book.setNewSectionCode(sectionCode);
+        book.setNewSectionTitle(title);
+
+        Example example = new Example(Book.class);
+        example.createCriteria().andEqualTo("code", bookCode);
+
+        myMapper.updateByExampleSelective(book, example);
+    }
+
     /**
      * 解析小说详情
      *

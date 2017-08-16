@@ -74,4 +74,13 @@ public interface BookService {
      * @return
      */
     List<Book> findHotBooks(int pageNum);
+
+    /**
+     * 更新小说最新章节
+     *
+     * @param bookCode
+     * @param sectionCode
+     * @param title
+     */
+    void updateBookNewSection(int bookCode, int sectionCode, String title);
 }

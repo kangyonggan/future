@@ -15,8 +15,8 @@
         <result column="descp" jdbcType="VARCHAR" property="descp"/>
         <result column="is_finished" jdbcType="TINYINT" property="isFinished"/>
         <result column="is_hot" jdbcType="TINYINT" property="isHot"/>
-        <result column="new_sectionId" jdbcType="BIGINT" property="newSectionid"/>
-        <result column="new_sectionTitle" jdbcType="VARCHAR" property="newSectiontitle"/>
+        <result column="new_section_code" jdbcType="BIGINT" property="new_section_code"/>
+        <result column="new_section_title" jdbcType="VARCHAR" property="new_section_title"/>
         <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
         <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
         <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
