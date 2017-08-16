@@ -111,6 +111,15 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         return true;
     }
 
+    @Override
+    public List<Section> findBookSections(int code) {
+        Example example = new Example(Section.class);
+        example.createCriteria().andEqualTo("bookCode", code);
+
+        example.setOrderByClause("code asc");
+        return myMapper.selectByExample(example);
+    }
+
     /**
      * 解析章节
      *

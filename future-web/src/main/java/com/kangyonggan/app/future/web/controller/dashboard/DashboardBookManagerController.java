@@ -7,6 +7,7 @@ import com.kangyonggan.app.future.biz.service.SectionService;
 import com.kangyonggan.app.future.model.constants.CategoryType;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Category;
+import com.kangyonggan.app.future.model.vo.Section;
 import com.kangyonggan.app.future.web.controller.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -136,6 +137,23 @@ public class DashboardBookManagerController extends BaseController {
         }
 
         return resultMap;
+    }
+
+    /**
+     * 章节列表
+     *
+     * @param code
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "{code:[\\d]+}/sections", method = RequestMethod.GET)
+    public String sectionList(@PathVariable("code") int code, Model model) {
+        List<Section> sections = sectionService.findBookSections(code);
+        Book book = bookService.findBookByCode(code);
+
+        model.addAttribute("book", book);
+        model.addAttribute("sections", sections);
+        return getPathRoot() + "/section-list";
     }
 
 }

@@ -14,7 +14,7 @@
     <td>${book.newSectionTitle!''}</td>
     <td>
         <div class="btn-group">
-            <a class="btn btn-xs btn-inverse" href="${ctx}/dashboard/book/manager/${book.code}/sections">章节列表</a>
+            <a class="btn btn-xs btn-inverse" href="#book/manager/${book.code}/sections">章节列表</a>
 
         <#if book.isFinished==0>
             <button data-toggle="dropdown" class="btn btn-xs btn-inverse dropdown-toggle">
