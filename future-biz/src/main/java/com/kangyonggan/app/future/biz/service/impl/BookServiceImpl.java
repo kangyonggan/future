@@ -35,7 +35,6 @@ import java.util.List;
 @Log4j2
 public class BookServiceImpl extends BaseService<Book> implements BookService {
 
-    private static final int RETRY_COUNT = 5;
     private static final String BOOK_UPDATE_FLAG = "book:update:flag";
 
     @Autowired
@@ -68,20 +67,15 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
 
         redisService.set(prefix + BOOK_UPDATE_FLAG, "1");
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 int c = code;
-                int tryCount = 0;
-                while (true) {
+                while (c <= 19293) {
                     try {
                         parseBookInfo(BI_QU_GE_URL + "book/" + c++);
-                        tryCount = 0;
                     } catch (Exception e) {
-                        log.warn("抓取小说异常,code=" + --c + ", 第" + ++tryCount + "次重试", e);
-                        if (tryCount > RETRY_COUNT) {
-                            break;
-                        }
+                        log.warn("抓取小说异常,code=" + (c - 1), e);
                     }
                 }
 
