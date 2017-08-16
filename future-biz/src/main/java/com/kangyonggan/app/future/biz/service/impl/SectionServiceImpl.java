@@ -40,6 +40,8 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
 
     private String prefix = PropertiesUtil.getProperties("redis.prefix") + ":";
 
+    private boolean isUpdated;
+
     @PostConstruct
     public void init() {
         redisService.delete(prefix + SECTION_UPDATE_FLAG);
@@ -50,15 +52,6 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
     @LogTime
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public boolean updateBookSections(int code) {
-        Book book = bookService.findBookByCode(code);
-        if (book.getIsFinished() == 1) {
-            log.info("小说已完结，无需更新");
-            // 小时状态置为完结
-            book.setIsFinished((byte) 1);
-            bookService.updateBook(book);
-            return false;
-        }
-
         Object flag = redisService.get(prefix + SECTION_UPDATE_FLAG);
 
         if (flag != null) {
@@ -67,48 +60,88 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         }
         redisService.set(prefix + SECTION_UPDATE_FLAG, "1");
 
-        Section lastSection = findLastSectionByBookCode(code);
-
         new Thread() {
             @Override
             public void run() {
-                try {
-                    Document bookDoc = HtmlUtil.parseUrl(BookService.BI_QU_GE_URL + "book/" + code);
-                    Elements elements = bookDoc.select("#list dl dd a");
-
-                    int startNum = 0;
-                    for (int i = 0; i < elements.size(); i++) {
-                        Element element = elements.get(i);
-                        String scode = element.attr("href");
-                        scode = scode.substring(scode.lastIndexOf("/") + 1, scode.lastIndexOf("."));
-                        if (lastSection == null || lastSection.getCode() == Integer.parseInt(scode)) {
-                            startNum = i;
-                            break;
-                        }
-                    }
-
-                    log.info("从第{}章节开始更新", startNum);
-                    for (int i = startNum; i < elements.size(); i++) {
-                        Element element = elements.get(i);
-                        String scode = element.attr("href");
-                        scode = scode.substring(scode.lastIndexOf("/") + 1, scode.lastIndexOf("."));
-                        parseSection(book, Integer.parseInt(scode));
-                    }
-                } catch (Exception e) {
-                    log.warn("抓取章节异常", e);
-                } finally {
-                    redisService.delete(prefix + SECTION_UPDATE_FLAG);
-                }
-
-                // 把最新章节更新到小说表中
-                Section lastNewSection = findLastSectionByBookCode(code);
-                if (lastNewSection != null) {
-                    bookService.updateBookNewSection(code, lastNewSection.getCode(), lastNewSection.getTitle());
-                }
+                updateSections(code);
             }
         }.start();
 
         return true;
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public void updateSections() {
+        if (isUpdated) {
+            log.info("小说正在更新");
+            return;
+        }
+
+        isUpdated = true;
+        Book book = bookService.findLastBook();
+        for (int i = 0; i <= book.getCode(); i++) {
+            updateSections(i);
+        }
+        isUpdated = false;
+    }
+
+    /**
+     * 更新小说章节
+     *
+     * @param bookCode
+     */
+    private void updateSections(int bookCode) {
+        Book book = bookService.findBookByCode(bookCode);
+        if (book.getIsFinished() == 1) {
+            log.info("小说已完结，无需更新");
+            // 小时状态置为完结
+            book.setIsFinished((byte) 1);
+            bookService.updateBook(book);
+            return;
+        }
+
+        Section lastSection = findLastSectionByBookCode(bookCode);
+
+        if (lastSection != null && lastSection.getCode() == book.getNewSectionCode()) {
+            log.info("此小说已经更新到最新章节了");
+            return;
+        }
+
+        try {
+            Document bookDoc = HtmlUtil.parseUrl(BookService.BI_QU_GE_URL + "book/" + bookCode);
+            Elements elements = bookDoc.select("#list dl dd a");
+
+            int startNum = 0;
+            for (int i = 0; i < elements.size(); i++) {
+                Element element = elements.get(i);
+                String scode = element.attr("href");
+                scode = scode.substring(scode.lastIndexOf("/") + 1, scode.lastIndexOf("."));
+                if (lastSection == null || lastSection.getCode() == Integer.parseInt(scode)) {
+                    startNum = i;
+                    break;
+                }
+            }
+
+            log.info("从第{}章节开始更新", startNum);
+            for (int i = startNum; i < elements.size(); i++) {
+                Element element = elements.get(i);
+                String scode = element.attr("href");
+                scode = scode.substring(scode.lastIndexOf("/") + 1, scode.lastIndexOf("."));
+                parseSection(bookCode, Integer.parseInt(scode));
+            }
+        } catch (Exception e) {
+            log.warn("抓取章节异常", e);
+            return;
+        } finally {
+            redisService.delete(prefix + SECTION_UPDATE_FLAG);
+        }
+
+        // 把最新章节更新到小说表中
+        Section lastNewSection = findLastSectionByBookCode(bookCode);
+        if (lastNewSection != null) {
+            bookService.updateBookNewSection(bookCode, lastNewSection.getCode(), lastNewSection.getTitle());
+        }
     }
 
     @Override
@@ -123,11 +156,11 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
     /**
      * 解析章节
      *
-     * @param book
+     * @param bookCode
      * @param sectionCode
      */
-    private void parseSection(Book book, int sectionCode) {
-        Document doc = HtmlUtil.parseUrl(BookService.BI_QU_GE_URL + "/book/" + book.getCode() + "/" + sectionCode + ".html");
+    private void parseSection(int bookCode, int sectionCode) {
+        Document doc = HtmlUtil.parseUrl(BookService.BI_QU_GE_URL + "/book/" + bookCode + "/" + sectionCode + ".html");
 
         Section s = new Section();
         s.setCode(sectionCode);
@@ -153,7 +186,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         }
 
         Section section = new Section();
-        section.setBookCode(book.getCode());
+        section.setBookCode(bookCode);
         section.setCode(sectionCode);
         section.setTitle(title);
         section.setContent(content);

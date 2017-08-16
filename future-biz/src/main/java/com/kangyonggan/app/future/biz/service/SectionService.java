@@ -19,6 +19,13 @@ public interface SectionService {
     boolean updateBookSections(int code);
 
     /**
+     * 更新所有小说章节
+     *
+     * @return
+     */
+    void updateSections();
+
+    /**
      * 查找书籍所有章节
      *
      * @param code
