@@ -203,6 +203,9 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         String categoryCode = bookDoc.select(".box_con .con_top a").get(1).attr("href").replaceAll("/", "");
 
         Category category = categoryService.findCategoryByTypeAndCode(CategoryType.BOOK.getType(), categoryCode);
+        if (category == null) {
+            category = categoryService.findCategoryByTypeAndCode(CategoryType.BOOK.getType(), "qita");
+        }
 
         String picUrl = bookDoc.select("#fmimg img").attr("src");
         author = author.substring(author.indexOf("：") + 1);
