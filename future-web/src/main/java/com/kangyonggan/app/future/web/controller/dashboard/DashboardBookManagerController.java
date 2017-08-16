@@ -150,8 +150,10 @@ public class DashboardBookManagerController extends BaseController {
     public String sectionList(@PathVariable("code") int code, Model model) {
         List<Section> sections = sectionService.findBookSections(code);
         Book book = bookService.findBookByCode(code);
+        Section newSection = sectionService.findLastSectionByBookCode(code);
 
         model.addAttribute("book", book);
+        model.addAttribute("newSection", newSection);
         model.addAttribute("sections", sections);
         return getPathRoot() + "/section-list";
     }

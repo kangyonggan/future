@@ -148,6 +148,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
     public List<Section> findBookSections(int code) {
         Example example = new Example(Section.class);
         example.createCriteria().andEqualTo("bookCode", code);
+        example.selectProperties("code", "title", "prevSectionCode", "nextSectionCode");
 
         example.setOrderByClause("code asc");
         return myMapper.selectByExample(example);
@@ -204,7 +205,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
      * @param bookCode
      * @return
      */
-    private Section findLastSectionByBookCode(int bookCode) {
+    public Section findLastSectionByBookCode(int bookCode) {
         Example example = new Example(Section.class);
         example.createCriteria().andEqualTo("bookCode", bookCode);
         example.setOrderByClause("code desc");

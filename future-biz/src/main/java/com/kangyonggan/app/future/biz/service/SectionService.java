@@ -32,4 +32,12 @@ public interface SectionService {
      * @return
      */
     List<Section> findBookSections(int code);
+
+    /**
+     * 查找书籍最新章节
+     *
+     * @param bookCode
+     * @return
+     */
+    Section findLastSectionByBookCode(int bookCode);
 }
