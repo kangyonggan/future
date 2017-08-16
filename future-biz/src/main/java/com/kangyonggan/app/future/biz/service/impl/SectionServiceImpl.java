@@ -6,6 +6,7 @@ import com.kangyonggan.app.future.biz.service.RedisService;
 import com.kangyonggan.app.future.biz.service.SectionService;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.HtmlUtil;
+import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Section;
@@ -213,5 +214,15 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         PageHelper.startPage(1, 1);
         List<Section> sections = myMapper.selectByExample(example);
         return sections.isEmpty() ? null : sections.get(0);
+    }
+
+    @Override
+    @LogTime
+    @CacheGetOrSave("section:code:{0}")
+    public Section findSectionByCode(int code) {
+        Section section = new Section();
+        section.setCode(code);
+
+        return myMapper.selectOne(section);
     }
 }

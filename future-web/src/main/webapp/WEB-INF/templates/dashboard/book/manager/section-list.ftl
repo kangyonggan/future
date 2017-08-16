@@ -10,7 +10,7 @@
         </ul>
         <ul>
             <#if newSection??>
-                <li>最新章节：${newSection.title}</li>
+                <li>最新章节：<a href="#book/manager/${newSection.code}/section">${newSection.title}</a></li>
             <#else>
                 <li>最新章节：暂未抓取</li>
             </#if>

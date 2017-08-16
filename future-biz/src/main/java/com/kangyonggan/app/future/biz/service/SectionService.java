@@ -40,4 +40,12 @@ public interface SectionService {
      * @return
      */
     Section findLastSectionByBookCode(int bookCode);
+
+    /**
+     * 查找章节详情
+     *
+     * @param code
+     * @return
+     */
+    Section findSectionByCode(int code);
 }

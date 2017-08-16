@@ -147,6 +147,7 @@ public class DashboardBookManagerController extends BaseController {
      * @return
      */
     @RequestMapping(value = "{code:[\\d]+}/sections", method = RequestMethod.GET)
+    @RequiresPermissions("BOOK_MANAGER")
     public String sectionList(@PathVariable("code") int code, Model model) {
         List<Section> sections = sectionService.findBookSections(code);
         Book book = bookService.findBookByCode(code);
@@ -156,6 +157,21 @@ public class DashboardBookManagerController extends BaseController {
         model.addAttribute("newSection", newSection);
         model.addAttribute("sections", sections);
         return getPathRoot() + "/section-list";
+    }
+
+    /**
+     * 章节详情
+     *
+     * @param code
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "{code:[\\d]+}/section", method = RequestMethod.GET)
+    public String sectionDetail(@PathVariable("code") int code, Model model) {
+        Section section = sectionService.findSectionByCode(code);
+
+        model.addAttribute("section", section);
+        return getPathRoot() + "/section-detail";
     }
 
 }

@@ -79,6 +79,10 @@ input[readonly].readonly {
     line-height: 30px;
 }
 
+.book-info div.r ul li a {
+    color: #000;
+}
+
 .book-info .descp {
     margin-top: 20px;
     margin-left: 30px;
@@ -99,4 +103,21 @@ input[readonly].readonly {
     color: #000;
     font-size: 16px;
     margin-left: 30px;
+}
+
+.section-content {
+    font-size: 18px;
+}
+
+.section-nav {
+    font-size: 18px;
+    border-top: 1px solid #333;
+}
+
+.section-nav div {
+    margin-top: 20px;
+}
+
+.section-nav div a {
+    color: #000;
 }
