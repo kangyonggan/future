@@ -2,11 +2,14 @@ package com.kangyonggan.app.future.web.controller.mobile;
 
 import com.github.pagehelper.PageInfo;
 import com.kangyonggan.app.future.biz.service.BookService;
+import com.kangyonggan.app.future.biz.service.SectionService;
 import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.dto.FindAllCategoryResponse;
+import com.kangyonggan.app.future.model.dto.FindBookSectionResponse;
 import com.kangyonggan.app.future.model.dto.FindHotBookResponse;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Category;
+import com.kangyonggan.app.future.model.vo.Section;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +30,9 @@ public class MBookController {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private SectionService sectionService;
 
     /**
      * 查找所有小说分类
@@ -79,5 +85,37 @@ public class MBookController {
 
         return response;
     }
+
+    /**
+     * 查找小说章节
+     *
+     * @param code    小说代码
+     * @param pageNum
+     * @return
+     */
+    @RequestMapping(value = "findBookSections", method = RequestMethod.POST)
+    public FindBookSectionResponse findBookSections(@RequestParam("code") int code,
+                                                    @RequestParam(value = "p", required = false, defaultValue = "1") int pageNum) {
+        FindBookSectionResponse response = new FindBookSectionResponse();
+
+        try {
+            List<Section> sections = sectionService.findBookSections(code, pageNum);
+            PageInfo<Section> page = new PageInfo(sections);
+
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+
+            response.setTotal(page.getTotal());
+            response.setPages(page.getPages());
+            response.setSections(sections);
+        } catch (Exception e) {
+            log.warn("查找小说章节异常", e);
+            response.setRespCo(Resp.FAILURE.getRespCo());
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
+        }
+
+        return response;
+    }
+
 
 }

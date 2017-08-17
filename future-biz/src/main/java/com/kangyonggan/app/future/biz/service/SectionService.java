@@ -48,4 +48,13 @@ public interface SectionService {
      * @return
      */
     Section findSectionByCode(int code);
+
+    /**
+     * 分页查找小说章节
+     *
+     * @param code
+     * @param pageNum
+     * @return
+     */
+    List<Section> findBookSections(int code, int pageNum);
 }

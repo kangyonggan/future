@@ -8,6 +8,7 @@ import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.HtmlUtil;
 import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.annotation.LogTime;
+import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Section;
 import lombok.extern.log4j.Log4j2;
@@ -224,5 +225,18 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         section.setCode(code);
 
         return myMapper.selectOne(section);
+    }
+
+    @Override
+    @LogTime
+    public List<Section> findBookSections(int code, int pageNum) {
+        Example example = new Example(Section.class);
+        example.createCriteria().andEqualTo("bookCode", code);
+        example.selectProperties("code", "title", "prevSectionCode", "nextSectionCode");
+
+        example.setOrderByClause("code asc");
+
+        PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
+        return myMapper.selectByExample(example);
     }
 }
