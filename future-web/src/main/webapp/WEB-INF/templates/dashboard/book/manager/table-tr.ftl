@@ -11,7 +11,7 @@
     </td>
     <td><#include "is-finished.ftl"></td>
     <td><#include "is-hot.ftl"></td>
-    <td>${book.newSectionTitle!''}</td>
+    <td><a href="#book/manager/${book.newSectionCode}/section">${book.newSectionTitle!''}</a></td>
     <td>
         <div class="btn-group">
             <a class="btn btn-xs btn-inverse" href="#book/manager/${book.code}/sections">章节列表</a>
