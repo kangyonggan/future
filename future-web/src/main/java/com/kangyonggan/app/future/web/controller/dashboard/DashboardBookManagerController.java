@@ -69,14 +69,14 @@ public class DashboardBookManagerController extends BaseController {
     }
 
     /**
-     * 抓取书籍
+     * 抓取小说
      *
      * @return
      */
     @RequestMapping(value = "update", method = RequestMethod.GET)
     @RequiresPermissions("BOOK_MANAGER")
     @ResponseBody
-    public Map<String, Object> update() {
+    public Map<String, Object> updateBook() {
         Map<String, Object> resultMap = getResultMap();
 
         Book book = bookService.findLastBook();
@@ -88,6 +88,24 @@ public class DashboardBookManagerController extends BaseController {
         }
 
         return resultMap;
+    }
+
+    /**
+     * 抓取章节
+     *
+     * @return
+     */
+    @RequestMapping(value = "section/update", method = RequestMethod.GET)
+    @RequiresPermissions("BOOK_MANAGER")
+    @ResponseBody
+    public Map<String, Object> updateSection() {
+        new Thread(){
+            public void run() {
+                sectionService.updateSections();
+            }
+        }.start();
+
+        return getResultMap();
     }
 
     /**

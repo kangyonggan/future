@@ -81,7 +81,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
 
         isUpdated = true;
         Book book = bookService.findLastBook();
-        for (int i = 0; i <= book.getCode(); i++) {
+        for (int i = 1; i <= book.getCode(); i++) {
             updateSections(i);
         }
         isUpdated = false;
