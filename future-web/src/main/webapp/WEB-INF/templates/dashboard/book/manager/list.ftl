@@ -11,7 +11,7 @@
         小说列表
         <small class="pull-right">
             <a class="btn btn-sm btn-purple" href="${ctx}/dashboard/book/manager/update" id="book-update">抓取小说</a>
-            <a class="btn btn-sm btn-success" href="${ctx}/dashboard/book/manager/section/update" id="book-update">抓取章节</a>
+            <a class="btn btn-sm btn-success" href="${ctx}/dashboard/book/manager/section/update" id="section-update">抓取章节</a>
         </small>
     </h1>
 </div>

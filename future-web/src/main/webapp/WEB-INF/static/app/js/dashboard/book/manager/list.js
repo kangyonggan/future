@@ -56,4 +56,22 @@ $(function () {
 
         return false;
     });
+
+    $("#section-update").click(function () {
+        var href = $(this).attr("href");
+        $.messager.confirm("提示", "确定抓取全部章节吗?", function () {
+            $.get(href).success(function (data) {
+                data = eval('(' + data + ')');
+                if (data.errCode == "success") {
+                    Message.success("后台正在抓取，请稍后刷新查看！");
+                } else {
+                    Message.warning(data.errMsg);
+                }
+            }).error(function () {
+                Message.error("网络错误，请稍后重试");
+            })
+        });
+
+        return false;
+    });
 });
