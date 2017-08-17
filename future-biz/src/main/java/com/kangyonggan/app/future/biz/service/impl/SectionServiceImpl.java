@@ -236,7 +236,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
 
         example.setOrderByClause("code asc");
 
-        PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
+        PageHelper.startPage(pageNum, 100);
         return myMapper.selectByExample(example);
     }
 }
