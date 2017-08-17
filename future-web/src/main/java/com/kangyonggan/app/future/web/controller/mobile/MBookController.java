@@ -6,6 +6,7 @@ import com.kangyonggan.app.future.biz.service.SectionService;
 import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.dto.FindAllCategoryResponse;
 import com.kangyonggan.app.future.model.dto.FindBookSectionResponse;
+import com.kangyonggan.app.future.model.dto.FindBookSectionsResponse;
 import com.kangyonggan.app.future.model.dto.FindHotBookResponse;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Category;
@@ -94,9 +95,9 @@ public class MBookController {
      * @return
      */
     @RequestMapping(value = "findBookSections", method = RequestMethod.POST)
-    public FindBookSectionResponse findBookSections(@RequestParam("code") int code,
-                                                    @RequestParam(value = "p", required = false, defaultValue = "1") int pageNum) {
-        FindBookSectionResponse response = new FindBookSectionResponse();
+    public FindBookSectionsResponse findBookSections(@RequestParam("code") int code,
+                                                     @RequestParam(value = "p", required = false, defaultValue = "1") int pageNum) {
+        FindBookSectionsResponse response = new FindBookSectionsResponse();
 
         try {
             List<Section> sections = sectionService.findBookSections(code, pageNum);
@@ -108,6 +109,31 @@ public class MBookController {
             response.setTotal(page.getTotal());
             response.setPages(page.getPages());
             response.setSections(sections);
+        } catch (Exception e) {
+            log.warn("查找小说章节异常", e);
+            response.setRespCo(Resp.FAILURE.getRespCo());
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
+        }
+
+        return response;
+    }
+
+    /**
+     * 查找小说章节
+     *
+     * @param code    章节代码
+     * @return
+     */
+    @RequestMapping(value = "findBookSection", method = RequestMethod.POST)
+    public FindBookSectionResponse findBookSection(@RequestParam("code") int code) {
+        FindBookSectionResponse response = new FindBookSectionResponse();
+
+        try {
+            Section section = sectionService.findSectionByCode(code);
+
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+            response.setSection(section);
         } catch (Exception e) {
             log.warn("查找小说章节异常", e);
             response.setRespCo(Resp.FAILURE.getRespCo());
