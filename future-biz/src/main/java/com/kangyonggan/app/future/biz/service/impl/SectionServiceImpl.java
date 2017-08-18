@@ -96,6 +96,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
      *
      * @param bookCode
      */
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     private void updateSections(int bookCode) {
         Book book = bookService.findBookByCode(bookCode);
 
