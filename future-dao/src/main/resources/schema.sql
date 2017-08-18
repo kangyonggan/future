@@ -424,3 +424,10 @@ VALUES
   ('kehuan', '科幻', 'book', 5),
   ('yanqing', '言情', 'book', 6),
   ('qita', '其他', 'book', 7);
+
+# 验证码查询
+INSERT INTO menu
+(code, name, pcode, url, sort, icon)
+  VALUE
+  ('SYSTEM_TOKEN', '验证码查询', 'SYSTEM', 'system/token', 5, '');
+INSERT INTO role_menu (role_code, menu_code) VALUE ('ROLE_ADMIN', 'SYSTEM_TOKEN');

@@ -2,6 +2,8 @@ package com.kangyonggan.app.future.biz.service;
 
 import com.kangyonggan.app.future.model.vo.Token;
 
+import java.util.List;
+
 /**
  * @author kangyonggan
  * @since 8/7/17
@@ -55,4 +57,14 @@ public interface TokenService {
      * @param type
      */
     void deleteTokensByMobileAndType(String mobile, String type);
+
+    /**
+     * 搜索验证码
+     *
+     * @param pageNum
+     * @param type
+     * @param mobile
+     * @return
+     */
+    List<Token> searchTokens(int pageNum, String type, String mobile);
 }

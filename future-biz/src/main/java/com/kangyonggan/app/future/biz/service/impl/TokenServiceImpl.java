@@ -7,6 +7,7 @@ import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Token;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
@@ -94,5 +95,24 @@ public class TokenServiceImpl extends BaseService<Token> implements TokenService
         token.setMobile(mobile);
 
         myMapper.delete(token);
+    }
+
+    @Override
+    @LogTime
+    public List<Token> searchTokens(int pageNum, String type, String mobile) {
+        Example example = new Example(Token.class);
+
+        Example.Criteria criteria = example.createCriteria();
+        if (StringUtils.isNotEmpty(type)) {
+            criteria.andEqualTo("type", type);
+        }
+        if (StringUtils.isNotEmpty(mobile)) {
+            criteria.andEqualTo("mobile", mobile);
+        }
+
+        example.setOrderByClause("id desc");
+
+        PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
+        return myMapper.selectByExample(example);
     }
 }
