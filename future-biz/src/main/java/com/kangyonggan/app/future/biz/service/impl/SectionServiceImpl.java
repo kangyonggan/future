@@ -64,7 +64,12 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         new Thread() {
             @Override
             public void run() {
-                updateSections(code);
+                try {
+                    updateSections(code);
+                } catch (Exception e) {
+                    log.warn("更新小说章节异常", e);
+                }
+                redisService.delete(prefix + SECTION_UPDATE_FLAG);
             }
         }.start();
 
@@ -86,7 +91,11 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         }
 
         for (int i = 1; i <= book.getCode(); i++) {
-            updateSections(i);
+            try {
+                updateSections(i);
+            } catch (Exception e) {
+                log.warn("更新小说章节异常", e);
+            }
         }
         isUpdated = false;
     }
@@ -143,8 +152,6 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         } catch (Exception e) {
             log.warn("抓取章节异常", e);
             return;
-        } finally {
-            redisService.delete(prefix + SECTION_UPDATE_FLAG);
         }
 
         // 把最新章节更新到小说表中
