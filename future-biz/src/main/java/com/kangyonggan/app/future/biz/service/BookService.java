@@ -71,9 +71,10 @@ public interface BookService {
      * 查找推荐小说
      *
      * @param pageNum
+     * @param pageSize
      * @return
      */
-    List<Book> findHotBooks(int pageNum);
+    List<Book> findHotBooks(int pageNum, int pageSize);
 
     /**
      * 更新小说最新章节

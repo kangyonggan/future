@@ -159,13 +159,13 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
 
     @Override
     @LogTime
-    public List<Book> findHotBooks(int pageNum) {
+    public List<Book> findHotBooks(int pageNum, int pageSize) {
         Example example = new Example(Book.class);
         example.createCriteria().andEqualTo("isHot", 1);
 
         example.setOrderByClause("updated_time desc");
 
-        PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
+        PageHelper.startPage(pageNum, pageSize);
         return myMapper.selectByExample(example);
     }
 

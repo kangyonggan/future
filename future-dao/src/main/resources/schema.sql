@@ -336,23 +336,6 @@ CREATE UNIQUE INDEX code_type_UNIQUE
 CREATE INDEX created_time_ix
   ON category (created_time);
 
--- ----------------------------
---  Table structure for book_category
--- ----------------------------
-DROP TABLE
-IF EXISTS book_category;
-
-CREATE TABLE book_category
-(
-  book_id       BIGINT(20)  NOT NULL
-  COMMENT '书籍ID',
-  category_code VARCHAR(16) NOT NULL
-  COMMENT '书籍分类代码'
-)
-  COMMENT '书籍分类表';
-CREATE UNIQUE INDEX book_id_category_code_UNIQUE
-  ON book_category (book_id, category_code);
-
 #====================初始数据====================#
 
 # 用户 admin
@@ -431,3 +414,37 @@ INSERT INTO menu
   VALUE
   ('SYSTEM_TOKEN', '验证码查询', 'SYSTEM', 'system/token', 5, '');
 INSERT INTO role_menu (role_code, menu_code) VALUE ('ROLE_ADMIN', 'SYSTEM_TOKEN');
+
+# 我的收藏
+-- ----------------------------
+--  Table structure for favorite
+-- ----------------------------
+DROP TABLE
+IF EXISTS favorite;
+
+CREATE TABLE favorite
+(
+  id                 BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  username           VARCHAR(20)                           NOT NULL
+  COMMENT '用户名（手机号）',
+  book_code          INT(11)                               NOT NULL
+  COMMENT '书籍代码',
+  book_name          VARCHAR(32)                           NOT NULL
+  COMMENT '书名',
+  last_section_code  INT(11)                               NOT NULL                    DEFAULT 0
+  COMMENT '最后阅读的章节代码',
+  last_section_title VARCHAR(256)                          NOT NULL                    DEFAULT ''
+  COMMENT '最后阅读的章节标题',
+  is_deleted         TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time       TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time       TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '小说收藏表';
+CREATE UNIQUE INDEX id_UNIQUE
+  ON favorite (id);
+CREATE UNIQUE INDEX username_book_code_UNIQUE
+  ON favorite (username, book_code);

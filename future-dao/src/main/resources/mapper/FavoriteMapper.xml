@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kangyonggan.app.future.mapper.FavoriteMapper">
+    <resultMap id="BaseResultMap" type="com.kangyonggan.app.future.model.vo.Favorite">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="book_code" jdbcType="INTEGER" property="bookCode"/>
+        <result column="book_name" jdbcType="INTEGER" property="bookName"/>
+        <result column="last_section_code" jdbcType="INTEGER" property="lastSectionCode"/>
+        <result column="last_section_title" jdbcType="VARCHAR" property="lastSectionTitle"/>
+        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
+        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
+        <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+    </resultMap>
+</mapper>

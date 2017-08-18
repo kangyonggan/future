@@ -14,16 +14,11 @@ public class FindBookSectionsResponse extends CommonResponse {
 
     private List<Section> sections;
 
-    private long total;
-
-    private int pages;
 
     @Override
     public String toString() {
         return "FindBookSectionResponse{" +
                 "sections=" + sections +
-                ", total=" + total +
-                ", pages=" + pages +
                 '}' + ", " + super.toString();
     }
 }

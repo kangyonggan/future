@@ -1,6 +1,6 @@
 package com.kangyonggan.app.future.model.dto;
 
-import com.kangyonggan.app.future.model.vo.Book;
+import com.kangyonggan.app.future.model.vo.Favorite;
 import lombok.Data;
 
 import java.util.List;
@@ -10,16 +10,15 @@ import java.util.List;
  * @since 8/11/17
  */
 @Data
-public class FindHotBookResponse extends CommonResponse {
+public class FindFavoritesResponse extends CommonResponse {
 
-    private List<Book> books;
+    private List<Favorite> favorites;
 
     @Override
     public String toString() {
-        return "FindHotBookResponse{" +
-                "books=" + books +
+        return "FindFavoritesResponse{" +
+                "favorites=" + favorites +
                 '}' + "," + super.toString();
     }
 }
-
 
