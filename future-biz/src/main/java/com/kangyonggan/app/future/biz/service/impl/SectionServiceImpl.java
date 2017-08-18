@@ -111,14 +111,13 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
             return;
         }
 
-        Section lastSection = findLastSectionByBookCode(bookCode);
-
-        if (lastSection != null && lastSection.getCode() == book.getNewSectionCode()) {
-            log.info("此小说已经更新到最新章节了");
-            return;
-        }
-
         try {
+            Section lastSection = findLastSectionByBookCode(bookCode);
+
+            if (lastSection != null && lastSection.getCode() == book.getNewSectionCode()) {
+                log.info("此小说已经更新到最新章节了");
+                return;
+            }
             Document bookDoc = HtmlUtil.parseUrl(BookService.BI_QU_GE_URL + "book/" + bookCode);
             Elements elements = bookDoc.select("#list dl dd a");
 
@@ -148,9 +147,13 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         }
 
         // 把最新章节更新到小说表中
-        Section lastNewSection = findLastSectionByBookCode(bookCode);
-        if (lastNewSection != null) {
-            bookService.updateBookNewSection(bookCode, lastNewSection.getCode(), lastNewSection.getTitle());
+        try {
+            Section lastNewSection = findLastSectionByBookCode(bookCode);
+            if (lastNewSection != null) {
+                bookService.updateBookNewSection(bookCode, lastNewSection.getCode(), lastNewSection.getTitle());
+            }
+        } catch (Exception e) {
+            log.warn("查找最后的章节异常", e);
         }
     }
 
