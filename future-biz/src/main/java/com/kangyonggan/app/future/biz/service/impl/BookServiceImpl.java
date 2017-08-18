@@ -46,6 +46,8 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     @Autowired
     private RedisService redisService;
 
+    private boolean isUpdatedFinished;
+
     private String prefix = PropertiesUtil.getProperties("redis.prefix") + ":";
 
     @PostConstruct
@@ -177,6 +179,33 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         example.createCriteria().andEqualTo("code", bookCode);
 
         myMapper.updateByExampleSelective(book, example);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public void updateBookIsFinished() {
+        isUpdatedFinished = true;
+        Book book = findLastBook();
+        if (book == null) {
+            return;
+        }
+
+        for (int i = 1; i <= book.getCode(); i++) {
+            try {
+                if (existBook(i + "")) {
+                    String url = BI_QU_GE_URL + "book/" + i;
+                    Document bookDoc = HtmlUtil.parseUrl(url);
+                    boolean isFinished = !bookDoc.select("#maininfo #info p").get(1).html().trim().contains("连载");
+                    if (isFinished) {
+                        book.setIsFinished((byte) 1);
+                        myMapper.updateByPrimaryKeySelective(book);
+                    }
+                }
+            } catch (Exception e) {
+                log.warn("更新小说是否完结异常", e);
+            }
+        }
+        isUpdatedFinished = false;
     }
 
     /**

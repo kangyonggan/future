@@ -83,4 +83,10 @@ public interface BookService {
      * @param title
      */
     void updateBookNewSection(int bookCode, int sectionCode, String title);
+
+    /**
+     * 更新小说是否完结
+     */
+    void updateBookIsFinished();
+
 }

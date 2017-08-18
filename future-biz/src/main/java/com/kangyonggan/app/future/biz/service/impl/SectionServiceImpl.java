@@ -8,7 +8,6 @@ import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.HtmlUtil;
 import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.annotation.LogTime;
-import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Section;
 import lombok.extern.log4j.Log4j2;
@@ -82,6 +81,10 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
 
         isUpdated = true;
         Book book = bookService.findLastBook();
+        if (book == null) {
+            return;
+        }
+
         for (int i = 1; i <= book.getCode(); i++) {
             updateSections(i);
         }
@@ -95,6 +98,11 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
      */
     private void updateSections(int bookCode) {
         Book book = bookService.findBookByCode(bookCode);
+
+        if (book == null) {
+            return;
+        }
+
         if (book.getIsFinished() == 1) {
             log.info("小说已完结，无需更新");
             // 小时状态置为完结
