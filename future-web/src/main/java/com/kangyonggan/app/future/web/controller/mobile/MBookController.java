@@ -72,7 +72,7 @@ public class MBookController {
         FindHotBookResponse response = new FindHotBookResponse();
 
         try {
-            List<Book> books = bookService.findHotBooks(pageNum, pageNum);
+            List<Book> books = bookService.findHotBooks(pageNum, pageSize);
 
             response.setRespCo(Resp.SUCCESS.getRespCo());
             response.setRespMsg(Resp.SUCCESS.getRespMsg());
