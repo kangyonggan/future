@@ -9,6 +9,7 @@
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="book_code" jdbcType="INTEGER" property="bookCode"/>
         <result column="book_name" jdbcType="INTEGER" property="bookName"/>
+        <result column="pic_url" jdbcType="INTEGER" property="picUrl"/>
         <result column="last_section_code" jdbcType="INTEGER" property="lastSectionCode"/>
         <result column="last_section_title" jdbcType="VARCHAR" property="lastSectionTitle"/>
         <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>

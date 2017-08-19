@@ -33,6 +33,12 @@ public class Favorite implements Serializable {
     private String bookName;
 
     /**
+     * 封面图片地址
+     */
+    @Column(name = "pic_url")
+    private String picUrl;
+
+    /**
      * 最后阅读的章节代码
      */
     @Column(name = "last_section_code")

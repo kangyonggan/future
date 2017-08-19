@@ -432,6 +432,8 @@ CREATE TABLE favorite
   COMMENT '书籍代码',
   book_name          VARCHAR(32)                           NOT NULL
   COMMENT '书名',
+  pic_url            VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-book.png'
+  COMMENT '封面图片地址',
   last_section_code  INT(11)                               NOT NULL                    DEFAULT 0
   COMMENT '最后阅读的章节代码',
   last_section_title VARCHAR(256)                          NOT NULL                    DEFAULT ''
