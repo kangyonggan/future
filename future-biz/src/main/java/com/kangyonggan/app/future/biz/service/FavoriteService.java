@@ -41,8 +41,9 @@ public interface FavoriteService {
      * @param username
      * @param bookCode
      * @param lastSectionCode
+     * @param lastSectionTitle
      */
-    void updateFavoriteLastSection(String username, int bookCode, int lastSectionCode);
+    void updateFavoriteLastSection(String username, int bookCode, int lastSectionCode, String lastSectionTitle);
 
     /**
      * 查找我收藏的某本书籍

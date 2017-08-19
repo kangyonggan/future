@@ -228,33 +228,6 @@ public class MBookController {
     }
 
     /**
-     * 更新最后阅读的章节
-     *
-     * @param username
-     * @param bookCode
-     * @param sectionCode
-     * @return
-     */
-    @RequestMapping(value = "updateLastSection", method = RequestMethod.POST)
-    public CommonResponse updateLastSection(@RequestParam("username") String username, @RequestParam("bookCode") int bookCode,
-                                            @RequestParam("sectionCode") int sectionCode) {
-        CommonResponse response = new CommonResponse();
-
-        try {
-            favoriteService.updateFavoriteLastSection(username, bookCode, sectionCode);
-
-            response.setRespCo(Resp.SUCCESS.getRespCo());
-            response.setRespMsg(Resp.SUCCESS.getRespMsg());
-        } catch (Exception e) {
-            log.warn("更新最后阅读的章节异常", e);
-            response.setRespCo(Resp.FAILURE.getRespCo());
-            response.setRespMsg(Resp.FAILURE.getRespMsg());
-        }
-
-        return response;
-    }
-
-    /**
      * 搜索小说
      *
      * @param key
@@ -293,8 +266,8 @@ public class MBookController {
      * @param bookCode
      * @return
      */
-    @RequestMapping(value = "section", method = RequestMethod.POST)
-    public SectionResponse section(@RequestParam("username") String username, @RequestParam("bookCode") int bookCode) {
+    @RequestMapping(value = "lastSection", method = RequestMethod.POST)
+    public SectionResponse lastSection(@RequestParam("username") String username, @RequestParam("bookCode") int bookCode) {
         SectionResponse response = new SectionResponse();
 
         try {
@@ -312,6 +285,40 @@ public class MBookController {
                 response.setRespMsg("没有此小说的章节");
                 return response;
             }
+
+            response.setSection(section);
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+        } catch (Exception e) {
+            log.warn("查找小说章节异常", e);
+            response.setRespCo(Resp.FAILURE.getRespCo());
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
+        }
+
+        return response;
+    }
+
+    /**
+     * 查找小说章节
+     *
+     * @param username
+     * @param sectionCode
+     * @return
+     */
+    @RequestMapping(value = "section", method = RequestMethod.POST)
+    public SectionResponse section(@RequestParam("username") String username, @RequestParam("sectionCode") int sectionCode) {
+        SectionResponse response = new SectionResponse();
+
+        try {
+            Section section = sectionService.findSectionByCode(sectionCode);
+
+            if (section == null) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("不存在的章节");
+                return response;
+            }
+
+            favoriteService.updateFavoriteLastSection(username, section.getBookCode(), section.getCode(), section.getTitle());
 
             response.setSection(section);
             response.setRespCo(Resp.SUCCESS.getRespCo());

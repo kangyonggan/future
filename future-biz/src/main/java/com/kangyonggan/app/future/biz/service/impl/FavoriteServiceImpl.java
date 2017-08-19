@@ -52,12 +52,10 @@ public class FavoriteServiceImpl extends BaseService<Favorite> implements Favori
 
     @Override
     @LogTime
-    public void updateFavoriteLastSection(String username, int bookCode, int lastSectionCode) {
-        Section section = sectionService.findSectionByCode(lastSectionCode);
-
+    public void updateFavoriteLastSection(String username, int bookCode, int lastSectionCode, String lastSectionTitle) {
         Favorite favorite = new Favorite();
         favorite.setLastSectionCode(lastSectionCode);
-        favorite.setLastSectionTitle(section.getTitle());
+        favorite.setLastSectionTitle(lastSectionTitle);
 
         Example example = new Example(Favorite.class);
         example.createCriteria().andEqualTo("username", username).andEqualTo("bookCode", bookCode);
