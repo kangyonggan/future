@@ -148,7 +148,8 @@ public class MBookController {
      * @return
      */
     @RequestMapping(value = "addFavorite", method = RequestMethod.POST)
-    public CommonResponse addFavorite(@RequestParam("username") String username, @RequestParam("bookCode") int bookCode) {
+    public CommonResponse addFavorite(@RequestParam("username") String username, @RequestParam("bookCode") int bookCode,
+                                      @RequestParam("lasSectionCode") int lastSectionCode) {
         CommonResponse response = new CommonResponse();
 
         try {
@@ -158,6 +159,11 @@ public class MBookController {
             favorite.setBookCode(bookCode);
             favorite.setUsername(username);
             favorite.setBookName(book.getName());
+            favorite.setPicUrl(book.getPicUrl());
+
+            Section section = sectionService.findSectionByCode(lastSectionCode);
+            favorite.setLastSectionCode(section.getCode());
+            favorite.setLastSectionTitle(section.getTitle());
 
             favoriteService.saveFavorite(favorite);
 
@@ -180,7 +186,7 @@ public class MBookController {
      * @return
      */
     @RequestMapping(value = "removeFavorite", method = RequestMethod.POST)
-    public CommonResponse removeFavorite(@RequestParam("username") String username, int bookCode) {
+    public CommonResponse removeFavorite(@RequestParam("username") String username, @RequestParam("bookCode") int bookCode) {
         CommonResponse response = new CommonResponse();
 
         try {
