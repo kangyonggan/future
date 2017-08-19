@@ -38,12 +38,11 @@ public interface FavoriteService {
     /**
      * 更新最后阅读的章节代码
      *
-     * @param username
-     * @param bookCode
+     * @param id
      * @param lastSectionCode
      * @param lastSectionTitle
      */
-    void updateFavoriteLastSection(String username, int bookCode, int lastSectionCode, String lastSectionTitle);
+    void updateFavoriteLastSection(Long id, int lastSectionCode, String lastSectionTitle);
 
     /**
      * 查找我收藏的某本书籍

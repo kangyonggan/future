@@ -287,6 +287,7 @@ public class MBookController {
             }
 
             response.setSection(section);
+            response.setFavorite(favorite != null);
             response.setRespCo(Resp.SUCCESS.getRespCo());
             response.setRespMsg(Resp.SUCCESS.getRespMsg());
         } catch (Exception e) {
@@ -318,7 +319,13 @@ public class MBookController {
                 return response;
             }
 
-            favoriteService.updateFavoriteLastSection(username, section.getBookCode(), section.getCode(), section.getTitle());
+            Favorite favorite = favoriteService.findFavorite(username, section.getBookCode());
+            if (favorite != null) {
+                favoriteService.updateFavoriteLastSection(favorite.getId(), section.getCode(), section.getTitle());
+                response.setFavorite(true);
+            } else {
+                response.setFavorite(false);
+            }
 
             response.setSection(section);
             response.setRespCo(Resp.SUCCESS.getRespCo());
