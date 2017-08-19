@@ -64,4 +64,14 @@ public class FavoriteServiceImpl extends BaseService<Favorite> implements Favori
 
         myMapper.updateByExampleSelective(favorite, example);
     }
+
+    @Override
+    @LogTime
+    public Favorite findFavorite(String username, int bookCode) {
+        Favorite favorite = new Favorite();
+        favorite.setUsername(username);
+        favorite.setBookCode(bookCode);
+
+        return myMapper.selectOne(favorite);
+    }
 }

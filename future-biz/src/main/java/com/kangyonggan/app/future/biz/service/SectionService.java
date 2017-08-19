@@ -57,4 +57,12 @@ public interface SectionService {
      * @return
      */
     List<Section> findBookSections(int code, int pageNum);
+
+    /**
+     * 查找书籍第一章
+     *
+     * @param bookCode
+     * @return
+     */
+    Section findBookFirstSection(int bookCode);
 }

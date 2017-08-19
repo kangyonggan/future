@@ -44,4 +44,12 @@ public interface FavoriteService {
      */
     void updateFavoriteLastSection(String username, int bookCode, int lastSectionCode);
 
+    /**
+     * 查找我收藏的某本书籍
+     *
+     * @param username
+     * @param bookCode
+     * @return
+     */
+    Favorite findFavorite(String username, int bookCode);
 }

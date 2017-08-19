@@ -258,4 +258,18 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         PageHelper.startPage(pageNum, 100);
         return myMapper.selectByExample(example);
     }
+
+    @Override
+    @LogTime
+    public Section findBookFirstSection(int bookCode) {
+        Example example = new Example(Section.class);
+
+        example.createCriteria().andEqualTo("bookCode", bookCode);
+
+        example.setOrderByClause("code asc");
+        PageHelper.startPage(1, 1);
+        List<Section> sections = myMapper.selectByExample(example);
+
+        return sections.isEmpty() ? null : sections.get(0);
+    }
 }

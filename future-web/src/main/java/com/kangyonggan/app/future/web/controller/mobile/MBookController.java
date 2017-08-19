@@ -285,4 +285,37 @@ public class MBookController {
 
         return response;
     }
+
+    /**
+     * 查找小说章节
+     *
+     * @param username
+     * @param bookCode
+     * @return
+     */
+    @RequestMapping(value = "section", method = RequestMethod.POST)
+    public SectionResponse section(@RequestParam("username") String username, @RequestParam("bookCode") int bookCode) {
+        SectionResponse response = new SectionResponse();
+
+        try {
+            Section section;
+            Favorite favorite = favoriteService.findFavorite(username, bookCode);
+            if (favorite == null) {
+                // 查找第一章
+                section = sectionService.findBookFirstSection(bookCode);
+            } else {
+                section = sectionService.findSectionByCode(favorite.getLastSectionCode());
+            }
+
+            response.setSection(section);
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+        } catch (Exception e) {
+            log.warn("查找小说章节异常", e);
+            response.setRespCo(Resp.FAILURE.getRespCo());
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
+        }
+
+        return response;
+    }
 }
