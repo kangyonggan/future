@@ -149,7 +149,7 @@ public class MBookController {
      */
     @RequestMapping(value = "addFavorite", method = RequestMethod.POST)
     public CommonResponse addFavorite(@RequestParam("username") String username, @RequestParam("bookCode") int bookCode,
-                                      @RequestParam("lasSectionCode") int lastSectionCode) {
+                                      @RequestParam("lastSectionCode") int lastSectionCode) {
         CommonResponse response = new CommonResponse();
 
         try {
