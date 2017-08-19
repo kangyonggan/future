@@ -97,4 +97,13 @@ public interface BookService {
      * @return
      */
     List<Book> searchBooks(String key);
+
+    /**
+     * 查找某分类的小说
+     *
+     * @param pageNum
+     * @param code
+     * @return
+     */
+    List<Book> findBooksByCategoryCode(int pageNum, String code);
 }

@@ -266,6 +266,33 @@ public class MBookController {
     }
 
     /**
+     * 查找某分类的小说
+     *
+     * @param pageNum
+     * @param code
+     * @return
+     */
+    @RequestMapping(value = "category", method = RequestMethod.POST)
+    public SearchBooksResponse category(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNum,
+                                        @RequestParam("code") String code) {
+        SearchBooksResponse response = new SearchBooksResponse();
+
+        try {
+            List<Book> books = bookService.findBooksByCategoryCode(pageNum, code);
+
+            response.setBooks(books);
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+        } catch (Exception e) {
+            log.warn("查找某分类的小说异常", e);
+            response.setRespCo(Resp.FAILURE.getRespCo());
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
+        }
+
+        return response;
+    }
+
+    /**
      * 查找小说章节
      *
      * @param username

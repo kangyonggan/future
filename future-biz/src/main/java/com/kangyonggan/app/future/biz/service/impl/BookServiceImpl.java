@@ -220,6 +220,17 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         return myMapper.selectByExample(example);
     }
 
+    @Override
+    @LogTime
+    public List<Book> findBooksByCategoryCode(int pageNum, String code) {
+        Example example = new Example(Book.class);
+        example.createCriteria().andEqualTo("categoryCode", code);
+        example.setOrderByClause("code desc");
+
+        PageHelper.startPage(pageNum, 50);
+        return myMapper.selectByExample(example);
+    }
+
     /**
      * 解析小说详情
      *
