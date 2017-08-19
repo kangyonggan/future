@@ -307,6 +307,11 @@ public class MBookController {
                 section = sectionService.findSectionByCode(favorite.getLastSectionCode());
             }
 
+            if (section == null) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("没有此小说的章节");
+            }
+
             response.setSection(section);
             response.setRespCo(Resp.SUCCESS.getRespCo());
             response.setRespMsg(Resp.SUCCESS.getRespMsg());
