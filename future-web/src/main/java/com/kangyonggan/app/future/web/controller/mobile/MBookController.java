@@ -310,6 +310,7 @@ public class MBookController {
             if (section == null) {
                 response.setRespCo(Resp.FAILURE.getRespCo());
                 response.setRespMsg("没有此小说的章节");
+                return response;
             }
 
             response.setSection(section);
