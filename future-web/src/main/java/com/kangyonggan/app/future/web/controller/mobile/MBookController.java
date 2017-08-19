@@ -118,7 +118,7 @@ public class MBookController {
     /**
      * 查找小说章节
      *
-     * @param code    章节代码
+     * @param code 章节代码
      * @return
      */
     @RequestMapping(value = "findBookSection", method = RequestMethod.POST)
@@ -262,6 +262,13 @@ public class MBookController {
      */
     @RequestMapping(value = "searchBooks", method = RequestMethod.POST)
     public SearchBooksResponse searchBooks(@RequestParam("key") String key) {
+        try {
+            key = new String(key.getBytes("ISO-8859-1"), "UTF-8");
+            log.info("转码后key:{}", key);
+        } catch (Exception e) {
+            log.warn("转码异常", e);
+        }
+
         SearchBooksResponse response = new SearchBooksResponse();
 
         try {
@@ -278,6 +285,4 @@ public class MBookController {
 
         return response;
     }
-
-
 }
