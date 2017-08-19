@@ -254,5 +254,30 @@ public class MBookController {
         return response;
     }
 
+    /**
+     * 搜索小说
+     *
+     * @param key
+     * @return
+     */
+    @RequestMapping(value = "searchBooks", method = RequestMethod.POST)
+    public SearchBooksResponse searchBooks(@RequestParam("key") String key) {
+        SearchBooksResponse response = new SearchBooksResponse();
+
+        try {
+            List<Book> books = bookService.searchBooks(key);
+
+            response.setBooks(books);
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+        } catch (Exception e) {
+            log.warn("更新最后阅读的章节异常", e);
+            response.setRespCo(Resp.FAILURE.getRespCo());
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
+        }
+
+        return response;
+    }
+
 
 }

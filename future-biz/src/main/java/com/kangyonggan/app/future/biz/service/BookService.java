@@ -90,4 +90,11 @@ public interface BookService {
      */
     void updateBookIsFinished();
 
+    /**
+     * 搜索小说
+     *
+     * @param key
+     * @return
+     */
+    List<Book> searchBooks(String key);
 }

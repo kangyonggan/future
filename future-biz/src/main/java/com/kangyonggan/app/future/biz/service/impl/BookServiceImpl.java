@@ -208,6 +208,18 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         isUpdatedFinished = false;
     }
 
+    @Override
+    @LogTime
+    public List<Book> searchBooks(String key) {
+        Example example = new Example(Book.class);
+        example.createCriteria().andEqualTo("name", key);
+        example.or(example.createCriteria().andEqualTo("author", key));
+
+        example.setOrderByClause("id desc");
+
+        return myMapper.selectByExample(example);
+    }
+
     /**
      * 解析小说详情
      *
