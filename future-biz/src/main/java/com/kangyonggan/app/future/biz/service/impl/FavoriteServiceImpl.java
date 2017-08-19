@@ -44,8 +44,7 @@ public class FavoriteServiceImpl extends BaseService<Favorite> implements Favori
     @LogTime
     public void deleteFavorite(String username, int bookCode) {
         Example example = new Example(Favorite.class);
-        example.createCriteria().andEqualTo("username", username);
-        example.createCriteria().andEqualTo("bookCode", bookCode);
+        example.createCriteria().andEqualTo("username", username).andEqualTo("bookCode", bookCode);
 
         myMapper.deleteByExample(example);
     }
