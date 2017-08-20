@@ -149,6 +149,19 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
                 String scode = element.attr("href");
                 scode = scode.substring(scode.lastIndexOf("/") + 1, scode.lastIndexOf("."));
                 parseSection(bookCode, Integer.parseInt(scode));
+
+                // 把上一章的"下一章节代码"更新一下
+                if (i == startNum + 1) {
+                    Element elementPrev = elements.get(i - 1);
+                    String scodePrev = elementPrev.attr("href");
+                    scodePrev = scodePrev.substring(scode.lastIndexOf("/") + 1, scode.lastIndexOf("."));
+
+                    Section section = new Section();
+                    section.setCode(Integer.parseInt(scodePrev));
+                    section.setNextSectionCode(Integer.parseInt(scode));
+
+                    updateSectionByCode(section);
+                }
             }
         } catch (Exception e) {
             log.warn("抓取章节异常", e);
@@ -164,6 +177,18 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         } catch (Exception e) {
             log.warn("查找最后的章节异常", e);
         }
+    }
+
+    /**
+     * 根据章节代码更新章节
+     *
+     * @param section
+     */
+    private void updateSectionByCode(Section section) {
+        Example example = new Example(Section.class);
+        example.createCriteria().andEqualTo("code", section.getCode());
+
+        myMapper.updateByExampleSelective(section, example);
     }
 
     @Override
