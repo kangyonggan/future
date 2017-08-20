@@ -354,4 +354,31 @@ public class MBookController {
 
         return response;
     }
+
+    /**
+     * 查找小说全部章节
+     *
+     * @param bookCode
+     * @return
+     */
+    @RequestMapping(value = "sections", method = RequestMethod.POST)
+    public SectionsResponse sections(@RequestParam("bookCode") int bookCode) {
+        SectionsResponse response = new SectionsResponse();
+
+        try {
+            Book book = bookService.findBookByCode(bookCode);
+            List<Section> sections = sectionService.findBookSections(bookCode);
+
+            response.setSections(sections);
+            response.setBookName(book.getName());
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+        } catch (Exception e) {
+            log.warn("查找小说全部章节异常", e);
+            response.setRespCo(Resp.FAILURE.getRespCo());
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
+        }
+
+        return response;
+    }
 }
