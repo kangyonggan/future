@@ -417,6 +417,13 @@ INSERT INTO menu
   ('SYSTEM_TOKEN', '验证码查询', 'SYSTEM', 'system/token', 5, '');
 INSERT INTO role_menu (role_code, menu_code) VALUE ('ROLE_ADMIN', 'SYSTEM_TOKEN');
 
+# 小说收藏
+INSERT INTO menu
+(code, name, pcode, url, sort, icon)
+  VALUE
+  ('BOOK_FAVORITE', '小说收藏', 'BOOK', 'book/favorite', 1, '');
+INSERT INTO role_menu (role_code, menu_code) VALUE ('ROLE_ADMIN', 'BOOK_FAVORITE');
+
 # 我的收藏
 -- ----------------------------
 --  Table structure for favorite

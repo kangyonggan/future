@@ -107,5 +107,11 @@ public class Book implements Serializable {
     @Transient
     private Integer lastSectionCode;
 
+    /**
+     * 订阅的用户
+     */
+    @Transient
+    private String username;
+
     private static final long serialVersionUID = 1L;
 }

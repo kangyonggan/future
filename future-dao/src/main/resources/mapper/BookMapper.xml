@@ -61,4 +61,20 @@
     <update id="updateFavoriteLastSection">
         UPDATE favorite SET last_section_code = #{lastSectionCode} WHERE username = #{username} AND book_code = #{bookCode}
     </update>
+
+    <select id="searchFavoriteBooks" resultMap="BaseResultMap">
+        SELECT b.*, f.last_section_code, f.username FROM book b, favorite f
+        <where>
+            <if test="username != ''">
+              f.username = #{username}
+            </if>
+            <if test="bookCode != ''">
+              AND b.code = #{bookCode}
+            </if>
+            <if test="bookName != ''">
+                AND b.name = #{bookName}
+            </if>
+        </where>
+        ORDER BY f.updated_time DESC
+    </select>
 </mapper>

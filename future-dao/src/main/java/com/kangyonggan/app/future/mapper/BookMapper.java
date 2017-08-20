@@ -59,4 +59,13 @@ public interface BookMapper extends MyMapper<Book> {
      * @param lastSectionCode
      */
     void updateFavoriteLastSection(@Param("username") String username, @Param("bookCode") Integer bookCode, @Param("lastSectionCode") Integer lastSectionCode);
+
+    /**
+     * 搜索收藏的书籍
+     *
+     * @param username
+     * @param bookCode
+     * @param bookName
+     */
+    List<Book> searchFavoriteBooks(@Param("username") String username, @Param("bookCode") String bookCode, @Param("bookName") String bookName);
 }

@@ -275,6 +275,13 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         bookMapper.updateFavoriteLastSection(username, bookCode, lastSectionCode);
     }
 
+    @Override
+    @LogTime
+    public List<Book> searchFavoriteBooks(int pageNum, String username, String bookCode, String bookName) {
+        PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
+        return bookMapper.searchFavoriteBooks(username, bookCode, bookName);
+    }
+
     /**
      * 解析小说详情
      *

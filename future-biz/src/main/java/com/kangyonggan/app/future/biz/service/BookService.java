@@ -159,4 +159,15 @@ public interface BookService {
      * @param lastSectionCode
      */
     void updateFavoriteLastSection(String username, Integer bookCode, Integer lastSectionCode);
+
+    /**
+     * 搜索订阅的书籍
+     *
+     * @param pageNum
+     * @param username
+     * @param bookCode
+     * @param bookName
+     * @return
+     */
+    List<Book> searchFavoriteBooks(int pageNum, String username, String bookCode, String bookName);
 }
