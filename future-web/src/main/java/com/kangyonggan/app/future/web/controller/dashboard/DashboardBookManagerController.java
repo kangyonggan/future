@@ -46,6 +46,7 @@ public class DashboardBookManagerController extends BaseController {
      * @param categoryCode
      * @param isFinished
      * @param isHot
+     * @param isAutoUpdate
      * @param model
      * @return
      */
@@ -58,8 +59,9 @@ public class DashboardBookManagerController extends BaseController {
                        @RequestParam(value = "categoryCode", required = false, defaultValue = "") String categoryCode,
                        @RequestParam(value = "isFinished", required = false, defaultValue = "") String isFinished,
                        @RequestParam(value = "isHot", required = false, defaultValue = "") String isHot,
+                       @RequestParam(value = "isAutoUpdate", required = false, defaultValue = "") String isAutoUpdate,
                        Model model) {
-        List<Book> books = bookService.searchBooks(pageNum, bookCode, bookName, author, categoryCode, isFinished, isHot);
+        List<Book> books = bookService.searchBooks(pageNum, bookCode, bookName, author, categoryCode, isFinished, isHot, isAutoUpdate);
         PageInfo<Book> page = new PageInfo(books);
         List<Category> categories = categoryService.findCategoriesByType(CategoryType.BOOK.getType());
 
@@ -118,11 +120,33 @@ public class DashboardBookManagerController extends BaseController {
      */
     @RequestMapping(value = "{code:[\\d]+}/{isHot:\\bhot\\b|\\bunhot\\b}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
     @RequiresPermissions("BOOK_MANAGER")
-    public String delete(@PathVariable("code") int code, @PathVariable("isHot") String isHot, Model model) {
+    public String hot(@PathVariable("code") int code, @PathVariable("isHot") String isHot, Model model) {
         Book book = bookService.findBookByCode(code);
         List<Category> categories = categoryService.findCategoriesByType(CategoryType.BOOK.getType());
 
         book.setIsHot((byte) (isHot.equals("hot") ? 1 : 0));
+        bookService.updateBook(book);
+
+        model.addAttribute("book", book);
+        model.addAttribute("categories", categories);
+        return getPathTableTr();
+    }
+
+    /**
+     * 自动/手动
+     *
+     * @param code
+     * @param isAutoUpdate
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "{code:[\\d]+}/{isAutoUpdate:\\bautoUpdate\\b|\\bunAutoUpdate\\b}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    @RequiresPermissions("BOOK_MANAGER")
+    public String auto(@PathVariable("code") int code, @PathVariable("isAutoUpdate") String isAutoUpdate, Model model) {
+        Book book = bookService.findBookByCode(code);
+        List<Category> categories = categoryService.findCategoriesByType(CategoryType.BOOK.getType());
+
+        book.setIsAutoUpdate((byte) (isAutoUpdate.equals("autoUpdate") ? 1 : 0));
         bookService.updateBook(book);
 
         model.addAttribute("book", book);

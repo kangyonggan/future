@@ -11,6 +11,7 @@
     </td>
     <td><#include "is-finished.ftl"></td>
     <td><#include "is-hot.ftl"></td>
+    <td><#include "is-auto_update.ftl"></td>
     <td><a href="#book/manager/${book.newSectionCode}/section">${book.newSectionTitle!''}</a></td>
     <td>
         <div class="btn-group">

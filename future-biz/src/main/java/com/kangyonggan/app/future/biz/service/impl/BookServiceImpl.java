@@ -90,7 +90,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
 
     @Override
     @LogTime
-    public List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, String isFinished, String isHot) {
+    public List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, String isFinished, String isHot, String isAutoUpdate) {
         Example example = new Example(Book.class);
         Example.Criteria criteria = example.createCriteria();
 
@@ -111,6 +111,9 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         }
         if (StringUtils.isNotEmpty(isHot)) {
             criteria.andEqualTo("isHot", isHot);
+        }
+        if (StringUtils.isNotEmpty(isAutoUpdate)) {
+            criteria.andEqualTo("isAutoUpdate", isAutoUpdate);
         }
 
         example.setOrderByClause("id desc");

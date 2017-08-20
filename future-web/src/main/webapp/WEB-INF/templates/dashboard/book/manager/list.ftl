@@ -5,6 +5,7 @@
 <#assign categoryCode = RequestParameters.categoryCode!'' />
 <#assign isFinished = RequestParameters.isFinished!'' />
 <#assign isHot = RequestParameters.isHot!'' />
+<#assign isAutoUpdate = RequestParameters.isAutoUpdate!'' />
 
 <div class="page-header">
     <h1>
@@ -42,6 +43,13 @@
         </select>
     </div>
     <div class="form-group">
+        <select name="isAutoUpdate" class="form-control">
+            <option value="">--是否自动更新--</option>
+            <option value="1" <#if isAutoUpdate=='1'>selected</#if>>自动</option>
+            <option value="0" <#if isAutoUpdate=='0'>selected</#if>>手动</option>
+        </select>
+    </div>
+    <div class="form-group">
         <input type="text" class="form-control" name="author" value="${author}" placeholder="作者"/>
     </div>
     <div class="form-group">
@@ -70,6 +78,7 @@
         <th>封面</th>
         <th>是否完结</th>
         <th>是否推荐</th>
+        <th>是否自动更新</th>
         <th>最新章节</th>
         <th>操作</th>
     </tr>

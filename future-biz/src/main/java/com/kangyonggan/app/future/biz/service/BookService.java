@@ -34,9 +34,10 @@ public interface BookService {
      * @param categoryCode
      * @param isFinished
      * @param isHot
+     * @param isAutoUpdate
      * @return
      */
-    List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, String isFinished, String isHot);
+    List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, String isFinished, String isHot, String isAutoUpdate);
 
     /**
      * 查找小说
