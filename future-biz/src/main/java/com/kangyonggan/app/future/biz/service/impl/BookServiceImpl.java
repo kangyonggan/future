@@ -231,6 +231,15 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         return myMapper.selectByExample(example);
     }
 
+    @Override
+    @LogTime
+    public List<Book> findAutoUpdateBooks() {
+        Book book = new Book();
+        book.setIsAutoUpdate((byte) 1);
+
+        return myMapper.select(book);
+    }
+
     /**
      * 解析小说详情
      *

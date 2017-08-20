@@ -106,4 +106,11 @@ public interface BookService {
      * @return
      */
     List<Book> findBooksByCategoryCode(int pageNum, String code);
+
+    /**
+     * 查找自动更新的小说
+     *
+     * @return
+     */
+    List<Book> findAutoUpdateBooks();
 }

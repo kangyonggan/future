@@ -86,14 +86,11 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         }
 
         isUpdated = true;
-        Book book = bookService.findLastBook();
-        if (book == null) {
-            return;
-        }
+        List<Book> books = bookService.findAutoUpdateBooks();
 
-        for (int i = 1; i <= book.getCode(); i++) {
+        for (int i = 0; i <= books.size(); i++) {
             try {
-                updateSections(i);
+                updateSections(books.get(i).getCode());
             } catch (Exception e) {
                 log.warn("更新小说章节异常", e);
             }

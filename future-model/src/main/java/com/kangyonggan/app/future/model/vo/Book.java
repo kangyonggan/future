@@ -66,6 +66,12 @@ public class Book implements Serializable {
     private Byte isHot;
 
     /**
+     * 自动更新{1: 是, 0: 否}
+     */
+    @Column(name = "is_auto_update")
+    private Byte isAutoUpdate;
+
+    /**
      * 最新章节代码
      */
     @Column(name = "new_section_code")

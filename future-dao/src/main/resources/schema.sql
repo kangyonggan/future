@@ -243,6 +243,8 @@ CREATE TABLE book
   COMMENT '是否完结{1: 完结, 0: 连载}',
   is_hot            TINYINT                               NOT NULL                    DEFAULT 0
   COMMENT '推荐{1: 是, 0: 否}',
+  is_auto_update    TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '自动更新{1: 是, 0: 否}',
   new_section_code  INT(11)                               NOT NULL                    DEFAULT 0
   COMMENT '最新章节代码',
   new_section_title VARCHAR(256)                          NOT NULL                    DEFAULT ''
