@@ -44,7 +44,6 @@
         <th>是否自动更新</th>
         <th>最新章节</th>
         <th>最后阅读章节</th>
-        <th>操作</th>
     </tr>
     </thead>
     <tbody>
