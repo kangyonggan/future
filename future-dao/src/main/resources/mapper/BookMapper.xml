@@ -31,7 +31,7 @@
     </select>
 
     <select id="selectFavoriteBooksByUsername" resultMap="BaseResultMap">
-        SELECT b.* FROM book FROM book b, favorite f
+        SELECT b.*, f.last_section_code FROM book b, favorite f
         WHERE b.code = f.book_code AND f.username = #{username}
         ORDER BY f.updated_time DESC
     </select>
