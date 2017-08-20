@@ -29,6 +29,7 @@ import java.util.List;
  */
 @Service
 @Log4j2
+@Transactional(propagation = Propagation.NOT_SUPPORTED)
 public class SectionServiceImpl extends BaseService<Section> implements SectionService {
 
     private static final String SECTION_UPDATE_FLAG = "section:update:flag";
@@ -226,6 +227,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
      * @param bookCode
      * @return
      */
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public Section findLastSectionByBookCode(int bookCode) {
         Example example = new Example(Section.class);
         example.createCriteria().andEqualTo("bookCode", bookCode);
