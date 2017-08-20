@@ -426,29 +426,13 @@ IF EXISTS favorite;
 
 CREATE TABLE favorite
 (
-  id                 BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
-  COMMENT '主键, 自增',
-  username           VARCHAR(20)                           NOT NULL
+  username          VARCHAR(20) NOT NULL
   COMMENT '用户名（手机号）',
-  book_code          INT(11)                               NOT NULL
-  COMMENT '书籍代码',
-  book_name          VARCHAR(32)                           NOT NULL
-  COMMENT '书名',
-  pic_url            VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-book.png'
-  COMMENT '封面图片地址',
-  last_section_code  INT(11)                               NOT NULL                    DEFAULT 0
+  book_code         INT(11),
+  last_section_code INT(11)     NOT NULL                    DEFAULT 0
   COMMENT '最后阅读的章节代码',
-  last_section_title VARCHAR(256)                          NOT NULL                    DEFAULT ''
-  COMMENT '最后阅读的章节标题',
-  is_deleted         TINYINT                               NOT NULL                    DEFAULT 0
-  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
-  created_time       TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
-  COMMENT '创建时间',
-  updated_time       TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-  COMMENT '更新时间'
+  updated_time      TIMESTAMP   NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间',
+  PRIMARY KEY (username, book_code)
 )
   COMMENT '小说收藏表';
-CREATE UNIQUE INDEX id_UNIQUE
-  ON favorite (id);
-CREATE UNIQUE INDEX username_book_code_UNIQUE
-  ON favorite (username, book_code);

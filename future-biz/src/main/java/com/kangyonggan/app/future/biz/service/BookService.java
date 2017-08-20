@@ -114,4 +114,49 @@ public interface BookService {
      * @return
      */
     List<Book> findAutoUpdateBooks();
+
+    /**
+     * 查找我的收藏
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param username
+     * @return
+     */
+    List<Book> findFavoriteBooksByUsername(int pageNum, int pageSize, String username);
+
+    /**
+     * 添加收藏
+     *
+     * @param username
+     * @param bookCode
+     * @param lastSectionCode
+     */
+    void saveFavorite(String username, int bookCode, int lastSectionCode);
+
+    /**
+     * 取消收藏
+     *
+     * @param username
+     * @param bookCode
+     */
+    void deleteFavorite(String username, int bookCode);
+
+    /**
+     * 查找我的收藏
+     *
+     * @param username
+     * @param bookCode
+     * @return
+     */
+    Book findFavorite(String username, int bookCode);
+
+    /**
+     * 更新我的收藏
+     *
+     * @param username
+     * @param bookCode
+     * @param lastSectionCode
+     */
+    void updateFavoriteLastSection(String username, Integer bookCode, Integer lastSectionCode);
 }

@@ -101,5 +101,11 @@ public class Book implements Serializable {
     @Column(name = "updated_time")
     private Date updatedTime;
 
+    /**
+     * 最后阅读的章节代码
+     */
+    @Transient
+    private Integer lastSectionCode;
+
     private static final long serialVersionUID = 1L;
 }

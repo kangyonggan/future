@@ -1,13 +1,11 @@
 package com.kangyonggan.app.future.web.controller.mobile;
 
 import com.kangyonggan.app.future.biz.service.BookService;
-import com.kangyonggan.app.future.biz.service.FavoriteService;
 import com.kangyonggan.app.future.biz.service.SectionService;
 import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.dto.*;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Category;
-import com.kangyonggan.app.future.model.vo.Favorite;
 import com.kangyonggan.app.future.model.vo.Section;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +30,6 @@ public class MBookController {
 
     @Autowired
     private SectionService sectionService;
-
-    @Autowired
-    private FavoriteService favoriteService;
 
     /**
      * 查找所有小说分类
@@ -153,19 +148,7 @@ public class MBookController {
         CommonResponse response = new CommonResponse();
 
         try {
-            Book book = bookService.findBookByCode(bookCode);
-
-            Favorite favorite = new Favorite();
-            favorite.setBookCode(bookCode);
-            favorite.setUsername(username);
-            favorite.setBookName(book.getName());
-            favorite.setPicUrl(book.getPicUrl());
-
-            Section section = sectionService.findSectionByCode(lastSectionCode);
-            favorite.setLastSectionCode(section.getCode());
-            favorite.setLastSectionTitle(section.getTitle());
-
-            favoriteService.saveFavorite(favorite);
+            bookService.saveFavorite(username, bookCode, lastSectionCode);
 
             response.setRespCo(Resp.SUCCESS.getRespCo());
             response.setRespMsg(Resp.SUCCESS.getRespMsg());
@@ -190,7 +173,7 @@ public class MBookController {
         CommonResponse response = new CommonResponse();
 
         try {
-            favoriteService.deleteFavorite(username, bookCode);
+            bookService.deleteFavorite(username, bookCode);
 
             response.setRespCo(Resp.SUCCESS.getRespCo());
             response.setRespMsg(Resp.SUCCESS.getRespMsg());
@@ -218,9 +201,9 @@ public class MBookController {
         FindFavoritesResponse response = new FindFavoritesResponse();
 
         try {
-            List<Favorite> favorites = favoriteService.findFavoritesByUsername(pageNum, pageSize, username);
+            List<Book> favorites = bookService.findFavoriteBooksByUsername(pageNum, pageSize, username);
 
-            response.setFavorites(favorites);
+            response.setBooks(favorites);
 
             response.setRespCo(Resp.SUCCESS.getRespCo());
             response.setRespMsg(Resp.SUCCESS.getRespMsg());
@@ -305,12 +288,12 @@ public class MBookController {
 
         try {
             Section section;
-            Favorite favorite = favoriteService.findFavorite(username, bookCode);
-            if (favorite == null) {
+            Book book = bookService.findFavorite(username, bookCode);
+            if (book == null) {
                 // 查找第一章
                 section = sectionService.findBookFirstSection(bookCode);
             } else {
-                section = sectionService.findSectionByCode(favorite.getLastSectionCode());
+                section = sectionService.findSectionByCode(book.getLastSectionCode());
             }
 
             if (section == null) {
@@ -320,7 +303,7 @@ public class MBookController {
             }
 
             response.setSection(section);
-            response.setFavorite(favorite != null);
+            response.setFavorite(book != null);
             response.setRespCo(Resp.SUCCESS.getRespCo());
             response.setRespMsg(Resp.SUCCESS.getRespMsg());
         } catch (Exception e) {
@@ -352,9 +335,9 @@ public class MBookController {
                 return response;
             }
 
-            Favorite favorite = favoriteService.findFavorite(username, section.getBookCode());
+            Book favorite = bookService.findFavorite(username, section.getBookCode());
             if (favorite != null) {
-                favoriteService.updateFavoriteLastSection(favorite.getId(), section.getCode(), section.getTitle());
+                bookService.updateFavoriteLastSection(username, section.getBookCode(), section.getCode());
                 response.setFavorite(true);
             } else {
                 response.setFavorite(false);

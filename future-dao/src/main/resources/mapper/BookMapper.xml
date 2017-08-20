@@ -16,15 +16,41 @@
         <result column="is_finished" jdbcType="TINYINT" property="isFinished"/>
         <result column="is_hot" jdbcType="TINYINT" property="isHot"/>
         <result column="is_auto_update" jdbcType="TINYINT" property="isAutoUpdate"/>
-        <result column="new_section_code" jdbcType="BIGINT" property="new_section_code"/>
-        <result column="new_section_title" jdbcType="VARCHAR" property="new_section_title"/>
+        <result column="new_section_code" jdbcType="BIGINT" property="newSectionCode"/>
+        <result column="new_section_title" jdbcType="VARCHAR" property="newSectionTitle"/>
         <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
         <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
         <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+
+        <result column="last_section_code" jdbcType="BIGINT" property="newSectionCode"/>
     </resultMap>
 
     <select id="selectAllCategoryWithBookCount" resultType="com.kangyonggan.app.future.model.vo.Category">
         SELECT count(*) AS bookCnt, category_code AS code, category_name AS name
         FROM book GROUP BY category_code, category_name ORDER BY bookCnt DESC
     </select>
+
+    <select id="selectFavoriteBooksByUsername" resultMap="BaseResultMap">
+        SELECT b.* FROM book FROM book b, favorite f
+        WHERE b.code = f.book_code AND f.username = #{username}
+        ORDER BY f.updated_time DESC
+    </select>
+
+    <insert id="insertFavorite">
+        INSERT INTO favorite (username, book_code, last_section_code)
+        VALUE (#{username}, #{bookCode}, #{lastSectionCode})
+    </insert>
+
+    <delete id="deleteFavorite">
+        DELETE FROM favorite WHERE username = #{username} AND book_code = #{bookCode}
+    </delete>
+
+    <select id="selectFavorite" resultMap="BaseResultMap">
+        SELECT b.*, f.last_section_code FROM book b, favorite f
+        WHERE b.code = f.book_code AND username = #{username} AND b.code = #{bookCode}
+    </select>
+
+    <update id="updateFavoriteLastSection">
+        UPDATE favorite SET last_section_code = #{lastSectionCode} WHERE username = #{username} AND book_code = #{bookCode}
+    </update>
 </mapper>
