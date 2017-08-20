@@ -65,8 +65,9 @@
     <select id="searchFavoriteBooks" resultMap="BaseResultMap">
         SELECT b.*, f.last_section_code, f.username FROM book b, favorite f
         <where>
+            b.code = f.book_code
             <if test="username != ''">
-              f.username = #{username}
+              AND f.username = #{username}
             </if>
             <if test="bookCode != ''">
               AND b.code = #{bookCode}
