@@ -315,7 +315,7 @@ public class MBookController {
 
             if (section == null) {
                 response.setRespCo(Resp.FAILURE.getRespCo());
-                response.setRespMsg("没有此小说的章节");
+                response.setRespMsg("小说章节尚未拉取，可以联系康永敢优先拉取此小说");
                 return response;
             }
 
