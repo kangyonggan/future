@@ -88,7 +88,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
         isUpdated = true;
         List<Book> books = bookService.findAutoUpdateBooks();
 
-        for (int i = 0; i <= books.size(); i++) {
+        for (int i = 0; i < books.size(); i++) {
             try {
                 updateSections(books.get(i).getCode());
             } catch (Exception e) {
