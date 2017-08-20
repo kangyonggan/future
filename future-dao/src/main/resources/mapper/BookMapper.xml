@@ -22,7 +22,7 @@
         <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
         <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
 
-        <result column="last_section_code" jdbcType="BIGINT" property="newSectionCode"/>
+        <result column="last_section_code" jdbcType="BIGINT" property="lastSectionCode"/>
     </resultMap>
 
     <select id="selectAllCategoryWithBookCount" resultType="com.kangyonggan.app.future.model.vo.Category">
