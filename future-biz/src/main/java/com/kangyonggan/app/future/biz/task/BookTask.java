@@ -31,16 +31,16 @@ public class BookTask {
         sectionService.updateSections();
         log.info("定时任务自动更新小说结束!");
     }
-
-    /**
-     * 每周1点更新小说是否完结
-     * cron表达式：* * * * * *（秒 分 时 日 月 星期）
-     */
-    @Scheduled(cron = "0 0 0 * * 1")
-    public void executeBookIsFinished() {
-        log.info("定时任务自动更新小说开始...");
-        bookService.updateBookIsFinished();
-        log.info("定时任务自动更新小说结束!");
-    }
+//
+//    /**
+//     * 每周1点更新小说是否完结
+//     * cron表达式：* * * * * *（秒 分 时 日 月 星期）
+//     */
+//    @Scheduled(cron = "0 0 0 * * 1")
+//    public void executeBookIsFinished() {
+//        log.info("定时任务自动更新小说开始...");
+//        bookService.updateBookIsFinished();
+//        log.info("定时任务自动更新小说结束!");
+//    }
 
 }

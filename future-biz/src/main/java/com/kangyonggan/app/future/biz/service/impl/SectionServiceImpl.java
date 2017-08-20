@@ -154,7 +154,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
                 if (i == startNum + 1) {
                     Element elementPrev = elements.get(i - 1);
                     String scodePrev = elementPrev.attr("href");
-                    scodePrev = scodePrev.substring(scode.lastIndexOf("/") + 1, scode.lastIndexOf("."));
+                    scodePrev = scodePrev.substring(scodePrev.lastIndexOf("/") + 1, scodePrev.lastIndexOf("."));
 
                     Section section = new Section();
                     section.setCode(Integer.parseInt(scodePrev));
