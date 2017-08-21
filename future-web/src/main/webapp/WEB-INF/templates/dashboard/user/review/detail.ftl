@@ -1,4 +1,7 @@
 <#assign ctx="${(rca.contextPath)!''}">
+
+<link rel="stylesheet" href="${ctx}/static/ace/dist/css/prettify.min.css"/>
+
 <div class="page-header">
     <h1>
         文章详情
@@ -52,4 +55,5 @@
     </div>
 </div>
 
+<script src="${ctx}/static/ace/dist/js/prettify.min.js"></script>
 <script src="${ctx}/static/app/js/dashboard/user/review/detail.js"></script>

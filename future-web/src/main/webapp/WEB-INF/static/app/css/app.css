@@ -146,27 +146,6 @@ input[readonly].readonly {
     color: #666;
 }
 
-.markdown code {
-    color: #555;
-    background: #eee;
-    font-size: 13px;
-    border-radius: 13px;
-    height: 20px;
-    font-family: consolas, Menlo, "PingFang SC", "Microsoft YaHei", monospace;
-    line-height: 1.6;
-}
-
-.markdown pre {
-    background: #1d1f21;
-    padding: 10px 15px;
-    overflow-x: auto;
-}
-
-.markdown pre > code {
-    background: #1d1f21;
-    color: #c5c8c6;
-}
-
 .markdown table {
     border-collapse: collapse;
 }
