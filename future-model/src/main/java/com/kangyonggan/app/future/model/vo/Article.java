@@ -38,6 +38,11 @@ public class Article implements Serializable {
     private String categoryName;
 
     /**
+     * 状态:{"waiting":"待审核", "reject":"审核未通过", "complete":"审核通过"}
+     */
+    private String status;
+
+    /**
      * 逻辑删除:{0:未删除, 1:已删除}
      */
     @Column(name = "is_deleted")

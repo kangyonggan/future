@@ -373,7 +373,7 @@ VALUES
   ('BOOK', '小说', 'DASHBOARD', 'book', 2, 'menu-icon fa fa-book'),
   ('BOOK_MANAGER', '小说管理', 'BOOK', 'book/manager', 0, ''),
 
-  ('USER', '用户', 'DASHBOARD', 'user', 3, 'menu-icon fa fa-user'),
+  ('USER', '我的', 'DASHBOARD', 'user', 3, 'menu-icon fa fa-user'),
   ('USER_INFO', '基本信息', 'USER', 'user/info', 0, '');
 
 -- ----------------------------
@@ -473,8 +473,10 @@ CREATE TABLE article
   COMMENT '是否允许评论:{0:不允许, 1:允许}',
   is_stick      TINYINT                               NOT NULL                    DEFAULT 0
   COMMENT '是否置顶:{0:未置顶, 1:已置顶}',
-  is_deleted    TINYINT                               NOT NULL                    DEFAULT 0
+  is_deleted    TINYINT                               NOT NULL                    DEFAULT ''
   COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  status        VARCHAR(16)                           NOT NULL                    DEFAULT 0
+  COMMENT '状态:{"waiting":"待审核", "reject":"审核未通过", "complete":"审核通过"}',
   created_time  TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
   COMMENT '创建时间',
   updated_time  TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

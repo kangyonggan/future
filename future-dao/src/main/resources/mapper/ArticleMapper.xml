@@ -10,6 +10,7 @@
         <result column="title" property="title" jdbcType="VARCHAR"/>
         <result column="category_code" property="categoryCode" jdbcType="VARCHAR"/>
         <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
         <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
         <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>

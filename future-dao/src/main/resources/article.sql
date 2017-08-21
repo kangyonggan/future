@@ -16197,4 +16197,8 @@ NotificationCenter.default.post(name: NSNotification.Name(rawValue: "BookListRef
 ```
 ', 0, '2017-08-03 10:21:09', '2017-08-17 03:23:14');
 
+ALTER TABLE future.article DROP visit_count;
+ALTER TABLE future.article DROP comment_count;
+ALTER TABLE future.article DROP is_comment;
+ALTER TABLE future.article DROP is_stick;
 UPDATE article SET category_code = 'jishu', category_name = '技术分享', username = '15121149571';

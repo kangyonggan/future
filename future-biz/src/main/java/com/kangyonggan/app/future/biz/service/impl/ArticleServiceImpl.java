@@ -1,8 +1,15 @@
 package com.kangyonggan.app.future.biz.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.ArticleService;
+import com.kangyonggan.app.future.model.annotation.LogTime;
+import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Article;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 /**
  * @author kangyonggan
@@ -11,6 +18,47 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArticleServiceImpl extends BaseService<Article> implements ArticleService {
 
+    @Override
+    @LogTime
+    public List<Article> searchArticles(int pageNum, String username, String categoryCode, String status, String title) {
+        Example example = new Example(Article.class);
+        Example.Criteria criteria = example.createCriteria();
 
+        if (StringUtils.isNotEmpty(username)) {
+            criteria.andEqualTo("username", username);
+        }
+        if (StringUtils.isNotEmpty(categoryCode)) {
+            criteria.andEqualTo("categoryCode", categoryCode);
+        }
+        if (StringUtils.isNotEmpty(title)) {
+            criteria.andEqualTo("title", title);
+        }
+        if (StringUtils.isNotEmpty(status)) {
+            criteria.andEqualTo("status", status);
+        }
 
+        example.selectProperties("id", "username", "title", "categoryCode", "categoryName", "isDeleted", "status", "createdTime");
+        example.setOrderByClause("id desc");
+
+        PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
+        return myMapper.selectByExample(example);
+    }
+
+    @Override
+    @LogTime
+    public Article findArticleById(Long id) {
+        return myMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    @LogTime
+    public void updateArticle(Article article) {
+        myMapper.updateByPrimaryKeySelective(article);
+    }
+
+    @Override
+    @LogTime
+    public void deleteArticleById(Long id) {
+        myMapper.deleteByPrimaryKey(id);
+    }
 }
