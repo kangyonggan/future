@@ -443,3 +443,66 @@ CREATE TABLE favorite
   PRIMARY KEY (username, book_code)
 )
   COMMENT '小说收藏表';
+
+# 数据迁移
+-- ----------------------------
+--  Table structure for article
+-- ----------------------------
+DROP TABLE
+IF EXISTS article;
+
+CREATE TABLE article
+(
+  id            BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  username      VARCHAR(20)                           NOT NULL                    DEFAULT ''
+  COMMENT '用户名（手机号）',
+  title         VARCHAR(64)                           NOT NULL
+  COMMENT '文章标题',
+  category_code VARCHAR(16)                           NOT NULL
+  COMMENT '栏目代码',
+  category_name VARCHAR(32)                           NOT NULL
+  COMMENT '栏目名称',
+  content       LONGTEXT                              NOT NULL
+  COMMENT '文章内容',
+  visit_count   INTEGER(11)                           NOT NULL                    DEFAULT 0
+  COMMENT '访问量',
+  comment_count INTEGER(11)                           NOT NULL                    DEFAULT 0
+  COMMENT '评论量',
+  is_comment    TINYINT                               NOT NULL                    DEFAULT 1
+  COMMENT '是否允许评论:{0:不允许, 1:允许}',
+  is_stick      TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '是否置顶:{0:未置顶, 1:已置顶}',
+  is_deleted    TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time  TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time  TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '文章表';
+CREATE INDEX id_category_code
+  ON article (category_code);
+CREATE INDEX id_created_time
+  ON article (created_time);
+
+INSERT INTO category (code, name, type, sort)
+VALUES
+  ('jishu', '技术分享', 'article', 0),
+  ('tongzhi', '通知公告', 'article', 1);
+
+# 我的文章，文章审核
+INSERT INTO menu
+(code, name, pcode, url, sort, icon)
+  VALUE
+  ('USER_ARTICLE', '我的文章', 'USER', 'user/article', 1, ''),
+  ('USER_REVIEW', '文章审核', 'USER', 'user/review', 2, '');
+
+INSERT INTO role_menu (role_code, menu_code) VALUES
+  ('ROLE_ADMIN', 'USER_ARTICLE'),
+  ('ROLE_ADMIN', 'USER_REVIEW');
+
+INSERT INTO role_menu (role_code, menu_code) VALUE ('ROLE_USER', 'USER_ARTICLE');
+
+
+

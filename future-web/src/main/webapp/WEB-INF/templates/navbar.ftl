@@ -25,7 +25,7 @@
                 <ul class="nav ace-nav">
                     <li class="dark">
                         <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                            <img class="nav-user-photo" src="${ctx}/static/ace/dist/avatars/profile-pic.jpg"
+                            <img class="nav-user-photo" id="userAvatar" src="${ctx}/${user.smallAvatar}"
                                  alt="${(user.realname!='')?string('${user.realname}', '${user.username}')}">
                             <span class="user-info">
 									<small>欢迎,</small>
