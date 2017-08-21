@@ -12,6 +12,10 @@ $(function () {
 
     $form.validate({
         rules: {
+            title: {
+                required: true,
+                rangelength: [1, 64]
+            },
             categoryCode: {
                 required: true,
                 rangelength: [1, 16]

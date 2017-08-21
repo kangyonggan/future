@@ -15,7 +15,7 @@
         <div class="form-group">
             <label for="title" class="col-sm-3 control-label no-padding-right">文章标题<span class="red">*</span></label>
             <div class="col-xs-12 col-sm-5">
-            <@s.formInput "article.title" 'class="form-control"' />
+            <@s.formInput "article.title" 'class="form-control" placeholder="请输入文章标题，最多64个字符"' />
             </div>
         </div>
 
