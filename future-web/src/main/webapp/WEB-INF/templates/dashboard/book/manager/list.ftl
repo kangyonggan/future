@@ -97,6 +97,6 @@
     </#if>
     </tbody>
 </table>
-<@c.pagination url="#book/manager" param="bookCode=${bookCode}&bookName=${bookName}&author=${author}&categoryCode=${categoryCode}&isFinished=${isFinished}&isHot=${isHot}"/>
+<@c.pagination url="#book/manager" param="bookCode=${bookCode}&bookName=${bookName}&author=${author}&categoryCode=${categoryCode}&isFinished=${isFinished}&isHot=${isHot}&isAutoUpdate=${isAutoUpdate}"/>
 
 <script src="${ctx}/static/app/js/dashboard/book/manager/list.js"></script>
