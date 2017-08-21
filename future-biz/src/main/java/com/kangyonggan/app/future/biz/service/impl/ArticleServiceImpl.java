@@ -61,4 +61,48 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     public void deleteArticleById(Long id) {
         myMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    @LogTime
+    public void saveArticle(Article article) {
+        myMapper.insertSelective(article);
+    }
+
+    @Override
+    @LogTime
+    public Article findPrevArticle(Long id, String username) {
+        Example example = new Example(Article.class);
+        Example.Criteria criteria = example.createCriteria();
+
+        criteria.andLessThan("id", id);
+        if (StringUtils.isNotEmpty(username)) {
+            criteria.andEqualTo("username", username);
+        }
+
+        example.setOrderByClause("id desc");
+
+        PageHelper.startPage(1, 1);
+        List<Article> articles = myMapper.selectByExample(example);
+
+        return articles.isEmpty() ? null : articles.get(0);
+    }
+
+    @Override
+    @LogTime
+    public Article findNextArticle(Long id, String username) {
+        Example example = new Example(Article.class);
+        Example.Criteria criteria = example.createCriteria();
+
+        criteria.andGreaterThan("id", id);
+        if (StringUtils.isNotEmpty(username)) {
+            criteria.andEqualTo("username", username);
+        }
+
+        example.setOrderByClause("id asc");
+
+        PageHelper.startPage(1, 1);
+        List<Article> articles = myMapper.selectByExample(example);
+
+        return articles.isEmpty() ? null : articles.get(0);
+    }
 }

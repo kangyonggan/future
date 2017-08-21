@@ -1,28 +1,23 @@
 <#assign ctx="${(rca.contextPath)!''}">
-
-<link rel="stylesheet" href="${ctx}/static/libs/bootstrap/css/bootstrap-markdown.min.css"/>
-
 <div class="page-header">
     <h1>
-        编辑文章
+        ${article.id???string('编辑', '发布')}文章
     </h1>
 </div>
 
-<div class="col-xs-12">
-    <form id="article-form" method="post" class="form-horizontal" action="${ctx}/dashboard/user/review/update">
+<link rel="stylesheet" href="${ctx}/static/libs/bootstrap/css/bootstrap-markdown.min.css"/>
 
-        <input type="hidden" name="id" value="${article.id}"/>
+<div class="col-xs-12">
+    <form id="article-form" method="post" class="form-horizontal" action="${ctx}/dashboard/user/article/${article.id???string('update', 'save')}">
+
+        <#if article.id??>
+            <input type="hidden" name="id" value="${article.id}"/>
+        </#if>
+
         <div class="form-group">
             <label for="title" class="col-sm-3 control-label no-padding-right">文章标题<span class="red">*</span></label>
             <div class="col-xs-12 col-sm-5">
             <@s.formInput "article.title" 'class="form-control"' />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="title" class="col-sm-3 control-label no-padding-right">发布人手机号</label>
-            <div class="col-xs-12 col-sm-5">
-            <@s.formInput "article.username" 'readonly class="form-control readonly"' />
             </div>
         </div>
 
@@ -31,8 +26,7 @@
             <div class="col-xs-12 col-sm-5">
                 <select name="categoryCode" class="form-control">
                 <#list categories as category>
-                    <option value="${category.code}"
-                            <#if article.categoryCode=='${category.code}'>selected</#if>>${category.name}</option>
+                    <option value="${category.code}" <#if article.id?? && article.categoryCode=='${category.code}'>selected</#if>>${category.name}</option>
                 </#list>
                 </select>
             </div>
@@ -58,4 +52,4 @@
 
 <script type="text/javascript" src="${ctx}/static/libs/bootstrap/js/marked.min.js"></script>
 <script type="text/javascript" src="${ctx}/static/libs/bootstrap/js/bootstrap-markdown.min.js"></script>
-<script src="${ctx}/static/app/js/dashboard/user/review/form.js"></script>
+<script src="${ctx}/static/app/js/dashboard/user/article/form.js"></script>

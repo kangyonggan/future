@@ -15,8 +15,8 @@
                 </h3>
 
                 <div class="widget-toolbar no-border invoice-info">
-                    <span class="invoice-info-label">发布人:</span>
-                    <span class="red">${article.username}</span>
+                    <span class="invoice-info-label">发布时间:</span>
+                    <span class="red"><@c.relative_date datetime=article.createdTime/></span>
 
                     <br/>
                     <span class="invoice-info-label">栏目:</span>
@@ -42,8 +42,8 @@
                     <div class="hr hr8 hr-double hr-dotted"></div>
 
                     <div>
-                        <a href="#user/review/${article.id}/prev" class="dark">&lt;&lt;&nbsp;上一篇文章</a>
-                        <a href="#user/review/${article.id}/next" class="pull-right dark">下一篇文章&nbsp;&gt;&gt;</a>
+                        <a href="#user/article/${article.id}/prev" class="dark">&lt;&lt;&nbsp;上一篇文章</a>
+                        <a href="#user/article/${article.id}/next" class="pull-right dark">下一篇文章&nbsp;&gt;&gt;</a>
                     </div>
 
                 </div>
@@ -52,4 +52,4 @@
     </div>
 </div>
 
-<script src="${ctx}/static/app/js/dashboard/user/review/detail.js"></script>
+<script src="${ctx}/static/app/js/dashboard/user/article/detail.js"></script>

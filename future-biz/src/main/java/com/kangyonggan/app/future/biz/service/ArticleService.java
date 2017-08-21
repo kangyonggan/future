@@ -43,4 +43,30 @@ public interface ArticleService {
      * @param id
      */
     void deleteArticleById(Long id);
+
+    /**
+     * 保存文章
+     *
+     * @param article
+     */
+    void saveArticle(Article article);
+
+    /**
+     * 查找上一章
+     *
+     * @param id
+     * @param username
+     * @return
+     */
+    Article findPrevArticle(Long id, String username);
+
+    /**
+     * 查找下一章
+     *
+     * @param id
+     * @param username
+     * @return
+     */
+    Article findNextArticle(Long id, String username);
+
 }
