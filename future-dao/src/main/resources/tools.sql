@@ -133,6 +133,8 @@ VALUES
   ('ASCLL', '126', '`', 126),
   ('ASCLL', '127', 'DEL', 127);
 
+DROP INDEX type_code_UNIQUE ON future.dictionary;
+
 INSERT INTO dictionary
 (type, code, value, sort)
 VALUES

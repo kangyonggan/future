@@ -348,6 +348,10 @@ body {
     margin-top: 30px;
 }
 
+.qr-code {
+    border: 2px solid #f2f2f2;
+}
+
 @media (max-width: 1000px) {
     #footer .top .list {
         width: 80%;
