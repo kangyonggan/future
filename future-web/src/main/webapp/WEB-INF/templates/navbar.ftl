@@ -37,7 +37,7 @@
 
                         <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
                             <li>
-                                <a href="${ctx}/logout">
+                                <a href="${ctx}/user/logout">
                                     <i class="ace-icon fa fa-power-off"></i>
                                     安全退出
                                 </a>
