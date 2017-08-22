@@ -1,7 +1,6 @@
 <#assign ctx="${(rca.contextPath)!''}">
 <#assign key = RequestParameters.key!'' />
 
-<link rel="stylesheet" href="${ctx}/static/ace/dist/css/bootstrap.min.css"/>
 <link rel="stylesheet" href="${ctx}/static/ace/dist/css/prettify.min.css"/>
 
 <#if page.list?size gt 0>

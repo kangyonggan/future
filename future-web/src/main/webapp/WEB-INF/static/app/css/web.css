@@ -52,14 +52,14 @@ body {
 }
 
 #main .sim-page {
+    width: 1000px;
+    margin: 0 auto;
     margin-top: 70px;
 }
 
 .article-list {
     list-style: none;
     padding-left: 0;
-    width: 1000px;
-    margin: 0 auto;
 }
 
 .article-list .article {
@@ -127,14 +127,8 @@ body {
 .empty {
     text-align: center;
     padding: 40px 0px;
-    font-size: 14px;
     color: #c00;
     font-size: 18px;
-}
-
-.page-div {
-    width: 1000px;
-    margin: 0 auto;
 }
 
 .page-div .pagination {
@@ -150,11 +144,6 @@ body {
     background: #ccc;
     color: #202020;
     border-color: #bbb;
-}
-
-.detail {
-    width: 1000px;
-    margin: 0 auto;
 }
 
 .detail .title {
@@ -210,6 +199,10 @@ body {
 }
 
 /*markdown*/
+.space-30 {
+    clear: both;
+    height: 30px;
+}
 
 #footer {
     margin-top: 30px;
@@ -300,7 +293,50 @@ body {
     height: 20px;
 }
 
-@media (max-width: 800px) {
+/*tools*/
+.tools-list > .item a {
+    display: inline-block;
+    padding: 20px 40px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    color: #333;
+    text-decoration: none;
+    float: left;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.tools-list > .item a img {
+    display: inline-block;
+    width: 140px;
+    height: 140px;
+}
+
+.tools-list > .item a p {
+    margin-top: 10px;
+}
+
+.ascll-table {
+    float: left;
+    margin-bottom: 50px;
+    width: 25%;
+}
+
+.tool-title {
+    text-align: center;
+    font-size: 34px;
+    line-height: 1.1;
+    font-weight: 500;
+    color: #202020;
+    padding-bottom: 30px;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+@media (max-width: 1000px) {
     #footer .top .list {
         width: 80%;
         margin-left: 10%;
@@ -310,7 +346,11 @@ body {
         height: 620px;
     }
 
-    #main .search form input, .article-list, .detail, .page-div {
+    #main .search form input, .article-list, .detail, .page-div, .tools-list, #main .sim-page {
         width: 95%;
+    }
+
+    .ascll-table {
+        width: 50%;
     }
 }

@@ -1,3 +1,5 @@
+<div class="space-30"></div>
+
 <div id="footer">
     <div class="top">
         <div class="list">

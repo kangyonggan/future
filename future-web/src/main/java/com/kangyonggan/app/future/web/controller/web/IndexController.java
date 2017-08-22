@@ -65,6 +65,10 @@ public class IndexController extends BaseController {
     public String search(@RequestParam(value = "key") String key,
                          @RequestParam(value = "p", required = false, defaultValue = "1") int pageNum,
                          Model model) {
+        if ("工具".equals(key)) {
+            return "web/tools/index";
+        }
+
         List<Article> articles = articleService.searchArticles(pageNum, null, key);
         PageInfo<Article> page = new PageInfo(articles);
 

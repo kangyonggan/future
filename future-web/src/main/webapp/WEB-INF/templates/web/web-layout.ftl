@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
     <link rel="shortcut icon" href="${ctx}/static/app/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="${ctx}/static/ace/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="${ctx}/static/app/css/web.css"/>
 <@block name="web-style"/>
 </head>

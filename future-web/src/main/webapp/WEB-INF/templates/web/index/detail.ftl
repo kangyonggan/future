@@ -1,5 +1,4 @@
 <#assign ctx="${(rca.contextPath)!''}">
-<link rel="stylesheet" href="${ctx}/static/ace/dist/css/bootstrap.min.css"/>
 <link rel="stylesheet" href="${ctx}/static/ace/dist/css/prettify.min.css"/>
 
 <div class="detail">
