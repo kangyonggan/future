@@ -51,6 +51,18 @@ body {
     background: url("../images/search.png") 5px 4px #fdfdfd no-repeat;
 }
 
+#main .search .hot {
+    margin: 0 auto;
+    width: 700px;
+    margin-top: 10px;
+}
+
+#main .search .hot a {
+    margin-right: 15px;
+    color: #c00;
+    text-decoration: none;
+}
+
 #main .sim-page {
     width: 1000px;
     margin: 0 auto;
@@ -346,7 +358,7 @@ body {
         height: 620px;
     }
 
-    #main .search form input, .article-list, .detail, .page-div, .tools-list, #main .sim-page {
+    #main .search form input, #main .search form .hot, .article-list, .detail, .page-div, .tools-list, #main .sim-page {
         width: 95%;
     }
 
