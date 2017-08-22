@@ -5,6 +5,19 @@
 <div class="page-header">
     <h1>
         文章详情
+        <small class="pull-right">
+        <#if article.status=="waiting">
+        <#--待审核-->
+            <a href="javascript:" data-role="article-detail" title="审核通过"
+               data-url="${ctx}/dashboard/user/review/${article.id}/complete" class="btn btn-sm btn-success">审核通过</a>
+            <a href="javascript:" data-role="article-detail" title="审核不通过"
+               data-url="${ctx}/dashboard/user/review/${article.id}/reject" class="btn btn-sm btn-danger">审核不通过</a>
+        <#elseif article.status=="reject" || article.status=="complete">
+        <#--审核不通过 和 审核通过-->
+            <a href="javascript:" data-role="article-detail" title="撤销审核"
+               data-url="${ctx}/dashboard/user/review/${article.id}/waiting" class="btn btn-sm btn-inverse">撤销审核</a>
+        </#if>
+        </small>
     </h1>
 </div>
 
@@ -14,7 +27,7 @@
             <div class="widget-header widget-header-large">
                 <h3 class="widget-title grey lighter">
                     <i class="ace-icon fa fa-leaf dark"></i>
-                    ${article.title}
+                ${article.title}
                 </h3>
 
                 <div class="widget-toolbar no-border invoice-info">
@@ -37,7 +50,7 @@
                     <div class="space-10"></div>
 
                     <div class="markdown">
-                        ${article.content}
+                    ${article.content}
                     </div>
 
                     <div class="space-20"></div>
