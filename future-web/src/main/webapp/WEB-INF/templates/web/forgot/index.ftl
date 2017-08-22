@@ -11,7 +11,7 @@
 
             <div class="space-6"></div>
 
-            <form id="forgot-form" action="${ctx}/forgot" method="post" novalidate="novalidate">
+            <form id="forgot-form" action="${ctx}/user/forgot" method="post" novalidate="novalidate">
                 <div>
                     <label for="username">手机号<span class="red">*</span></label>
                     <div class="input-icon input-icon-right">

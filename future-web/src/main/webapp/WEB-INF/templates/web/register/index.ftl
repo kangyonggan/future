@@ -11,7 +11,7 @@
 
             <div class="space-6"></div>
 
-            <form id="register-form" action="${ctx}/register" method="post" novalidate="novalidate">
+            <form id="register-form" action="${ctx}/user/register" method="post" novalidate="novalidate">
                 <div>
                     <label for="username">手机号<span class="red">*</span></label>
                     <div class="input-icon input-icon-right">
