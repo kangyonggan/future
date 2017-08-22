@@ -23,6 +23,16 @@ public interface ArticleService {
     List<Article> searchArticles(int pageNum, String username, String categoryCode, String status, String title);
 
     /**
+     * 搜索文章
+     *
+     * @param pageNum
+     * @param categoryCode
+     * @param key
+     * @return
+     */
+    List<Article> searchArticles(int pageNum, String categoryCode, String key);
+
+    /**
      * 查找文章
      *
      * @param id
@@ -69,4 +79,10 @@ public interface ArticleService {
      */
     Article findNextArticle(Long id, String username);
 
+    /**
+     * 获取可用的文章
+     *
+     * @param id
+     */
+    Article findActiveArticleById(Long id);
 }

@@ -27,9 +27,19 @@ import java.util.Map;
  * @since 2017/1/8
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("user")
 @Log4j2
 public class LoginController extends BaseController {
+
+    /**
+     * 模板
+     *
+     * @return
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public String layout() {
+        return "web/layout";
+    }
 
     /**
      * 登录界面

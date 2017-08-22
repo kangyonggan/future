@@ -20,7 +20,7 @@ import java.util.Map;
  * @since 8/7/17
  */
 @Controller
-@RequestMapping("forgot")
+@RequestMapping("user/forgot")
 @Log4j2
 public class ForgotController extends BaseController {
 

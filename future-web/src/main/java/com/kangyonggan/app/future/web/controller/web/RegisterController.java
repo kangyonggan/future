@@ -20,7 +20,7 @@ import java.util.Map;
  * @since 8/7/17
  */
 @Controller
-@RequestMapping("register")
+@RequestMapping("user/register")
 @Log4j2
 public class RegisterController extends BaseController {
 

@@ -1,0 +1,4 @@
+$(function () {
+    $(".sim-page").simPage();
+});
+
