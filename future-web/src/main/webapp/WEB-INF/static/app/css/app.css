@@ -126,36 +126,10 @@ input[readonly].readonly {
 .markdown p {
     color: #555;
     line-height: 2;
+    font-size: 16px;
 }
 
 .markdown img {
     max-width: 100%;
-}
-
-.markdown blockquote {
-    padding: 0 15px;
-    color: #666;
-    border-left: 6px solid #ddd;
-    margin-left: 0;
-    height: 35px;
-    font-size: 14px;
-    line-height: 35px;
-}
-
-.markdown a {
-    color: #666;
-}
-
-.markdown table {
-    border-collapse: collapse;
-}
-
-.markdown table tr td, th {
-    border: 1px solid #555;
-    padding: 6px 10px;
-}
-
-.markdown table a {
-    color: #555;
 }
 /*markdown*/
