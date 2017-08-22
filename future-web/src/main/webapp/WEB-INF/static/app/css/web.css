@@ -84,7 +84,7 @@ body {
 .article-list .article .title a {
     font-size: 30px;
     margin-top: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     line-height: 1.1;
     font-weight: 500;
     color: #202020;
@@ -103,16 +103,13 @@ body {
     border-bottom: 3px solid #000;
 }
 
-.article-list .article .info {
-    margin-top: 10px;
-}
-
 .article-list .article .info span {
     font-size: 14px;
+    color: #999;
 }
 
 .article-list .article .info span a {
-    color: #666666;
+    color: #999;
 }
 
 .article-list .article .info span:after {
@@ -196,6 +193,9 @@ body {
 }
 
 /*markdown*/
+.markdown {
+    margin-top: 10px;
+}
 .markdown p {
     color: #555;
     line-height: 2;
