@@ -415,7 +415,7 @@ public class MBookController {
             List<Section> sections = sectionService.findNext100Sections(section.getBookCode(), section.getCode());
             response.setSections(sections);
             response.setRespCo(Resp.SUCCESS.getRespCo());
-            response.setRespCo(Resp.SUCCESS.getRespMsg());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
         } catch (Exception e) {
             log.warn("查找小说后面100章异常", e);
             response.setRespCo(Resp.FAILURE.getRespCo());

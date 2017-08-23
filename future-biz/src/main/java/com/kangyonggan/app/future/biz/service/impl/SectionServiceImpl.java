@@ -300,7 +300,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
     @Override
     public List<Section> findNext100Sections(Integer bookCode, Integer code) {
         Example example = new Example(Section.class);
-        example.createCriteria().andEqualTo("bookCode", code).andGreaterThanOrEqualTo("code", code);
+        example.createCriteria().andEqualTo("bookCode", bookCode).andGreaterThanOrEqualTo("code", code);
 
         example.setOrderByClause("code asc");
 
