@@ -356,6 +356,76 @@ public class MBookController {
     }
 
     /**
+     * 更新小说最后阅读章节
+     *
+     * @param username
+     * @param sectionCode
+     * @return
+     */
+    @RequestMapping(value = "sectionFav", method = RequestMethod.POST)
+    public CommonResponse sectionFav(@RequestParam("username") String username, @RequestParam("sectionCode") int sectionCode) {
+        CommonResponse response = new CommonResponse();
+
+        try {
+            Section section = sectionService.findSectionByCode(sectionCode);
+
+            if (section == null) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("不存在的章节");
+                return response;
+            }
+
+            Book favorite = bookService.findFavorite(username, section.getBookCode());
+            if (favorite != null) {
+                bookService.updateFavoriteLastSection(username, section.getBookCode(), section.getCode());
+                response.setRespCo(Resp.SUCCESS.getRespCo());
+                response.setRespMsg(Resp.SUCCESS.getRespMsg());
+            } else {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("没有收藏此小说，无法更新最后阅读章节");
+            }
+        } catch (Exception e) {
+            log.warn("更新小说最后阅读章节异常", e);
+            response.setRespCo(Resp.FAILURE.getRespCo());
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
+        }
+
+        return response;
+    }
+
+    /**
+     * 查找小说后面100章
+     *
+     * @param sectionCode
+     * @return
+     */
+    @RequestMapping(value = "sectionCache", method = RequestMethod.POST)
+    public SectionsResponse sectionCache(@RequestParam("sectionCode") int sectionCode) {
+        SectionsResponse response = new SectionsResponse();
+
+        try {
+            Section section = sectionService.findSectionByCode(sectionCode);
+
+            if (section == null) {
+                response.setRespCo(Resp.FAILURE.getRespCo());
+                response.setRespMsg("不存在的章节");
+                return response;
+            }
+
+            List<Section> sections = sectionService.findNext100Sections(section.getBookCode(), section.getCode());
+            response.setSections(sections);
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespCo(Resp.SUCCESS.getRespMsg());
+        } catch (Exception e) {
+            log.warn("查找小说后面100章异常", e);
+            response.setRespCo(Resp.FAILURE.getRespCo());
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
+        }
+
+        return response;
+    }
+
+    /**
      * 查找小说全部章节
      *
      * @param bookCode

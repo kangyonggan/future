@@ -296,4 +296,15 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
 
         return sections.isEmpty() ? null : sections.get(0);
     }
+
+    @Override
+    public List<Section> findNext100Sections(Integer bookCode, Integer code) {
+        Example example = new Example(Section.class);
+        example.createCriteria().andEqualTo("bookCode", code).andGreaterThanOrEqualTo("code", code);
+
+        example.setOrderByClause("code asc");
+
+        PageHelper.startPage(1, 100);
+        return myMapper.selectByExample(example);
+    }
 }

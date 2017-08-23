@@ -65,4 +65,13 @@ public interface SectionService {
      * @return
      */
     Section findBookFirstSection(int bookCode);
+
+    /**
+     * 查找后面100章
+     *
+     * @param bookCode
+     * @param code
+     * @return
+     */
+    List<Section> findNext100Sections(Integer bookCode, Integer code);
 }
