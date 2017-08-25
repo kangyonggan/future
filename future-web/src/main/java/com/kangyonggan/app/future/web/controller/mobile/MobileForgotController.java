@@ -2,12 +2,9 @@ package com.kangyonggan.app.future.web.controller.mobile;
 
 import com.kangyonggan.app.future.biz.service.TokenService;
 import com.kangyonggan.app.future.biz.service.UserService;
-import com.kangyonggan.app.future.common.util.Digests;
-import com.kangyonggan.app.future.common.util.Encodes;
-import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.constants.TokenType;
-import com.kangyonggan.app.future.model.dto.RegisterResponse;
+import com.kangyonggan.app.future.model.dto.TokenResponse;
 import com.kangyonggan.app.future.model.vo.Token;
 import com.kangyonggan.app.future.model.vo.User;
 import lombok.extern.log4j.Log4j2;
@@ -24,37 +21,36 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 8/11/17
  */
 @RestController
-@RequestMapping("m")
+@RequestMapping("mobile/forgot")
 @Log4j2
-public class MRegisterController {
-
-    @Autowired
-    private UserService userService;
+public class MobileForgotController {
 
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private UserService userService;
+
     /**
-     * 注册
+     * 找回密码
      *
      * @param user
      * @param authCode
      * @return
      */
-    @RequestMapping(value = "register", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public RegisterResponse register(User user, String authCode) {
-        log.info("用户注册入参：{}, authCode:{}", user, authCode);
-        RegisterResponse response = new RegisterResponse();
+    public TokenResponse register(User user, String authCode) {
+        log.info("用户找回密码入参：{}, authCode:{}", user, authCode);
+        TokenResponse response = new TokenResponse();
 
         try {
-
-            Token token = tokenService.findTokenByMobileAndType(user.getUsername(), TokenType.REGISTER.getType());
+            Token token = tokenService.findTokenByMobileAndType(user.getUsername(), TokenType.FORGOT.getType());
             if (token == null) {
                 response.setRespCo(Resp.FAILURE.getRespCo());
                 response.setRespMsg("验证码已失效，请重新获取");
 
-                log.info("用户注册出参：{}", response);
+                log.info("用户找回密码出参：{}", response);
                 return response;
             }
             String realCaptcha = token.getCode();
@@ -65,41 +61,27 @@ public class MRegisterController {
                 response.setRespCo(Resp.FAILURE.getRespCo());
                 response.setRespMsg("验证码错误");
 
-                log.info("用户注册出参：{}", response);
+                log.info("用户找回密码出参：{}", response);
                 return response;
             }
 
-            try {
-                userService.saveUserWithDefaultRole(user);
-            } catch (Exception e) {
-                response.setRespCo(Resp.FAILURE.getRespCo());
-                response.setRespMsg("该手机号已被注册");
-            }
+            userService.updateUserPassword(user);
 
             // 删除短信的token
             tokenService.deleteTokenById(token.getId());
 
-            response.setRespCo(Resp.SUCCESS.getRespCo());
-            response.setRespMsg(Resp.SUCCESS.getRespMsg());
-            String code = Encodes.encodeHex(Digests.generateSalt(AppConstants.SALT_SIZE));
-            response.setToken(code);
-
             // 清除此用户的登录token
             tokenService.deleteTokensByMobileAndType(user.getUsername(), TokenType.LOGIN.getType());
 
-            // 保存登录的token
-            Token tk = new Token();
-            tk.setCode(code);
-            tk.setMobile(user.getUsername());
-            tk.setType(TokenType.LOGIN.getType());
-            tokenService.saveToken(tk);
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
         } catch (Exception e) {
-            log.warn("注册异常", e);
+            log.warn("找回密码异常", e);
             response.setRespCo(Resp.FAILURE.getRespCo());
             response.setRespMsg(Resp.FAILURE.getRespMsg());
         }
 
-        log.info("用户注册出参：{}", response);
+        log.info("用户找回密码出参：{}", response);
         return response;
     }
 

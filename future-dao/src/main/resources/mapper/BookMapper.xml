@@ -28,54 +28,6 @@
     <select id="selectAllCategoryWithBookCount" resultType="com.kangyonggan.app.future.model.vo.Category">
         SELECT count(*) AS bookCnt, category_code AS code, category_name AS name
         FROM book GROUP BY category_code, category_name
-
-
-
-
-
-
-
-         ORDER BY bookCnt DESC
-    </select>
-
-    <select id="selectFavoriteBooksByUsername" resultMap="BaseResultMap">
-        SELECT b.*, f.last_section_code FROM book b, favorite f
-        WHERE b.code = f.book_code AND f.username = #{username}
-        ORDER BY f.updated_time DESC
-    </select>
-
-    <insert id="insertFavorite">
-        INSERT INTO favorite (username, book_code, last_section_code)
-        VALUE (#{username}, #{bookCode}, #{lastSectionCode})
-    </insert>
-
-    <delete id="deleteFavorite">
-        DELETE FROM favorite WHERE username = #{username} AND book_code = #{bookCode}
-    </delete>
-
-    <select id="selectFavorite" resultMap="BaseResultMap">
-        SELECT b.*, f.last_section_code FROM book b, favorite f
-        WHERE b.code = f.book_code AND username = #{username} AND b.code = #{bookCode}
-    </select>
-
-    <update id="updateFavoriteLastSection">
-        UPDATE favorite SET last_section_code = #{lastSectionCode} WHERE username = #{username} AND book_code = #{bookCode}
-    </update>
-
-    <select id="searchFavoriteBooks" resultMap="BaseResultMap">
-        SELECT b.*, f.last_section_code, f.username FROM book b, favorite f
-        <where>
-            b.code = f.book_code
-            <if test="username != ''">
-              AND f.username = #{username}
-            </if>
-            <if test="bookCode != ''">
-              AND b.code = #{bookCode}
-            </if>
-            <if test="bookName != ''">
-                AND b.name = #{bookName}
-            </if>
-        </where>
-        ORDER BY f.updated_time DESC
+        ORDER BY bookCnt DESC
     </select>
 </mapper>

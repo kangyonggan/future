@@ -243,45 +243,6 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
         return myMapper.select(book);
     }
 
-    @Override
-    @LogTime
-    public List<Book> findFavoriteBooksByUsername(int pageNum, int pageSize, String username) {
-        PageHelper.startPage(pageNum, pageSize);
-
-        return bookMapper.selectFavoriteBooksByUsername(username);
-    }
-
-    @Override
-    @LogTime
-    public void saveFavorite(String username, int bookCode, int lastSectionCode) {
-        bookMapper.insertFavorite(username, bookCode, lastSectionCode);
-    }
-
-    @Override
-    @LogTime
-    public void deleteFavorite(String username, int bookCode) {
-        bookMapper.deleteFavorite(username, bookCode);
-    }
-
-    @Override
-    @LogTime
-    public Book findFavorite(String username, int bookCode) {
-        return bookMapper.selectFavorite(username, bookCode);
-    }
-
-    @Override
-    @LogTime
-    public void updateFavoriteLastSection(String username, Integer bookCode, Integer lastSectionCode) {
-        bookMapper.updateFavoriteLastSection(username, bookCode, lastSectionCode);
-    }
-
-    @Override
-    @LogTime
-    public List<Book> searchFavoriteBooks(int pageNum, String username, String bookCode, String bookName) {
-        PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
-        return bookMapper.searchFavoriteBooks(username, bookCode, bookName);
-    }
-
     /**
      * 解析小说详情
      *

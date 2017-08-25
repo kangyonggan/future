@@ -1,6 +1,6 @@
 package com.kangyonggan.app.future.model.dto;
 
-import com.kangyonggan.app.future.model.vo.Section;
+import com.kangyonggan.app.future.model.vo.Category;
 import lombok.Data;
 
 import java.util.List;
@@ -10,10 +10,8 @@ import java.util.List;
  * @since 8/11/17
  */
 @Data
-public class SectionsResponse extends CommonResponse {
+public class CategoriesResponse extends CommonResponse {
 
-    private List<Section> sections;
+    private List<Category> categories;
 
 }
-
-

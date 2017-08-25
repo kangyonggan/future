@@ -417,33 +417,6 @@ INSERT INTO menu
   ('SYSTEM_TOKEN', '验证码查询', 'SYSTEM', 'system/token', 5, '');
 INSERT INTO role_menu (role_code, menu_code) VALUE ('ROLE_ADMIN', 'SYSTEM_TOKEN');
 
-# 小说收藏
-INSERT INTO menu
-(code, name, pcode, url, sort, icon)
-  VALUE
-  ('BOOK_FAVORITE', '小说收藏', 'BOOK', 'book/favorite', 1, '');
-INSERT INTO role_menu (role_code, menu_code) VALUE ('ROLE_ADMIN', 'BOOK_FAVORITE');
-
-# 我的收藏
--- ----------------------------
---  Table structure for favorite
--- ----------------------------
-DROP TABLE
-IF EXISTS favorite;
-
-CREATE TABLE favorite
-(
-  username          VARCHAR(20) NOT NULL
-  COMMENT '用户名（手机号）',
-  book_code         INT(11),
-  last_section_code INT(11)     NOT NULL                    DEFAULT 0
-  COMMENT '最后阅读的章节代码',
-  updated_time      TIMESTAMP   NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-  COMMENT '更新时间',
-  PRIMARY KEY (username, book_code)
-)
-  COMMENT '小说收藏表';
-
 # 数据迁移
 -- ----------------------------
 --  Table structure for article

@@ -10,16 +10,10 @@ import java.util.List;
  * @since 8/11/17
  */
 @Data
-public class FindHotBookResponse extends CommonResponse {
+public class BooksResponse extends CommonResponse {
 
     private List<Book> books;
 
-    @Override
-    public String toString() {
-        return "FindHotBookResponse{" +
-                "books=" + books +
-                '}' + "," + super.toString();
-    }
 }
 
 

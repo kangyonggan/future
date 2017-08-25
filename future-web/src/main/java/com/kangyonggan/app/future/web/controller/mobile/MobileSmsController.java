@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 8/11/17
  */
 @RestController
-@RequestMapping("m/sms")
+@RequestMapping("mobile/sms")
 @Log4j2
-public class MSmsController {
+public class MobileSmsController {
 
     @Autowired
     private SmsService smsService;
@@ -41,7 +41,7 @@ public class MSmsController {
      * @param type
      * @return
      */
-    @RequestMapping(value = "send", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public CommonResponse sendSms(@RequestParam("mobile") String mobile, @RequestParam("type") String type) {
         log.info("发短信请求入参:mobile:{}, type:{}", mobile, type);
         CommonResponse response = new CommonResponse();

@@ -7,7 +7,7 @@ import com.kangyonggan.app.future.common.util.Encodes;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.constants.TokenType;
-import com.kangyonggan.app.future.model.dto.LoginResponse;
+import com.kangyonggan.app.future.model.dto.TokenResponse;
 import com.kangyonggan.app.future.model.vo.Token;
 import com.kangyonggan.app.future.model.vo.User;
 import lombok.extern.log4j.Log4j2;
@@ -24,9 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 8/11/17
  */
 @RestController
-@RequestMapping("m")
+@RequestMapping("mobile/login")
 @Log4j2
-public class MLoginController {
+public class MobileLoginController {
 
     @Autowired
     private UserService userService;
@@ -41,10 +41,10 @@ public class MLoginController {
      * @param token
      * @return
      */
-    @RequestMapping(value = "login", method = RequestMethod.POST)
-    public LoginResponse login(User user, String token) {
+    @RequestMapping(method = RequestMethod.POST)
+    public TokenResponse login(User user, String token) {
         log.info("用户登录入参:{}, token={}", user, token);
-        LoginResponse response = new LoginResponse();
+        TokenResponse response = new TokenResponse();
 
         try {
             // 使用token登录
