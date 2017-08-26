@@ -1,6 +1,7 @@
 package com.kangyonggan.app.future.web.controller.mobile;
 
 import com.kangyonggan.app.future.biz.service.BookService;
+import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.dto.BooksResponse;
 import com.kangyonggan.app.future.model.vo.Book;
@@ -61,12 +62,7 @@ public class MobileBookController {
      */
     @RequestMapping(value = "search", method = RequestMethod.POST)
     public BooksResponse search(@RequestParam("key") String key) {
-        try {
-            key = new String(key.getBytes("ISO-8859-1"), "UTF-8");
-            log.info("转码后key:{}", key);
-        } catch (Exception e) {
-            log.warn("转码异常", e);
-        }
+        key = StringUtil.decode(key);
 
         BooksResponse response = new BooksResponse();
 

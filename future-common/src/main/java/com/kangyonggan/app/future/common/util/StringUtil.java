@@ -261,4 +261,17 @@ public class StringUtil {
         return Pattern.matches(REGEX_URL, url);
     }
 
+    /**
+     * 接收手机端转码
+     *
+     * @param data
+     * @return
+     */
+    public static String decode(String data) {
+        try {
+            return new String(data.getBytes("ISO-8859-1"), "UTF-8");
+        } catch (Exception e) {
+            return data;
+        }
+    }
 }
