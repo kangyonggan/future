@@ -83,6 +83,10 @@ public class MobileLoginController {
                 token = Encodes.encodeHex(Digests.generateSalt(AppConstants.SALT_SIZE));
                 response.setToken(token);
 
+                u.setPassword("");
+                u.setSalt("");
+                response.setUser(u);
+
                 // 清除此用户的登录token
                 tokenService.deleteTokensByMobileAndType(user.getUsername(), TokenType.LOGIN.getType());
 

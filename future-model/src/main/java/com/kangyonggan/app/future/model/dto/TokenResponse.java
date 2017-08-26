@@ -1,5 +1,6 @@
 package com.kangyonggan.app.future.model.dto;
 
+import com.kangyonggan.app.future.model.vo.User;
 import lombok.Data;
 
 /**
@@ -10,5 +11,7 @@ import lombok.Data;
 public class TokenResponse extends CommonResponse {
 
     private String token;
+
+    private User user;
 
 }
