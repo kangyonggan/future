@@ -83,6 +83,10 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     public void saveUserWithDefaultRole(User user) {
         entryptPassword(user);
 
+        if (StringUtils.isEmpty(user.getRealname())) {
+            user.setRealname("未来");
+        }
+
         myMapper.insertSelective(user);
 
         saveUserRoles(user.getUsername(), AppConstants.DEFAULT_ROLE_CODE);
