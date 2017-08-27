@@ -1,21 +1,27 @@
 package com.kangyonggan.app.future.web.controller.mobile;
 
+import com.kangyonggan.app.future.biz.service.MessageService;
 import com.kangyonggan.app.future.biz.service.TokenService;
 import com.kangyonggan.app.future.biz.service.UserService;
 import com.kangyonggan.app.future.common.util.Digests;
 import com.kangyonggan.app.future.common.util.Encodes;
 import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.model.constants.AppConstants;
+import com.kangyonggan.app.future.model.constants.MessageType;
 import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.constants.TokenType;
 import com.kangyonggan.app.future.model.dto.CommonResponse;
 import com.kangyonggan.app.future.model.dto.TokenResponse;
+import com.kangyonggan.app.future.model.vo.Message;
 import com.kangyonggan.app.future.model.vo.Token;
 import com.kangyonggan.app.future.model.vo.User;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * @author kangyonggan
@@ -31,6 +37,11 @@ public class MobileUserController {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private MessageService messageService;
+
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
 
     /**
      * 登录
@@ -282,7 +293,15 @@ public class MobileUserController {
             response.setRespCo(Resp.SUCCESS.getRespCo());
             response.setRespMsg(Resp.SUCCESS.getRespMsg());
 
-            // TODO 发送系统通知
+            // 发送系统通知
+            Message message = new Message();
+            message.setType(MessageType.UPDATE_PASSWORD.getType());
+            message.setIsGroup((byte) 0);
+            message.setCreatedUsername(user.getUsername());
+            message.setTitle("修改密码通知");
+            message.setContent("尊敬的用户，您好！您于" + dateFormat.format(new Date()) + "修改了密码，如非本人操作，请马上修改密码。");
+
+            messageService.save(message, user.getUsername());
         } catch (Exception e) {
             log.warn("修改密码异常", e);
             response.setRespCo(Resp.FAILURE.getRespCo());

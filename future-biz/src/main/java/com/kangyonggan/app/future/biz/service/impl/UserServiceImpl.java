@@ -154,6 +154,16 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         return reqPassword.equals(user.getPassword());
     }
 
+    @Override
+    public List<User> findAllUsers() {
+        return myMapper.selectAll();
+    }
+
+    @Override
+    public List<User> findMessageUsers(Long messageId) {
+        return userMapper.selectMessageUsers(messageId);
+    }
+
     /**
      * 批量保存用户角色
      *

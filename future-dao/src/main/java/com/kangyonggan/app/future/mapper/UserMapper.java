@@ -16,4 +16,12 @@ public interface UserMapper extends MyMapper<User> {
      * @param roleCodes
      */
     void insertUserRoles(@Param("username") String username, @Param("roleCodes") List<String> roleCodes);
+
+    /**
+     * 查找消息接收人
+     *
+     * @param messageId
+     * @return
+     */
+    List<User> selectMessageUsers(Long messageId);
 }

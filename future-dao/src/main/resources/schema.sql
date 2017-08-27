@@ -446,9 +446,9 @@ CREATE TABLE article
   COMMENT '是否允许评论:{0:不允许, 1:允许}',
   is_stick      TINYINT                               NOT NULL                    DEFAULT 0
   COMMENT '是否置顶:{0:未置顶, 1:已置顶}',
-  is_deleted    TINYINT                               NOT NULL                    DEFAULT ''
+  is_deleted    TINYINT                               NOT NULL                    DEFAULT 0
   COMMENT '逻辑删除:{0:未删除, 1:已删除}',
-  status        VARCHAR(16)                           NOT NULL                    DEFAULT 0
+  status        VARCHAR(16)                           NOT NULL                    DEFAULT 'waiting'
   COMMENT '状态:{"waiting":"待审核", "reject":"审核未通过", "complete":"审核通过"}',
   created_time  TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
   COMMENT '创建时间',
@@ -479,5 +479,60 @@ INSERT INTO role_menu (role_code, menu_code) VALUES
 
 INSERT INTO role_menu (role_code, menu_code) VALUE ('ROLE_USER', 'USER_ARTICLE');
 
+## 系统消息
+-- ----------------------------
+--  Table structure for message
+-- ----------------------------
+DROP TABLE
+IF EXISTS message;
+
+CREATE TABLE message
+(
+  id               BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  title            VARCHAR(64)                           NOT NULL
+  COMMENT '消息标题',
+  content          LONGTEXT                              NOT NULL
+  COMMENT '消息内容',
+  type             VARCHAR(16)                           NOT NULL                    DEFAULT 'SYSTEM'
+  COMMENT '消息类型',
+  created_username VARCHAR(20)                           NOT NULL                    DEFAULT ''
+  COMMENT '创建人',
+  is_group         TINYINT                               NOT NULL                    DEFAULT '0'
+  COMMENT '是否群发:{0:群发, 1:部分发送}',
+  is_deleted       TINYINT                               NOT NULL                    DEFAULT '0'
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time     TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time     TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '系统消息表';
+CREATE INDEX id_created_time
+  ON message (created_time);
+
+-- ----------------------------
+--  Table structure for message_user
+-- ----------------------------
+DROP TABLE
+IF EXISTS message_user;
+
+CREATE TABLE message_user
+(
+  message_id BIGINT(20)  NOT NULL
+  COMMENT '系统消息ID',
+  username   VARCHAR(20) NOT NULL
+  COMMENT '接收人',
+  PRIMARY KEY (message_id, username)
+)
+  COMMENT '消息分发中间表';
+
+INSERT INTO menu
+(code, name, pcode, url, sort, icon)
+  VALUE
+  ('SYSTEM_MESSAGE', '系统消息', 'SYSTEM', 'system/message', 6, '');
+
+INSERT INTO role_menu (role_code, menu_code) VALUES
+  ('ROLE_ADMIN', 'SYSTEM_MESSAGE');
 
 

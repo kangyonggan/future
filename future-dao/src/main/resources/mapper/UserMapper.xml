@@ -26,4 +26,12 @@
             (#{username}, #{roleCode})
         </foreach>
     </insert>
+
+    <select id="selectMessageUsers" resultMap="BaseResultMap">
+        SELECT u.* FROM user u, message_user mu
+        <where>
+            u.username = mu.username
+            AND mu.message_id = #{messageId}
+        </where>
+    </select>
 </mapper>

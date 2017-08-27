@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kangyonggan.app.future.mapper.MessageMapper">
+    <resultMap id="BaseResultMap" type="com.kangyonggan.app.future.model.vo.Message">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="created_username" property="createdUsername" jdbcType="VARCHAR"/>
+        <result column="is_group" property="isGroup" jdbcType="TINYINT"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <delete id="deleteMessageUserByMessageId">
+        DELETE FROM message_user WHERE message_id = #{id}
+    </delete>
+
+    <insert id="insertMessageUsers">
+        INSERT INTO message_user (message_id, username)
+        VALUES
+        <foreach collection="usernames" item="username" separator=",">
+            (#{messageId}, #{username})
+        </foreach>
+    </insert>
+</mapper>

@@ -32,6 +32,9 @@ public class DashboardSystemDictionaryController extends BaseController {
     /**
      * 字典列表
      *
+     * @param pageNum
+     * @param type
+     * @param value
      * @param model
      * @return
      */
@@ -144,7 +147,7 @@ public class DashboardSystemDictionaryController extends BaseController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     @RequiresPermissions("SYSTEM_DICTIONARY")
     @ResponseBody
-    public Map<String, Object> update(@ModelAttribute("dictionary") @Valid Dictionary dictionary, BindingResult result) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public Map<String, Object> update(@ModelAttribute("dictionary") @Valid Dictionary dictionary, BindingResult result) {
         Map<String, Object> resultMap = getResultMap();
 
         if (!result.hasErrors()) {

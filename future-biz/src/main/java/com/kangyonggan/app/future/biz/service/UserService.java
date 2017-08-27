@@ -90,4 +90,19 @@ public interface UserService {
      * @return
      */
     boolean isEqualPassword(String password, User user);
+
+    /**
+     * 查找所有用户
+     *
+     * @return
+     */
+    List<User> findAllUsers();
+
+    /**
+     * 查询消息接收人
+     *
+     * @param messageId
+     * @return
+     */
+    List<User> findMessageUsers(Long messageId);
 }
