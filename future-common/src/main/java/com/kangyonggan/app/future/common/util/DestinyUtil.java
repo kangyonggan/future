@@ -125,7 +125,7 @@ public class DestinyUtil {
      * @return
      */
     private static int getDiZhiIndex(int num) {
-        return (num % DI_ZHI.length + 9) % SHENG_XIAO.length;
+        return (num % DI_ZHI.length + 9) % 12;
     }
 
     /**
@@ -176,7 +176,7 @@ public class DestinyUtil {
      * @return
      */
     public static String getShengXiao(int year) {
-        return SHENG_XIAO[getDiZhiIndex(year - 3)];
+        return SHENG_XIAO[(getDiZhiIndex(year - 3) + 2) % 12];
     }
 
     /**
