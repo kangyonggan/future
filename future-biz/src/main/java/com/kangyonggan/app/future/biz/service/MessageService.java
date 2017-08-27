@@ -74,4 +74,12 @@ public interface MessageService {
      * @param username
      */
     void updateMessageUser4Read(Long messageId, String username);
+
+    /**
+     * 查找未删除的消息
+     *
+     * @param id
+     * @return
+     */
+    Message findAbleMessageById(Long id);
 }

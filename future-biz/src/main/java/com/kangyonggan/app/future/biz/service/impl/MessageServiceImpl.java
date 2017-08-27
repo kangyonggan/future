@@ -103,4 +103,13 @@ public class MessageServiceImpl extends BaseService<Message> implements MessageS
     public void updateMessageUser4Read(Long messageId, String username) {
         messageMapper.updateMessageUser4Read(messageId, username);
     }
+
+    @Override
+    public Message findAbleMessageById(Long id) {
+        Message message = new Message();
+        message.setId(id);
+        message.setIsDeleted(AppConstants.IS_DELETED_NO);
+
+        return myMapper.selectOne(message);
+    }
 }

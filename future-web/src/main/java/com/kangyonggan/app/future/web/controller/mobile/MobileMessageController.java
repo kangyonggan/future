@@ -118,7 +118,7 @@ public class MobileMessageController {
      */
     @RequestMapping(value = "{id:[\\d]+}", method = RequestMethod.GET)
     public String messageRead(@PathVariable("id") Long id, Model model) {
-        Message message = messageService.findMessageById(id);
+        Message message = messageService.findAbleMessageById(id);
         message.setContent(MarkdownUtil.markdownToHtml(message.getContent()));
 
         model.addAttribute("message", message);
