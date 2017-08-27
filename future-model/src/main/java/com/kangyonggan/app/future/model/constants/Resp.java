@@ -9,7 +9,7 @@ import lombok.Getter;
 public enum Resp {
 
     SUCCESS("0000", "成功"),
-    FAILURE("0001", "失败");
+    FAILURE("0001", "通讯异常，请联系康永敢。");
 
     /**
      * 响应码
