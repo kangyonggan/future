@@ -2,7 +2,7 @@
 
 <tr id="message-${message.id}">
     <td>${message.id}</td>
-    <td>${message.title}</td>
+    <td><a href="${ctx}/mobile/message/${message.id}" target="_blank">${message.title}</a></td>
     <td><#include "type.ftl"></td>
     <td><#include "is-group.ftl"></td>
     <td>${message.createdUsername}</td>
