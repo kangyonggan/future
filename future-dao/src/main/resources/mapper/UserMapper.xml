@@ -17,6 +17,8 @@
         <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
         <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
         <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+
+        <result column="is_read" jdbcType="TINYINT" property="isRead"/>
     </resultMap>
 
     <insert id="insertUserRoles">
@@ -28,7 +30,7 @@
     </insert>
 
     <select id="selectMessageUsers" resultMap="BaseResultMap">
-        SELECT u.* FROM user u, message_user mu
+        SELECT u.*, mu.is_read FROM user u, message_user mu
         <where>
             u.username = mu.username
             AND mu.message_id = #{messageId}

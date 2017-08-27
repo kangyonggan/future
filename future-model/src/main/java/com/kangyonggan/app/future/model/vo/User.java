@@ -76,5 +76,11 @@ public class User implements Serializable {
     @Column(name = "updated_time")
     private Date updatedTime;
 
+    /**
+     * 是否已读
+     */
+    @Transient
+    private Byte isRead;
+
     private static final long serialVersionUID = 1L;
 }

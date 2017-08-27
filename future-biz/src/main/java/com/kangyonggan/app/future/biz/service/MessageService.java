@@ -50,4 +50,28 @@ public interface MessageService {
      * @param id
      */
     void deleteMessageById(Long id);
+
+    /**
+     * 查询未读消息数量
+     *
+     * @param username
+     * @return
+     */
+    int findMessageCount(String username);
+
+    /**
+     * 查找所有消息
+     *
+     * @param username
+     * @return
+     */
+    List<Message> findMessagesByUsername(String username);
+
+    /**
+     * 把消息更新为已读
+     *
+     * @param messageId
+     * @param username
+     */
+    void updateMessageUser4Read(Long messageId, String username);
 }

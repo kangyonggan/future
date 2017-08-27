@@ -14,6 +14,8 @@
         <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
         <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+
+        <result column="is_read" property="isRead" jdbcType="TINYINT"/>
     </resultMap>
 
     <delete id="deleteMessageUserByMessageId">
@@ -27,4 +29,31 @@
             (#{messageId}, #{username})
         </foreach>
     </insert>
+
+    <select id="selectMessageCount" resultType="Integer">
+        SELECT count(*) FROM message_user
+        <where>
+            username = #{username}
+            AND is_read = 0
+        </where>
+    </select>
+
+    <select id="selectMessagesByUsername" resultMap="BaseResultMap">
+      SELECT m.id, m.title, mu.is_read, d.value AS type
+      FROM message m, message_user mu, dictionary d
+      <where>
+          m.id = mu.message_id
+          AND mu.username = #{username}
+          AND m.type = d.code
+      </where>
+        ORDER BY mu.is_read ASC , m.created_time DESC
+    </select>
+
+    <update id="updateMessageUser4Read">
+        UPDATE message_user SET is_read = 1
+        <where>
+            message_id = #{messageId}
+            AND username = #{username}
+        </where>
+    </update>
 </mapper>

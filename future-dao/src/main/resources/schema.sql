@@ -523,6 +523,8 @@ CREATE TABLE message_user
   COMMENT '系统消息ID',
   username   VARCHAR(20) NOT NULL
   COMMENT '接收人',
+  is_read    TINYINT     NOT NULL                    DEFAULT '0'
+  COMMENT '是否已读:{0:未读, 1:已读}',
   PRIMARY KEY (message_id, username)
 )
   COMMENT '消息分发中间表';
@@ -534,5 +536,10 @@ INSERT INTO menu
 
 INSERT INTO role_menu (role_code, menu_code) VALUES
   ('ROLE_ADMIN', 'SYSTEM_MESSAGE');
+
+INSERT INTO dictionary (code, value, type, sort)
+VALUES
+  ('SYSTEM', '系统消息', 'MESSAGE_TYPE', 0),
+  ('UPDATE_PASSWORD', '修改密码', 'MESSAGE_TYPE', 1);
 
 

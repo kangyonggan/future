@@ -86,4 +86,21 @@ public class MessageServiceImpl extends BaseService<Message> implements MessageS
         // 删除消息分发表的数据
         messageMapper.deleteMessageUserByMessageId(id);
     }
+
+    @Override
+    @LogTime
+    public int findMessageCount(String username) {
+        return messageMapper.selectMessageCount(username);
+    }
+
+    @Override
+    @LogTime
+    public List<Message> findMessagesByUsername(String username) {
+        return messageMapper.selectMessagesByUsername(username);
+    }
+
+    @Override
+    public void updateMessageUser4Read(Long messageId, String username) {
+        messageMapper.updateMessageUser4Read(messageId, username);
+    }
 }

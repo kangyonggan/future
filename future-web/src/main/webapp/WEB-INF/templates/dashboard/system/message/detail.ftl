@@ -42,6 +42,7 @@
                             <th>手机号</th>
                             <th>真实姓名</th>
                             <th>邮箱</th>
+                            <th>是否已读</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,6 +51,7 @@
                             <td>${user.username}</td>
                             <td>${user.realname}</td>
                             <td>${user.email}</td>
+                            <td><#include "is-read.ftl"></td>
                         </tr>
                         </#list>
                         </tbody>

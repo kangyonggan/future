@@ -8,10 +8,10 @@ import lombok.Getter;
  */
 public enum DictionaryType {
 
-    TRANS_CO("TRANS_CO", "交易码"),
-    ID_TP("ID_TP", "证件类型"),
-    ACCT_TP("ACCT_TP", "账户类型"),
-    CURR_CO("CURR_CO", "币种");
+    AREA("AREA", "地区"),
+    ASCLL("ASCLL", "ascll码"),
+    HTML("HTML", "html转移字符"),
+    MESSAGE_TYPE("MESSAGE_TYPE", "消息类型");
 
     /**
      * 类型

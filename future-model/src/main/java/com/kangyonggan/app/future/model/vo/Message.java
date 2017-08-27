@@ -60,5 +60,8 @@ public class Message implements Serializable {
      */
     private String content;
 
+    @Transient
+    private Byte isRead;
+
     private static final long serialVersionUID = 1L;
 }
