@@ -8,8 +8,10 @@ import lombok.Getter;
  */
 public enum MessageType {
 
-    UPDATE_PASSWORD("UPDATE_PASSWORD", "修改密码"),
-    SYSTEM("SYSTEM", "系统消息");
+    SYSTEM("SYSTEM", "系统消息"),
+    ADVICE("ADVICE", "意见反馈"),
+    REPLY("REPLY", "反馈结果"),
+    UPDATE_PASSWORD("UPDATE_PASSWORD", "修改密码");
 
     /**
      * 类型

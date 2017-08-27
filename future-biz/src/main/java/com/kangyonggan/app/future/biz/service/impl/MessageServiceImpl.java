@@ -112,4 +112,16 @@ public class MessageServiceImpl extends BaseService<Message> implements MessageS
 
         return myMapper.selectOne(message);
     }
+
+    @Override
+    @LogTime
+    public Message findReplyMessage(Long id) {
+        return messageMapper.selectReplyMessage(id);
+    }
+
+    @Override
+    @LogTime
+    public void updateMessageUser4Reply(Long id, String username) {
+        messageMapper.updateMessageUser4Reply(id, username);
+    }
 }

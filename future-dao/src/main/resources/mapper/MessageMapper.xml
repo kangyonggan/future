@@ -57,4 +57,21 @@
             AND username = #{username}
         </where>
     </update>
+
+    <select id="selectReplyMessage" resultMap="BaseResultMap">
+        SELECT m.* FROM message m, message_user mu
+        <where>
+            m.id = mu.message_id
+            AND m.id = #{id}
+            AND mu.is_reply = 1
+        </where>
+    </select>
+
+    <update id="updateMessageUser4Reply">
+        UPDATE message_user SET is_reply = 1
+        <where>
+            message_id = #{messageId}
+            AND username = #{username}
+        </where>
+    </update>
 </mapper>

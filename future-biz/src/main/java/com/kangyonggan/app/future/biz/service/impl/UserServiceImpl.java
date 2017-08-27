@@ -164,6 +164,12 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         return userMapper.selectMessageUsers(messageId);
     }
 
+    @Override
+    @LogTime
+    public List<User> findAllAdmin() {
+        return userMapper.selectAllAdmin();
+    }
+
     /**
      * 批量保存用户角色
      *

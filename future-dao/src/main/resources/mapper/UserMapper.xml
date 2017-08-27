@@ -19,6 +19,7 @@
         <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
 
         <result column="is_read" jdbcType="TINYINT" property="isRead"/>
+        <result column="is_reply" jdbcType="TINYINT" property="isReply"/>
     </resultMap>
 
     <insert id="insertUserRoles">
@@ -30,10 +31,21 @@
     </insert>
 
     <select id="selectMessageUsers" resultMap="BaseResultMap">
-        SELECT u.*, mu.is_read FROM user u, message_user mu
+        SELECT u.*, mu.is_read,
+        (SELECT count(*) FROM message_user t WHERE t.message_id = #{messageId} AND t.username = u.username AND t.is_reply = 1) AS is_reply
+        FROM user u, message_user mu
         <where>
             u.username = mu.username
             AND mu.message_id = #{messageId}
         </where>
+    </select>
+
+    <select id="selectAllAdmin" resultMap="BaseResultMap">
+        SELECT u.username FROM user u, user_role ur
+        <where>
+            u.username = ur.username
+            AND ur.role_code = 'ROLE_ADMIN'
+        </where>
+        ORDER BY u.id DESC
     </select>
 </mapper>

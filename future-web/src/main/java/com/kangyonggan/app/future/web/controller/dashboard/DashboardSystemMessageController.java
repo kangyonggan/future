@@ -140,9 +140,15 @@ public class DashboardSystemMessageController extends BaseController {
         Message message = messageService.findMessageById(id);
         message.setContent(MarkdownUtil.markdownToHtml(message.getContent()));
 
+        Message replyMessage = messageService.findReplyMessage(id);
+        if (replyMessage != null) {
+            replyMessage.setContent(MarkdownUtil.markdownToHtml(replyMessage.getContent()));
+        }
+
         List<User> users = userService.findMessageUsers(id);
 
         model.addAttribute("message", message);
+        model.addAttribute("replyMessage", replyMessage);
         model.addAttribute("users", users);
         model.addAttribute("types", MessageType.values());
         return getPathDetail();

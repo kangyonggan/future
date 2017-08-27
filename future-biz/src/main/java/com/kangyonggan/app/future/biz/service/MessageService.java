@@ -82,4 +82,20 @@ public interface MessageService {
      * @return
      */
     Message findAbleMessageById(Long id);
+
+    /**
+     * 查找回复的消息
+     *
+     * @param id
+     * @return
+     */
+    Message findReplyMessage(Long id);
+
+    /**
+     * 更新回复状态
+     *
+     * @param id
+     * @param username
+     */
+    void updateMessageUser4Reply(Long id, String username);
 }

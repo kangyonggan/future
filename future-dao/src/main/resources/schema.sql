@@ -519,12 +519,16 @@ IF EXISTS message_user;
 
 CREATE TABLE message_user
 (
-  message_id BIGINT(20)  NOT NULL
+  message_id   BIGINT(20)  NOT NULL
   COMMENT '系统消息ID',
-  username   VARCHAR(20) NOT NULL
+  username     VARCHAR(20) NOT NULL
   COMMENT '接收人',
-  is_read    TINYINT     NOT NULL                    DEFAULT '0'
+  is_read      TINYINT     NOT NULL                    DEFAULT '0'
   COMMENT '是否已读:{0:未读, 1:已读}',
+  is_reply     TINYINT     NOT NULL                    DEFAULT '0'
+  COMMENT '是否已回复:{0:未回复, 1:已回复}',
+  updated_time TIMESTAMP   NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间',
   PRIMARY KEY (message_id, username)
 )
   COMMENT '消息分发中间表';
@@ -540,6 +544,8 @@ INSERT INTO role_menu (role_code, menu_code) VALUES
 INSERT INTO dictionary (code, value, type, sort)
 VALUES
   ('SYSTEM', '系统消息', 'MESSAGE_TYPE', 0),
-  ('UPDATE_PASSWORD', '修改密码', 'MESSAGE_TYPE', 1);
+  ('UPDATE_PASSWORD', '修改密码', 'MESSAGE_TYPE', 1),
+  ('ADVICE', '意见反馈', 'MESSAGE_TYPE', 2),
+  ('REPLY', '反馈结果', 'MESSAGE_TYPE', 3);
 
 

@@ -43,6 +43,7 @@
                             <th>真实姓名</th>
                             <th>邮箱</th>
                             <th>是否已读</th>
+                            <th>是否回复</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -52,11 +53,11 @@
                             <td>${user.realname}</td>
                             <td>${user.email}</td>
                             <td><#include "is-read.ftl"></td>
+                            <td>${(user.isReply==1)?string('已回复', '未回复')}</td>
                         </tr>
                         </#list>
                         </tbody>
                     </table>
-
 
                     <div class="space-20"></div>
 
@@ -66,6 +67,16 @@
                         ${message.content}
                     </div>
 
+                    <#if replyMessage??>
+                        <div class="space-20"></div>
+
+                        <div class="hr hr8 hr-double hr-dotted"></div>
+
+                        <h5><i class="ace-icon fa fa-comments icon-only"></i>回复内容:</h5>
+                        <div class="markdown">
+                        ${replyMessage.content}
+                        </div>
+                    </#if>
                 </div>
             </div>
         </div>

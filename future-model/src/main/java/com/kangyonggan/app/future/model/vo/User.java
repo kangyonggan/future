@@ -82,5 +82,11 @@ public class User implements Serializable {
     @Transient
     private Byte isRead;
 
+    /**
+     * 是否回复
+     */
+    @Transient
+    private Byte isReply;
+
     private static final long serialVersionUID = 1L;
 }

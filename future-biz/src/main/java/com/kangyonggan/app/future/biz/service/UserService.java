@@ -105,4 +105,12 @@ public interface UserService {
      * @return
      */
     List<User> findMessageUsers(Long messageId);
+
+    /**
+     * 查找所有管理员
+     *
+     * @return
+     */
+    List<User> findAllAdmin();
+
 }

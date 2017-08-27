@@ -24,4 +24,12 @@ public interface UserMapper extends MyMapper<User> {
      * @return
      */
     List<User> selectMessageUsers(Long messageId);
+
+    /**
+     * 查找所有管理员
+     *
+     * @return
+     */
+    List<User> selectAllAdmin();
+
 }

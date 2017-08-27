@@ -47,4 +47,21 @@ public interface MessageMapper extends MyMapper<Message> {
      * @param username
      */
     void updateMessageUser4Read(@Param("messageId") Long messageId, @Param("username") String username);
+
+    /**
+     * 查找被回复的消息
+     *
+     * @param id
+     * @return
+     */
+    Message selectReplyMessage(Long id);
+
+    /**
+     * 更新回复状态
+     *
+     * @param messageId
+     * @param username
+     */
+    void updateMessageUser4Reply(@Param("messageId") Long messageId, @Param("username") String username);
+
 }
