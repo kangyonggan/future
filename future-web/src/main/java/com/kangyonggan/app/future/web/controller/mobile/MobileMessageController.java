@@ -1,6 +1,8 @@
 package com.kangyonggan.app.future.web.controller.mobile;
 
 import com.kangyonggan.app.future.biz.service.MessageService;
+import com.kangyonggan.app.future.common.util.MarkdownUtil;
+import com.kangyonggan.app.future.model.constants.MessageType;
 import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.dto.CommonResponse;
 import com.kangyonggan.app.future.model.dto.CountResponse;
@@ -9,10 +11,8 @@ import com.kangyonggan.app.future.model.vo.Message;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -83,15 +83,15 @@ public class MobileMessageController {
     }
 
     /**
-     * 查询消息
+     * 消息更新为已读
      *
      * @param id
      * @param username
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "read", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResponse getMessage(@RequestParam("id") Long id, @RequestParam("username") String username) {
+    public CommonResponse messageRead(@RequestParam("id") Long id, @RequestParam("username") String username) {
         CommonResponse response = new CommonResponse();
 
         try {
@@ -101,12 +101,29 @@ public class MobileMessageController {
             response.setRespCo(Resp.SUCCESS.getRespCo());
             response.setRespMsg(Resp.SUCCESS.getRespMsg());
         } catch (Exception e) {
-            log.warn("查询消息异常", e);
+            log.warn("消息更新为已读异常", e);
             response.setRespCo(Resp.FAILURE.getRespCo());
             response.setRespMsg(Resp.FAILURE.getRespMsg());
         }
 
         return response;
+    }
+
+    /**
+     * 查看消息
+     *
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "{id:[\\d]+}", method = RequestMethod.GET)
+    public String messageRead(@PathVariable("id") Long id, Model model) {
+        Message message = messageService.findMessageById(id);
+        message.setContent(MarkdownUtil.markdownToHtml(message.getContent()));
+
+        model.addAttribute("message", message);
+        model.addAttribute("types", MessageType.values());
+        return "mobile/message/detail";
     }
 
 }
