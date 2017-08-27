@@ -45,7 +45,7 @@
           m.id = mu.message_id
           AND mu.username = #{username}
           AND m.type = d.code
-          AND m.id_deleted = 0
+          AND m.is_deleted = 0
       </where>
         ORDER BY mu.is_read ASC , m.created_time DESC
     </select>
