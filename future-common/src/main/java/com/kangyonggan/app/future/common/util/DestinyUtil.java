@@ -125,7 +125,7 @@ public class DestinyUtil {
      * @return
      */
     private static int getDiZhiIndex(int num) {
-        return (num % DI_ZHI.length + 9) % 10;
+        return (num % DI_ZHI.length + 9) % SHENG_XIAO.length;
     }
 
     /**
@@ -318,10 +318,6 @@ public class DestinyUtil {
         }
 
         return count;
-    }
-
-    public static void main(String[] args) throws Exception {
-        System.out.println(wuxing(getWuXing(getEightWord4Lunar(1992, 3, 17, 17))));
     }
 
     /**
