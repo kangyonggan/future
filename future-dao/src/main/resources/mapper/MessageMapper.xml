@@ -74,4 +74,11 @@
             AND username = #{username}
         </where>
     </update>
+
+    <update id="updateMessageUser4Read">
+        UPDATE message_user SET is_read = 1
+        <where>
+            username = #{username}
+        </where>
+    </update>
 </mapper>

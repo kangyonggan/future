@@ -65,4 +65,10 @@ public interface MessageMapper extends MyMapper<Message> {
      */
     void updateMessageUser4Reply(@Param("messageId") Long messageId, @Param("username") String username, @Param("replyMessageId") Long replyMessageId);
 
+    /**
+     * 把消息全部更新为已读
+     *
+     * @param username
+     */
+    void updateMessageUser4Read(String username);
 }

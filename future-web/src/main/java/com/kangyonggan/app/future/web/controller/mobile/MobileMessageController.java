@@ -118,6 +118,32 @@ public class MobileMessageController {
     }
 
     /**
+     * 消息全部标记为已读
+     *
+     * @param username
+     * @return
+     */
+    @RequestMapping(value = "allread", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResponse messageAllRead(@RequestParam("username") String username) {
+        CommonResponse response = new CommonResponse();
+
+        try {
+            // 把消息全部更新为已读
+            messageService.updateMessageUser4Read(username);
+
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+        } catch (Exception e) {
+            log.warn("消息全部更新为已读异常", e);
+            response.setRespCo(Resp.FAILURE.getRespCo());
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
+        }
+
+        return response;
+    }
+
+    /**
      * 意见反馈
      *
      * @param username

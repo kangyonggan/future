@@ -124,4 +124,10 @@ public class MessageServiceImpl extends BaseService<Message> implements MessageS
     public void updateMessageUser4Reply(Long id, String username, Long replyMessageId) {
         messageMapper.updateMessageUser4Reply(id, username, replyMessageId);
     }
+
+    @Override
+    @LogTime
+    public void updateMessageUser4Read(String username) {
+        messageMapper.updateMessageUser4Read(username);
+    }
 }

@@ -99,4 +99,11 @@ public interface MessageService {
      * @param replyMessageId
      */
     void updateMessageUser4Reply(Long id, String username, Long replyMessageId);
+
+    /**
+     * 消息全部更新为已读
+     *
+     * @param username
+     */
+    void updateMessageUser4Read(String username);
 }
