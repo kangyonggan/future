@@ -127,7 +127,7 @@ public class MessageServiceImpl extends BaseService<Message> implements MessageS
 
     @Override
     @LogTime
-    public void updateMessageUser4Read(String username) {
-        messageMapper.updateMessageUser4Read(username);
+    public void updateMessageUsers4Read(String username) {
+        messageMapper.updateMessageUsers4Read(username);
     }
 }

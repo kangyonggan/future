@@ -130,7 +130,7 @@ public class MobileMessageController {
 
         try {
             // 把消息全部更新为已读
-            messageService.updateMessageUser4Read(username);
+            messageService.updateMessageUsers4Read(username);
 
             response.setRespCo(Resp.SUCCESS.getRespCo());
             response.setRespMsg(Resp.SUCCESS.getRespMsg());

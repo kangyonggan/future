@@ -105,5 +105,5 @@ public interface MessageService {
      *
      * @param username
      */
-    void updateMessageUser4Read(String username);
+    void updateMessageUsers4Read(String username);
 }

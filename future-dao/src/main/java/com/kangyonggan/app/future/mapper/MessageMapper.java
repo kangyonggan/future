@@ -70,5 +70,5 @@ public interface MessageMapper extends MyMapper<Message> {
      *
      * @param username
      */
-    void updateMessageUser4Read(String username);
+    void updateMessageUsers4Read(String username);
 }
