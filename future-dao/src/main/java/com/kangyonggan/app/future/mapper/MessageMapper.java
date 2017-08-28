@@ -4,6 +4,7 @@ import com.kangyonggan.app.future.model.vo.Message;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -36,9 +37,10 @@ public interface MessageMapper extends MyMapper<Message> {
      * 查找所有消息
      *
      * @param username
+     * @param date
      * @return
      */
-    List<Message> selectMessagesByUsername(String username);
+    List<Message> selectMessagesByUsername(@Param("username") String username, @Param("date") Date date);
 
     /**
      * 把消息更新为已读

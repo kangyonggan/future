@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.MessageService;
 import com.kangyonggan.app.future.biz.service.UserService;
 import com.kangyonggan.app.future.common.util.Collections3;
+import com.kangyonggan.app.future.common.util.DateUtil;
 import com.kangyonggan.app.future.mapper.MessageMapper;
 import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.AppConstants;
@@ -96,7 +97,7 @@ public class MessageServiceImpl extends BaseService<Message> implements MessageS
     @Override
     @LogTime
     public List<Message> findMessagesByUsername(String username) {
-        return messageMapper.selectMessagesByUsername(username);
+        return messageMapper.selectMessagesByUsername(username, DateUtil.plusDays(-30L));
     }
 
     @Override
