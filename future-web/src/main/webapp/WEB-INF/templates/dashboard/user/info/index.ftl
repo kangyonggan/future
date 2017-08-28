@@ -50,6 +50,7 @@
 
                     <div class="col-xs-12 col-sm-5">
                         <input type="file" id="avatar" name="avatar" class="ace ace-file-input"/>
+                        <div>请上传 png、gif、jpg 格式的图片文件，文件大小不能超过10MB。建议上传一张 240*240 像素或等比例的图片。</div>
                     </div>
                 </div>
             </div>
