@@ -106,4 +106,13 @@ public interface MessageService {
      * @param username
      */
     void updateMessageUsers4Read(String username);
+
+    /**
+     * 删除消息
+     *
+     * @param messageId
+     * @param username
+     */
+    void deleteMessageUser(Long messageId, String username);
+
 }

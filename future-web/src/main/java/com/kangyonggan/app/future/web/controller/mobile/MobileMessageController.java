@@ -144,6 +144,32 @@ public class MobileMessageController {
     }
 
     /**
+     * 删除消息
+     *
+     * @param messageId
+     * @param username
+     * @return
+     */
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResponse delete(@RequestParam("messageId") Long messageId, @RequestParam("username") String username) {
+        CommonResponse response = new CommonResponse();
+
+        try {
+            messageService.deleteMessageUser(messageId, username);
+
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+        } catch (Exception e) {
+            log.warn("删除消息异常", e);
+            response.setRespCo(Resp.FAILURE.getRespCo());
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
+        }
+
+        return response;
+    }
+
+    /**
      * 意见反馈
      *
      * @param username

@@ -81,4 +81,12 @@
             username = #{username}
         </where>
     </update>
+
+    <delete id="deleteMessageUser">
+        DELETE FROM message_user
+        <where>
+            message_id = #{messageId}
+            AND username = #{username}
+        </where>
+    </delete>
 </mapper>

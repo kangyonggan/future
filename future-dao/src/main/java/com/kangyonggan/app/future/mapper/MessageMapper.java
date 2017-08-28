@@ -71,4 +71,12 @@ public interface MessageMapper extends MyMapper<Message> {
      * @param username
      */
     void updateMessageUsers4Read(String username);
+
+    /**
+     * 删除消息接收者
+     *
+     * @param messageId
+     * @param username
+     */
+    void deleteMessageUser(@Param("messageId") Long messageId, @Param("username") String username);
 }
