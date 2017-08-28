@@ -8,7 +8,7 @@ import lombok.Data;
  * @since 8/11/17
  */
 @Data
-public class TokenResponse extends CommonResponse {
+public class UserResponse extends CommonResponse {
 
     private String token;
 

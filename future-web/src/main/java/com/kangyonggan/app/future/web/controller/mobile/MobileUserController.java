@@ -11,14 +11,17 @@ import com.kangyonggan.app.future.model.constants.MessageType;
 import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.constants.TokenType;
 import com.kangyonggan.app.future.model.dto.CommonResponse;
-import com.kangyonggan.app.future.model.dto.TokenResponse;
+import com.kangyonggan.app.future.model.dto.UserResponse;
 import com.kangyonggan.app.future.model.vo.Message;
 import com.kangyonggan.app.future.model.vo.Token;
 import com.kangyonggan.app.future.model.vo.User;
+import com.kangyonggan.app.future.web.util.FileUpload;
+import com.kangyonggan.app.future.web.util.Images;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,9 +54,9 @@ public class MobileUserController {
      * @return
      */
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public TokenResponse login(User user, String token) {
+    public UserResponse login(User user, String token) {
         log.info("进入用户登录");
-        TokenResponse response = new TokenResponse();
+        UserResponse response = new UserResponse();
 
         try {
             // 使用token登录
@@ -128,9 +131,9 @@ public class MobileUserController {
      */
     @RequestMapping(value = "register", method = RequestMethod.POST)
     @ResponseBody
-    public TokenResponse register(User user, String authCode) {
+    public UserResponse register(User user, String authCode) {
         log.info("进入用户注册");
-        TokenResponse response = new TokenResponse();
+        UserResponse response = new UserResponse();
 
         try {
 
@@ -197,9 +200,9 @@ public class MobileUserController {
      */
     @RequestMapping(value = "forgot", method = RequestMethod.POST)
     @ResponseBody
-    public TokenResponse forgot(User user, String authCode) {
+    public UserResponse forgot(User user, String authCode) {
         log.info("进入用户找回密码");
-        TokenResponse response = new TokenResponse();
+        UserResponse response = new UserResponse();
 
         try {
             Token token = tokenService.findTokenByMobileAndType(user.getUsername(), TokenType.FORGOT.getType());
@@ -252,9 +255,9 @@ public class MobileUserController {
      */
     @RequestMapping(value = "password", method = RequestMethod.POST)
     @ResponseBody
-    public TokenResponse upadtePassword(User user, String oldPassword, String token) {
+    public UserResponse upadtePassword(User user, String oldPassword, String token) {
         log.info("进入用户修改密码");
-        TokenResponse response = new TokenResponse();
+        UserResponse response = new UserResponse();
 
         try {
             Token t = tokenService.findTokenByMobileAndType(user.getUsername(), TokenType.LOGIN.getType());
@@ -330,6 +333,49 @@ public class MobileUserController {
             response.setRespMsg(Resp.SUCCESS.getRespMsg());
         } catch (Exception e) {
             log.warn("修改用户信息异常", e);
+            response.setRespCo(Resp.FAILURE.getRespCo());
+            response.setRespMsg(Resp.FAILURE.getRespMsg());
+        }
+
+        return response;
+    }
+
+    /**
+     * 上传头像
+     *
+     * @param username
+     * @param avatar
+     * @return
+     */
+    @RequestMapping(value = "avatar", method = RequestMethod.POST)
+    public UserResponse avatar(@RequestParam("username") String username,
+                               @RequestParam("avatar") MultipartFile avatar) {
+        UserResponse response = new UserResponse();
+
+        try {
+            User user = new User();
+            user.setUsername(username);
+
+            String fileName = FileUpload.upload(avatar);
+
+            String large = Images.large(fileName);
+            user.setLargeAvatar(large);
+            String middle = Images.middle(fileName);
+            user.setMediumAvatar(middle);
+            String small = Images.small(fileName);
+            user.setSmallAvatar(small);
+
+            userService.updateUserByUsername(user);
+
+            user = userService.findUserByUsername(username);
+            user.setPassword("");
+            user.setSalt("");
+
+            response.setUser(user);
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
+        } catch (Exception e) {
+            log.warn("上传头像异常", e);
             response.setRespCo(Resp.FAILURE.getRespCo());
             response.setRespMsg(Resp.FAILURE.getRespMsg());
         }
