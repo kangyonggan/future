@@ -4,6 +4,7 @@ import com.kangyonggan.app.future.biz.service.MessageService;
 import com.kangyonggan.app.future.biz.service.UserService;
 import com.kangyonggan.app.future.common.util.Collections3;
 import com.kangyonggan.app.future.common.util.MarkdownUtil;
+import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.model.constants.MessageType;
 import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.dto.CommonResponse;
@@ -129,6 +130,8 @@ public class MobileMessageController {
                                  @RequestParam("content") String content) {
         CommonResponse response = new CommonResponse();
 
+        content = StringUtil.decode(content);
+
         try {
             // 组装意见
             Message message = new Message();
@@ -209,6 +212,8 @@ public class MobileMessageController {
     @ResponseBody
     public CommonResponse reply(@RequestParam("messageId") Long messageId, @RequestParam("username") String username, @RequestParam("content") String content) {
         CommonResponse response = new CommonResponse();
+
+        content = StringUtil.decode(content);
 
         try {
             Message msg = messageService.findAbleMessageById(messageId);
