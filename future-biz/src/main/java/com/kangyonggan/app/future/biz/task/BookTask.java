@@ -22,10 +22,10 @@ public class BookTask {
     private SectionService sectionService;
 
     /**
-     * 每天凌晨1点更新小说章节
+     * 每天早上7点更新小说章节
      * cron表达式：* * * * * *（秒 分 时 日 月 星期）
      */
-    @Scheduled(cron = "0 0 1 * * *")
+    @Scheduled(cron = "0 0 7 * * *")
     public void executeBookUpdate() {
         log.info("定时任务自动更新小说开始...");
         sectionService.updateSections();
