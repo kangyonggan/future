@@ -4,6 +4,12 @@
 <div class="page-header">
     <h1>
         消息详情
+    <#if message.type == "ADVICE" && !replyMessage?? && usernames?seq_contains(user.username) >
+        <small class="pull-right">
+            <a href="${ctx}/dashboard/system/message/${message.id}/reply" data-target="#myModal" data-toggle="modal"
+               class="btn btn-sm btn-inverse">回复</a>
+        </small>
+    </#if>
     </h1>
 </div>
 
@@ -13,7 +19,7 @@
             <div class="widget-header widget-header-large">
                 <h3 class="widget-title grey lighter">
                     <i class="ace-icon fa fa-leaf dark"></i>
-                    ${message.title}
+                ${message.title}
                 </h3>
 
                 <div class="widget-toolbar no-border invoice-info">
@@ -34,7 +40,8 @@
                 <div class="widget-main padding-24">
 
                     <div class="space-10"></div>
-                    <h5><i class="ace-icon fa fa-users icon-only"></i>消息接收人（<span class="red">${(message.isGroup==1)?string('群发', '定向')}</span>）</h5>
+                    <h5><i class="ace-icon fa fa-users icon-only"></i>消息接收人（<span
+                            class="red">${(message.isGroup==1)?string('群发', '定向')}</span>）</h5>
 
                     <table class="table table-striped table-bordered table-hove">
                         <thead>
@@ -64,19 +71,19 @@
                     <div class="hr hr8 hr-double hr-dotted"></div>
 
                     <div class="markdown">
-                        ${message.content}
+                    ${message.content}
                     </div>
 
-                    <#if replyMessage??>
-                        <div class="space-20"></div>
+                <#if replyMessage??>
+                    <div class="space-20"></div>
 
-                        <div class="hr hr8 hr-double hr-dotted"></div>
+                    <div class="hr hr8 hr-double hr-dotted"></div>
 
-                        <h5><i class="ace-icon fa fa-comments icon-only"></i>回复内容:</h5>
-                        <div class="markdown">
-                        ${replyMessage.content}
-                        </div>
-                    </#if>
+                    <h5><i class="ace-icon fa fa-comments icon-only"></i>回复内容:</h5>
+                    <div class="markdown">
+                    ${replyMessage.content}
+                    </div>
+                </#if>
                 </div>
             </div>
         </div>

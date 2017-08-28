@@ -61,14 +61,14 @@
     <select id="selectReplyMessage" resultMap="BaseResultMap">
         SELECT m.* FROM message m, message_user mu
         <where>
-            m.id = mu.message_id
-            AND m.id = #{id}
-            AND mu.is_reply = 1
+            mu.message_id = #{id}
+            AND mu.reply_message_id != 0
+            AND mu.reply_message_id = m.id
         </where>
     </select>
 
     <update id="updateMessageUser4Reply">
-        UPDATE message_user SET is_reply = 1
+        UPDATE message_user SET reply_message_id = #{replyMessageId}
         <where>
             message_id = #{messageId}
             AND username = #{username}

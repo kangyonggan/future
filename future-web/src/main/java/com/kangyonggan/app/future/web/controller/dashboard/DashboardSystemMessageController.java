@@ -3,6 +3,7 @@ package com.kangyonggan.app.future.web.controller.dashboard;
 import com.github.pagehelper.PageInfo;
 import com.kangyonggan.app.future.biz.service.MessageService;
 import com.kangyonggan.app.future.biz.service.UserService;
+import com.kangyonggan.app.future.common.util.Collections3;
 import com.kangyonggan.app.future.common.util.MarkdownUtil;
 import com.kangyonggan.app.future.model.constants.MessageType;
 import com.kangyonggan.app.future.model.vo.Message;
@@ -137,6 +138,9 @@ public class DashboardSystemMessageController extends BaseController {
     @RequestMapping(value = "{id:[\\d]+}", method = RequestMethod.GET)
     @RequiresPermissions("SYSTEM_MESSAGE")
     public String detail(@PathVariable("id") Long id, Model model) {
+        // 更新消息为已读
+        messageService.updateMessageUser4Read(id, userService.getShiroUser().getUsername());
+
         Message message = messageService.findMessageById(id);
         message.setContent(MarkdownUtil.markdownToHtml(message.getContent()));
 
@@ -150,6 +154,8 @@ public class DashboardSystemMessageController extends BaseController {
         model.addAttribute("message", message);
         model.addAttribute("replyMessage", replyMessage);
         model.addAttribute("users", users);
+        model.addAttribute("user", userService.getShiroUser());
+        model.addAttribute("usernames", Collections3.extractToList(users, "username"));
         model.addAttribute("types", MessageType.values());
         return getPathDetail();
     }
@@ -203,5 +209,47 @@ public class DashboardSystemMessageController extends BaseController {
         }
 
         return resultMap;
+    }
+
+    /**
+     * 回复
+     *
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "{id:[\\d]+}/reply", method = RequestMethod.GET)
+    public String reply(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("id", id);
+        return getPathRoot() + "/reply-modal";
+    }
+
+    /**
+     * 回复
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "{id:[\\d]+}/reply", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> reply(@PathVariable("id") Long id, @RequestParam("content") String content) {
+        ShiroUser shiroUser = userService.getShiroUser();
+
+        Message msg = messageService.findAbleMessageById(id);
+
+        Message message = new Message();
+        message.setCreatedUsername(shiroUser.getUsername());
+        message.setType(MessageType.REPLY.getType());
+        message.setTitle("系统回复了你提出的意见反馈");
+        message.setContent(content);
+        message.setIsGroup((byte) 0);
+
+        // 回复
+        messageService.save(message, msg.getCreatedUsername());
+
+        // 更新回复状态
+        messageService.updateMessageUser4Reply(id, shiroUser.getUsername(), message.getId());
+
+        return getResultMap();
     }
 }

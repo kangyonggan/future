@@ -224,7 +224,7 @@ public class MobileMessageController {
             messageService.save(message, msg.getCreatedUsername());
 
             // 更新回复状态
-            messageService.updateMessageUser4Reply(messageId, username);
+            messageService.updateMessageUser4Reply(messageId, username, message.getId());
 
             response.setRespCo(Resp.SUCCESS.getRespCo());
             response.setRespMsg(Resp.SUCCESS.getRespMsg());

@@ -96,6 +96,7 @@ public interface MessageService {
      *
      * @param id
      * @param username
+     * @param replyMessageId
      */
-    void updateMessageUser4Reply(Long id, String username);
+    void updateMessageUser4Reply(Long id, String username, Long replyMessageId);
 }

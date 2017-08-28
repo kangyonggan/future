@@ -32,7 +32,7 @@
 
     <select id="selectMessageUsers" resultMap="BaseResultMap">
         SELECT u.*, mu.is_read,
-        (SELECT count(*) FROM message_user t WHERE t.message_id = #{messageId} AND t.username = u.username AND t.is_reply = 1) AS is_reply
+        (SELECT count(*) FROM message_user t WHERE t.message_id = #{messageId} AND t.username = u.username AND t.reply_message_id != 0) AS is_reply
         FROM user u, message_user mu
         <where>
             u.username = mu.username
