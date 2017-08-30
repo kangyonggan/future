@@ -52,6 +52,9 @@ public class MobileToolController {
                     response.setTransCard(IDCardUtil.convert18To15(idcard));
                 }
             }
+
+            response.setRespCo(Resp.SUCCESS.getRespCo());
+            response.setRespMsg(Resp.SUCCESS.getRespMsg());
         } catch (Exception e) {
             response.setRespCo(Resp.FAILURE.getRespCo());
             response.setRespMsg("身份证号码校验异常");
