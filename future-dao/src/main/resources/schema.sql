@@ -590,6 +590,8 @@ CREATE TABLE news
   COMMENT '标题',
   content             LONGTEXT                              NOT NULL
   COMMENT '内容',
+  summary             VARCHAR(512)                          NOT NULL                    DEFAULT ''
+  COMMENT '摘要',
   source              VARCHAR(128)                          NOT NULL                    DEFAULT ''
   COMMENT '来源',
   category_code       VARCHAR(32)                           NOT NULL                    DEFAULT ''
@@ -602,8 +604,6 @@ CREATE TABLE news
   COMMENT '图片数量',
   keywords            VARCHAR(256)                          NOT NULL                    DEFAULT ''
   COMMENT '关键字(逗号分隔)',
-  public_time         TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
-  COMMENT '发布时间',
   is_deleted          TINYINT                               NOT NULL                    DEFAULT '0'
   COMMENT '逻辑删除:{0:未删除, 1:已删除}',
   created_time        TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
@@ -612,8 +612,8 @@ CREATE TABLE news
   COMMENT '更新时间'
 )
   COMMENT '新闻表';
-CREATE INDEX id_public_time
-  ON news (public_time);
+CREATE UNIQUE INDEX id_code
+  ON news (code);
 CREATE INDEX id_category_code
   ON news (category_code);
 

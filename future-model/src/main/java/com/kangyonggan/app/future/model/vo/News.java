@@ -60,12 +60,6 @@ public class News implements Serializable {
     private String keywords;
 
     /**
-     * 发布时间
-     */
-    @Column(name = "public_time")
-    private Date publicTime;
-
-    /**
      * 逻辑删除:{0:未删除, 1:已删除}
      */
     @Column(name = "is_deleted")
@@ -87,6 +81,11 @@ public class News implements Serializable {
      * 内容
      */
     private String content;
+
+    /**
+     * 摘要
+     */
+    private String summary;
 
     private static final long serialVersionUID = 1L;
 }

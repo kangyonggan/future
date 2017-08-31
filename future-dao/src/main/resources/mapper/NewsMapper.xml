@@ -11,10 +11,10 @@
         <result column="source" property="source" jdbcType="VARCHAR"/>
         <result column="category_code" property="categoryCode" jdbcType="VARCHAR"/>
         <result column="category_name" property="categoryName" jdbcType="VARCHAR"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
         <result column="image_url" property="imageUrl" jdbcType="VARCHAR"/>
         <result column="gallary_image_count" property="gallaryImageCount" jdbcType="INTEGER"/>
         <result column="keywords" property="keywords" jdbcType="VARCHAR"/>
-        <result column="public_time" property="publicTime" jdbcType="TIMESTAMP"/>
         <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
         <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
         <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
