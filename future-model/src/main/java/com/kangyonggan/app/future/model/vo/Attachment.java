@@ -6,8 +6,8 @@ import javax.persistence.*;
 import lombok.Data;
 
 @Data
-@Table(name = "category")
-public class Category implements Serializable {
+@Table(name = "attachment")
+public class Attachment implements Serializable {
     /**
      * 主键, 自增
      */
@@ -16,30 +16,31 @@ public class Category implements Serializable {
     private Long id;
 
     /**
-     * 分类代码
+     * 来源类型:{"news": "新闻", "article": "文章"}
      */
-    private String code;
+    @Column(name = "source_type")
+    private String sourceType;
 
     /**
-     * 分类名称
+     * 来源ID
      */
-    private String name;
+    @Column(name = "source_id")
+    private Long sourceId;
 
     /**
-     * 分类类型{"book": "小说", "blog": "博客"}
+     * 附件类型
      */
     private String type;
 
     /**
-     * 图片地址
+     * 附件名称
      */
-    @Column(name = "picUrl")
-    private String picurl;
+    private String name;
 
     /**
-     * 菜单排序(从0开始)
+     * 路径
      */
-    private Integer sort;
+    private String url;
 
     /**
      * 逻辑删除:{0:未删除, 1:已删除}

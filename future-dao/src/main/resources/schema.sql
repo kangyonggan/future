@@ -229,7 +229,7 @@ CREATE TABLE book
   COMMENT '书名',
   author            VARCHAR(32)                           NOT NULL
   COMMENT '作者',
-  category_code     VARCHAR(16)                           NOT NULL
+  category_code     VARCHAR(32)                           NOT NULL
   COMMENT '分类代码',
   category_name     VARCHAR(32)                           NOT NULL
   COMMENT '分类名称',
@@ -311,16 +311,14 @@ CREATE TABLE category
 (
   id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
   COMMENT '主键, 自增',
-  code         VARCHAR(16)                           NOT NULL
+  code         VARCHAR(32)                           NOT NULL
   COMMENT '分类代码',
   name         VARCHAR(32)                           NOT NULL
   COMMENT '分类名称',
   type         VARCHAR(16)                           NOT NULL
-  COMMENT '分类类型{"book": "小说", "blog": "博客"}',
+  COMMENT '分类类型{"book": "小说", "blog": "博客", "news": "新闻"}',
   picUrl       VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-category.png'
   COMMENT '图片地址',
-  book_cnt     INT(11)                               NOT NULL                    DEFAULT 0
-  COMMENT '书籍数量',
   sort         INT(11)                               NOT NULL                    DEFAULT 0
   COMMENT '菜单排序(从0开始)',
   is_deleted   TINYINT                               NOT NULL                    DEFAULT 0
@@ -432,7 +430,7 @@ CREATE TABLE article
   COMMENT '用户名（手机号）',
   title         VARCHAR(64)                           NOT NULL
   COMMENT '文章标题',
-  category_code VARCHAR(16)                           NOT NULL
+  category_code VARCHAR(32)                           NOT NULL
   COMMENT '栏目代码',
   category_name VARCHAR(32)                           NOT NULL
   COMMENT '栏目名称',
@@ -548,4 +546,106 @@ VALUES
   ('ADVICE', '意见反馈', 'MESSAGE_TYPE', 2),
   ('REPLY', '反馈结果', 'MESSAGE_TYPE', 3);
 
+# 新闻头条
+# 栏目
+INSERT INTO category
+(code, name, type, sort)
+VALUES
+  ('__all__', '推荐', 'news', 0),
+  ('video', '视频', 'news', 1),
+  ('news_hot', '热点', 'news', 2),
+  ('news_society', '社会', 'news', 3),
+  ('news_entertainment', '娱乐', 'news', 4),
+  ('news_military', '军事', 'news', 5),
+  ('news_tech', '科技', 'news', 6),
+  ('news_car', '汽车', 'news', 7),
+  ('news_sports', '体育', 'news', 8),
+  ('news_finance', '财经', 'news', 9),
+  ('news_world', '国际', 'news', 10),
+  ('news_baby', '育儿', 'news', 11),
+  ('news_food', '美食', 'news', 12),
+  ('news_regimen', '养生', 'news', 13),
+  ('news_essay', '美文', 'news', 14),
+  ('news_story', '故事', 'news', 15),
+  ('news_history', '历史', 'news', 16),
+  ('news_game', '游戏', 'news', 17),
+  ('news_travel', '旅游', 'news', 18),
+  ('news_discovery', '探索', 'news', 19),
+  ('news', '其他', 'news', 20);
+
+# 新闻
+-- ----------------------------
+--  Table structure for news
+-- ----------------------------
+DROP TABLE
+IF EXISTS news;
+
+CREATE TABLE news
+(
+  id                  BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  code                VARCHAR(32)                           NOT NULL
+  COMMENT '代码',
+  title               VARCHAR(256)                          NOT NULL                    DEFAULT ''
+  COMMENT '标题',
+  content             LONGTEXT                              NOT NULL
+  COMMENT '内容',
+  source              VARCHAR(128)                          NOT NULL                    DEFAULT ''
+  COMMENT '来源',
+  category_code       VARCHAR(32)                           NOT NULL                    DEFAULT ''
+  COMMENT '栏目代码',
+  category_name       VARCHAR(32)                           NOT NULL                    DEFAULT ''
+  COMMENT '栏目名称',
+  image_url           VARCHAR(128)                          NOT NULL                    DEFAULT ''
+  COMMENT '封面图片',
+  gallary_image_count INT(11)                               NOT NULL                    DEFAULT 0
+  COMMENT '图片数量',
+  keywords            VARCHAR(256)                          NOT NULL                    DEFAULT ''
+  COMMENT '关键字(逗号分隔)',
+  public_time         TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '发布时间',
+  is_deleted          TINYINT                               NOT NULL                    DEFAULT '0'
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time        TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time        TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '新闻表';
+CREATE INDEX id_public_time
+  ON news (public_time);
+CREATE INDEX id_category_code
+  ON news (category_code);
+
+# 附件
+-- ----------------------------
+--  Table structure for attachment
+-- ----------------------------
+DROP TABLE
+IF EXISTS attachment;
+
+CREATE TABLE attachment
+(
+  id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  source_type  VARCHAR(16)                           NOT NULL
+  COMMENT '来源类型:{"news": "新闻", "article": "文章"}',
+  source_id    BIGINT(20)                            NOT NULL
+  COMMENT '来源ID',
+  type         VARCHAR(16)                           NOT NULL
+  COMMENT '附件类型',
+  name         VARCHAR(256)                          NOT NULL                    DEFAULT ''
+  COMMENT '附件名称',
+  url          VARCHAR(256)                          NOT NULL                    DEFAULT ''
+  COMMENT '路径',
+  is_deleted   TINYINT                               NOT NULL                    DEFAULT '0'
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '附件表';
+CREATE INDEX id_created_time
+  ON attachment (created_time);
 
