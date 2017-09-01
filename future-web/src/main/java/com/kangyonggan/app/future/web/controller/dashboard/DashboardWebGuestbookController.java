@@ -2,6 +2,7 @@ package com.kangyonggan.app.future.web.controller.dashboard;
 
 import com.github.pagehelper.PageInfo;
 import com.kangyonggan.app.future.biz.service.GuestbookService;
+import com.kangyonggan.app.future.biz.service.MailService;
 import com.kangyonggan.app.future.biz.service.UserService;
 import com.kangyonggan.app.future.common.util.MarkdownUtil;
 import com.kangyonggan.app.future.model.constants.ArticleStatus;
@@ -31,6 +32,9 @@ public class DashboardWebGuestbookController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MailService mailService;
 
     /**
      * 留言列表
@@ -205,6 +209,9 @@ public class DashboardWebGuestbookController extends BaseController {
         guestbook.setReplyUsername(shiroUser.getUsername());
 
         guestbookService.updateGuestbook(guestbook);
+
+        // 发邮件通知
+        mailService.send(guestbook.getEmail(), "未来网站的站长回复了您的留言", MarkdownUtil.markdownToHtml(replyMessage));
 
         return getResultMap();
     }
