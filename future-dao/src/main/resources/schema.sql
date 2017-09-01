@@ -546,106 +546,41 @@ VALUES
   ('ADVICE', '意见反馈', 'MESSAGE_TYPE', 2),
   ('REPLY', '反馈结果', 'MESSAGE_TYPE', 3);
 
-# 新闻头条
-# 栏目
-INSERT INTO category
-(code, name, type, sort)
-VALUES
-  ('__all__', '推荐', 'news', 0),
-  ('video', '视频', 'news', 1),
-  ('news_hot', '热点', 'news', 2),
-  ('news_society', '社会', 'news', 3),
-  ('news_entertainment', '娱乐', 'news', 4),
-  ('news_military', '军事', 'news', 5),
-  ('news_tech', '科技', 'news', 6),
-  ('news_car', '汽车', 'news', 7),
-  ('news_sports', '体育', 'news', 8),
-  ('news_finance', '财经', 'news', 9),
-  ('news_world', '国际', 'news', 10),
-  ('news_baby', '育儿', 'news', 11),
-  ('news_food', '美食', 'news', 12),
-  ('news_regimen', '养生', 'news', 13),
-  ('news_essay', '美文', 'news', 14),
-  ('news_story', '故事', 'news', 15),
-  ('news_history', '历史', 'news', 16),
-  ('news_game', '游戏', 'news', 17),
-  ('news_travel', '旅游', 'news', 18),
-  ('news_discovery', '探索', 'news', 19),
-  ('news', '其他', 'news', 20);
-
-# 新闻
 -- ----------------------------
---  Table structure for news
+--  Table structure for guestbook
 -- ----------------------------
 DROP TABLE
-IF EXISTS news;
+IF EXISTS guestbook;
 
-CREATE TABLE news
+CREATE TABLE guestbook
 (
-  id                  BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  id              BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
   COMMENT '主键, 自增',
-  code                VARCHAR(32)                           NOT NULL
-  COMMENT '代码',
-  title               VARCHAR(256)                          NOT NULL                    DEFAULT ''
-  COMMENT '标题',
-  content             LONGTEXT                              NOT NULL
+  realname        VARCHAR(32)                           NOT NULL
+  COMMENT '昵称',
+  email           VARCHAR(64)                           NOT NULL
+  COMMENT '邮箱',
+  content         VARCHAR(2048)                         NOT NULL
   COMMENT '内容',
-  summary             VARCHAR(512)                          NOT NULL                    DEFAULT ''
-  COMMENT '摘要',
-  source              VARCHAR(128)                          NOT NULL                    DEFAULT ''
-  COMMENT '来源',
-  category_code       VARCHAR(32)                           NOT NULL                    DEFAULT ''
-  COMMENT '栏目代码',
-  category_name       VARCHAR(32)                           NOT NULL                    DEFAULT ''
-  COMMENT '栏目名称',
-  image_url           VARCHAR(128)                          NOT NULL                    DEFAULT ''
-  COMMENT '封面图片',
-  gallary_image_count INT(11)                               NOT NULL                    DEFAULT 0
-  COMMENT '图片数量',
-  keywords            VARCHAR(256)                          NOT NULL                    DEFAULT ''
-  COMMENT '关键字(逗号分隔)',
-  is_deleted          TINYINT                               NOT NULL                    DEFAULT '0'
+  status          VARCHAR(16)                           NOT NULL                    DEFAULT 'waiting'
+  COMMENT '状态:{"waiting":"待审核", "reject":"审核未通过", "complete":"审核通过"}',
+  adjust_username VARCHAR(16)                           NOT NULL                    DEFAULT ''
+  COMMENT '审核人',
+  ip              VARCHAR(32)                           NOT NULL                    DEFAULT ''
+  COMMENT 'IP',
+  ip_info         VARCHAR(32)                           NOT NULL                    DEFAULT ''
+  COMMENT 'IP信息',
+  reply_message   LONGTEXT                              NOT NULL
+  COMMENT '回复信息',
+  reply_username  VARCHAR(16)                           NOT NULL                    DEFAULT ''
+  COMMENT '回复人',
+  is_deleted      TINYINT                               NOT NULL                    DEFAULT '0'
   COMMENT '逻辑删除:{0:未删除, 1:已删除}',
-  created_time        TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  created_time    TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
   COMMENT '创建时间',
-  updated_time        TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_time    TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   COMMENT '更新时间'
 )
-  COMMENT '新闻表';
-CREATE UNIQUE INDEX id_code
-  ON news (code);
-CREATE INDEX id_category_code
-  ON news (category_code);
-
-# 附件
--- ----------------------------
---  Table structure for attachment
--- ----------------------------
-DROP TABLE
-IF EXISTS attachment;
-
-CREATE TABLE attachment
-(
-  id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
-  COMMENT '主键, 自增',
-  source_type  VARCHAR(16)                           NOT NULL
-  COMMENT '来源类型:{"news": "新闻", "article": "文章"}',
-  source_id    BIGINT(20)                            NOT NULL
-  COMMENT '来源ID',
-  type         VARCHAR(16)                           NOT NULL
-  COMMENT '附件类型',
-  name         VARCHAR(256)                          NOT NULL                    DEFAULT ''
-  COMMENT '附件名称',
-  url          VARCHAR(256)                          NOT NULL                    DEFAULT ''
-  COMMENT '路径',
-  is_deleted   TINYINT                               NOT NULL                    DEFAULT '0'
-  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
-  created_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
-  COMMENT '创建时间',
-  updated_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-  COMMENT '更新时间'
-)
-  COMMENT '附件表';
+  COMMENT '留言表';
 CREATE INDEX id_created_time
-  ON attachment (created_time);
-
+  ON guestbook (created_time);

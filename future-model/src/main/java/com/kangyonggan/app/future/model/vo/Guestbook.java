@@ -6,8 +6,8 @@ import javax.persistence.*;
 import lombok.Data;
 
 @Data
-@Table(name = "category")
-public class Category implements Serializable {
+@Table(name = "guestbook")
+public class Guestbook implements Serializable {
     /**
      * 主键, 自增
      */
@@ -16,30 +16,47 @@ public class Category implements Serializable {
     private Long id;
 
     /**
-     * 分类代码
+     * 昵称
      */
-    private String code;
+    private String realname;
 
     /**
-     * 分类名称
+     * 邮箱
      */
-    private String name;
+    private String email;
 
     /**
-     * 分类类型{"book": "小说", "blog": "博客"}
+     * 内容
      */
-    private String type;
+    private String content;
 
     /**
-     * 图片地址
+     * 状态:{"waiting":"待审核", "reject":"审核未通过", "complete":"审核通过"}
      */
-    @Column(name = "picUrl")
-    private String picurl;
+    private String status;
 
     /**
-     * 菜单排序(从0开始)
+     * 审核人
      */
-    private Integer sort;
+    @Column(name = "adjust_username")
+    private String adjustUsername;
+
+    /**
+     * IP
+     */
+    private String ip;
+
+    /**
+     * IP信息
+     */
+    @Column(name = "ip_info")
+    private String ipInfo;
+
+    /**
+     * 回复人
+     */
+    @Column(name = "reply_username")
+    private String replyUsername;
 
     /**
      * 逻辑删除:{0:未删除, 1:已删除}
@@ -60,10 +77,10 @@ public class Category implements Serializable {
     private Date updatedTime;
 
     /**
-     * 书籍数量
+     * 回复信息
      */
-    @Transient
-    private Integer bookCnt;
+    @Column(name = "reply_message")
+    private String replyMessage;
 
     private static final long serialVersionUID = 1L;
 }
