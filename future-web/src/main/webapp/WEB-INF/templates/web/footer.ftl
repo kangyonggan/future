@@ -12,7 +12,7 @@
         <div class="list">
             <h4 class="title">留言和订阅</h4>
             <ul>
-                <li><a href="javascript:alert('暂未开发')">留言板</a></li>
+                <li><a href="#guestbook">留言板</a></li>
                 <li><a href="${ctx}/rss/blog-15121149571.xml" target="_blank">RSS订阅</a></li>
             </ul>
         </div>

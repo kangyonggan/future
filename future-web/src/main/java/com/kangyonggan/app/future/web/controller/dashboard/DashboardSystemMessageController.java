@@ -219,6 +219,7 @@ public class DashboardSystemMessageController extends BaseController {
      * @return
      */
     @RequestMapping(value = "{id:[\\d]+}/reply", method = RequestMethod.GET)
+    @RequiresPermissions("SYSTEM_MESSAGE")
     public String reply(@PathVariable("id") Long id, Model model) {
         model.addAttribute("id", id);
         return getPathRoot() + "/reply-modal";
@@ -228,10 +229,12 @@ public class DashboardSystemMessageController extends BaseController {
      * 回复
      *
      * @param id
+     * @param content
      * @return
      */
     @RequestMapping(value = "{id:[\\d]+}/reply", method = RequestMethod.POST)
     @ResponseBody
+    @RequiresPermissions("SYSTEM_MESSAGE")
     public Map<String, Object> reply(@PathVariable("id") Long id, @RequestParam("content") String content) {
         ShiroUser shiroUser = userService.getShiroUser();
 

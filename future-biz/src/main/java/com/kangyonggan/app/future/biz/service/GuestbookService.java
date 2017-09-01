@@ -41,15 +41,7 @@ public interface GuestbookService {
     void deleteGuestbookById(Long id);
 
     /**
-     * 获取留言（包含逻辑删除的）
-     *
-     * @param id
-     * @return
-     */
-    Guestbook getGuestbook(Long id);
-
-    /**
-     * 获取留言（不包含逻辑删除的）
+     * 获取留言
      *
      * @param id
      * @return
@@ -63,4 +55,36 @@ public interface GuestbookService {
      * @return
      */
     List<Guestbook> findGuestbookByPage(int pageNum);
+
+    /**
+     * 三分钟内是否留言了
+     *
+     * @param ip
+     * @return
+     */
+    boolean isQuickWrite(String ip);
+
+    /**
+     * 异步更新ip信息
+     *
+     * @param id
+     * @param ip
+     */
+    void updateGuestbookIpInfo(Long id, String ip);
+
+    /**
+     * 查找上一个留言
+     *
+     * @param id
+     * @return
+     */
+    Guestbook findPrevGuestbook(Long id);
+
+    /**
+     * 查找下一个留言
+     *
+     * @param id
+     * @return
+     */
+    Guestbook findNextGuestbook(Long id);
 }

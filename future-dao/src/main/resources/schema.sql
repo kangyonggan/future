@@ -584,3 +584,13 @@ CREATE TABLE guestbook
   COMMENT '留言表';
 CREATE INDEX id_created_time
   ON guestbook (created_time);
+
+INSERT INTO menu
+(code, name, pcode, url, sort, icon)
+  VALUE
+  ('WEB', '网站', 'DASHBOARD', 'web', 1, 'menu-icon fa fa-laptop'),
+  ('WEB_GUESTBOOK', '留言审核', 'WEB', 'web/guestbook', 0, '');
+
+INSERT INTO role_menu (role_code, menu_code) VALUES
+  ('ROLE_ADMIN', 'WEB'),
+  ('ROLE_ADMIN', 'WEB_GUESTBOOK');
