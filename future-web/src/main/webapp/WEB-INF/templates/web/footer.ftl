@@ -6,7 +6,7 @@
             <h4 class="title">友情链接</h4>
             <ul>
                 <li><a href="https://houbb.github.io" target="_blank">侯宾宾的博客</a></li>
-                <li><a href="https://github.com/kangyonggan">点此申请</a></li>
+                <li><a href="#guestbook">点此申请</a></li>
             </ul>
         </div>
         <div class="list">
