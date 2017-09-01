@@ -85,4 +85,11 @@ public interface ArticleService {
      * @param id
      */
     Article findActiveArticleById(Long id);
+
+    /**
+     * 生成博客的rss
+     *
+     * @param username
+     */
+    void genBlogRss(String username);
 }

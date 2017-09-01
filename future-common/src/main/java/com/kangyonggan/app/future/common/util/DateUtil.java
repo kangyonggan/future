@@ -23,6 +23,13 @@ public class DateUtil {
 
     private static final ZoneId zoneId = ZoneId.systemDefault();
 
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss.SSS");
+
+    public static String toXmlDateTime(Date date) {
+        return dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
+    }
+
     /**
      * yyyyMMddHHmmssSSS
      *

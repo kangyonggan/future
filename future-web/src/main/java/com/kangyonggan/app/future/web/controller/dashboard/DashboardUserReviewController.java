@@ -8,8 +8,6 @@ import com.kangyonggan.app.future.model.constants.ArticleStatus;
 import com.kangyonggan.app.future.model.constants.CategoryType;
 import com.kangyonggan.app.future.model.vo.Article;
 import com.kangyonggan.app.future.model.vo.Category;
-import com.kangyonggan.app.future.model.vo.ShiroUser;
-import com.kangyonggan.app.future.model.vo.User;
 import com.kangyonggan.app.future.web.controller.BaseController;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -221,6 +219,20 @@ public class DashboardUserReviewController extends BaseController {
 
         model.addAttribute("article", article);
         return getPathDetail();
+    }
+
+    /**
+     * 手动生成rss
+     *
+     * @param username
+     * @return
+     */
+    @RequestMapping(value = "rss", method = RequestMethod.GET)
+    @RequiresPermissions("USER_REVIEW")
+    @ResponseBody
+    public String genRss(@RequestParam("username") String username) {
+        articleService.genBlogRss(username);
+        return "ok";
     }
 
 }

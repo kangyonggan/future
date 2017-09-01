@@ -5,15 +5,15 @@
         <div class="list">
             <h4 class="title">友情链接</h4>
             <ul>
-                <li><a href="https://github.com/kangyonggan" target="_blank">我的Github</a></li>
                 <li><a href="https://houbb.github.io" target="_blank">侯宾宾的博客</a></li>
+                <li><a href="https://github.com/kangyonggan">点此申请</a></li>
             </ul>
         </div>
         <div class="list">
-            <h4 class="title">苹果安卓下载</h4>
+            <h4 class="title">留言和订阅</h4>
             <ul>
-                <li><a href="javascript:alert('暂未开发')">Android版下载</a></li>
-                <li><a href="javascript:alert('开发中')">iOS版下载</a></li>
+                <li><a href="javascript:alert('暂未开发')">留言板</a></li>
+                <li><a href="${ctx}/rss/blog-15121149571.xml" target="_blank">RSS订阅</a></li>
             </ul>
         </div>
         <div class="list">
