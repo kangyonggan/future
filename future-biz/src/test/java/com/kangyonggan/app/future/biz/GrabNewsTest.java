@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kangyonggan.app.future.biz.service.CategoryService;
 import com.kangyonggan.app.future.biz.service.NewsService;
+import com.kangyonggan.app.future.biz.util.NewsHelper;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.FileUtil;
 import com.kangyonggan.app.future.common.util.HttpUtil;
@@ -25,7 +26,10 @@ import java.util.List;
  */
 public class GrabNewsTest extends AbstractServiceTest {
 
-    private static final String DOMAIN = "http://www.toutiao.com/";
+    /**
+     * 头条手机网页版
+     */
+    private static final String DOMAIN = "https://m.toutiao.com/";
 
     @Autowired
     private NewsService newsService;
@@ -35,9 +39,9 @@ public class GrabNewsTest extends AbstractServiceTest {
 
     @Test
     public void testGrab() throws Exception {
-//        String categoryCode = "__all__";
+        String categoryCode = "__all__";
 //        String categoryCode = "news_hot";
-        String categoryCode = "essay_joke";
+//        String categoryCode = "essay_joke";
         String behot = "0";
         while (StringUtils.isNotEmpty(behot)) {
             behot = grabNews(categoryCode, behot);
@@ -47,7 +51,8 @@ public class GrabNewsTest extends AbstractServiceTest {
     }
 
     private String grabNews(String categoryCode, String behot) throws Exception {
-        String result = HttpUtil.sendGet(DOMAIN + "api/pc/feed/", "category=" + categoryCode + "&max_behot_time=" + behot + "&utm_source=toutiao&widen=1&max_behot_time_tmp=0&tadrequire=true&as=A1D5495AA800C39&cp=59A8202C73996E1");
+        JSONObject params = NewsHelper.getUrlParam();
+        String result = HttpUtil.sendGet(DOMAIN + "list/", String.format("tag=%s&ac=wap&count=20&format=json_raw&as=%s&cp=%s&min_behot_time=%s", categoryCode, params.getString("as"), params.getString("cp"), behot));
         JSONObject jsonObject = JSON.parseObject(result);
         JSONArray data = jsonObject.getJSONArray("data");
         JSONObject next = jsonObject.getJSONObject("next");
@@ -67,6 +72,9 @@ public class GrabNewsTest extends AbstractServiceTest {
             String keywords = newsObject.getString("keywords");
 
             // 对数据加工
+            if (!"__all__".equals(categoryCode2)) {
+                categoryCode2 = categoryCode;
+            }
             Category category = categoryService.findCategoryByTypeAndCode(CategoryType.NEWS.getType(), categoryCode2);
             String categoryName;
             if (category != null) {
@@ -77,8 +85,8 @@ public class GrabNewsTest extends AbstractServiceTest {
             }
 
             if (StringUtils.isNotEmpty(imageUrl)) {
-                String filePath = "news/" + code + ".jpg";
-                FileUtil.downloadFromUrl("https:" + imageUrl, PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filePath);
+                String filePath = "news/" + code;
+                FileUtil.saveToFile("https:" + imageUrl, PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filePath);
                 imageUrl = filePath;
             }
 
@@ -100,6 +108,9 @@ public class GrabNewsTest extends AbstractServiceTest {
             news.setKeywords(StringUtils.defaultIfEmpty(keywords, ""));
 
             newsService.saveNews(news);
+
+            // 抓取新闻详情
+            grabNewsDetail(news);
         }
 
         if (next == null || "0".equals(next.getString("max_behot_time"))) {
@@ -107,5 +118,19 @@ public class GrabNewsTest extends AbstractServiceTest {
         }
 
         return next.getString("max_behot_time");
+    }
+
+    /**
+     * 抓取新闻详情
+     *
+     * @param news
+     */
+    private void grabNewsDetail(News news) throws Exception {
+        String result = HttpUtil.sendGet(DOMAIN + "i" + news.getCode() + "/info/");
+        JSONObject jsonObject = JSON.parseObject(result);
+        String content = jsonObject.getJSONObject("data").getString("content");
+        news.setContent(content);
+
+        newsService.updateNews(news);
     }
 }

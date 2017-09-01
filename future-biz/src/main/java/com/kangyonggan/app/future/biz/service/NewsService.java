@@ -15,4 +15,10 @@ public interface NewsService {
      */
     void saveNews(News news);
 
+    /**
+     * 更新新闻
+     *
+     * @param news
+     */
+    void updateNews(News news);
 }

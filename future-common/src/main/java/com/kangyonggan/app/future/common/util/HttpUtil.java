@@ -17,6 +17,17 @@ public class HttpUtil {
     /**
      * 向指定URL发送GET方法的请求
      *
+     * @param url 发送请求的URL
+     * @return URL 所代表远程资源的响应结果
+     * @throws Exception
+     */
+    public static String sendGet(String url) throws Exception {
+        return sendGet(url, "");
+    }
+
+    /**
+     * 向指定URL发送GET方法的请求
+     *
      * @param url   发送请求的URL
      * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return URL 所代表远程资源的响应结果
@@ -29,9 +40,10 @@ public class HttpUtil {
             URL realUrl = new URL(url + "?" + param);
             URLConnection connection = realUrl.openConnection();
 
-            connection.setRequestProperty("accept", "*/*");
-            connection.setRequestProperty("connection", "Keep-Alive");
-            connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+//            connection.setRequestProperty("accept", "*/*");
+//            connection.setRequestProperty("connection", "Keep-Alive");
+//            connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
             connection.connect();
 
             in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
