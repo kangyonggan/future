@@ -2,6 +2,8 @@ package com.kangyonggan.app.future.web.controller.web;
 
 import com.github.pagehelper.PageInfo;
 import com.kangyonggan.app.future.biz.service.GuestbookService;
+import com.kangyonggan.app.future.biz.service.MailService;
+import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.IPUtil;
 import com.kangyonggan.app.future.model.vo.Guestbook;
 import com.kangyonggan.app.future.web.controller.BaseController;
@@ -27,6 +29,9 @@ public class GuestbookController extends BaseController {
 
     @Autowired
     private GuestbookService guestbookService;
+
+    @Autowired
+    private MailService mailService;
 
     /**
      * 留言板
@@ -74,6 +79,9 @@ public class GuestbookController extends BaseController {
 
             log.info("异步查询ip信息，查回后更新");
             guestbookService.updateGuestbookIpInfo(guestbook.getId(), ip);
+
+            // 发邮件通知站长
+            mailService.send(PropertiesUtil.getProperties("mail.receiver"), "未来网站 - 收到 " + guestbook.getRealname() + " 的留言信息，请及时审核。", guestbook.getContent());
         } else {
             resultMap.put(ERR_CODE, FAILURE);
             resultMap.put(ERR_MSG, "为防止灌水，请于三分钟之后再次评论");
