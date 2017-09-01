@@ -25,13 +25,13 @@
                 <a href="#search?key=ubuntu">Ubuntu</a>
                 <a href="#search?key=ssh">SSH</a>
                 <a href="#search?key=java">Java</a>
-                <a href="#search?key=nginx">Nginx</a>
                 <a href="#search?key=mysql">MySQL</a>
                 <a href="#search?key=redis">Redis</a>
                 <a href="#search?key=log4j2">Log4j2</a>
                 <a href="#search?key=安装">安装</a>
                 <a href="#search?key=配置">配置</a>
                 <a href="#search?key=工具">工具</a>
+                <a href="#guestbook">留言</a>
             </div>
         </form>
     </div>

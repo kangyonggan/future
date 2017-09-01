@@ -5,7 +5,7 @@ body {
 }
 
 #banner {
-    height: 400px;
+    height: 260px;
     text-align: center;
     background: url("../images/banner.jpg");
     background-repeat: no-repeat;
@@ -29,7 +29,7 @@ body {
 #banner .logo-desc {
     color: #fff;
     padding: 0;
-    margin: 0 0 45px;
+    margin: 0 0 9px;
     font-weight: 100;
     font-size: 34px;
     line-height: 1.1;
@@ -343,12 +343,16 @@ body {
     color: #c00;
 }
 
-.space-162 {
-    height: 162px;
+.space-100 {
+    height: 100px;
 }
 
 .space-32 {
     height: 32px;
+}
+
+.space-10 {
+    height: 10px;
 }
 
 .space-20 {
