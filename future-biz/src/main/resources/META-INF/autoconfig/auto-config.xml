@@ -37,7 +37,7 @@
         <property name="future.sms.accessKeyId" description="邮件服务器用户名" defaultValue="xxx"/>
         <property name="future.sms.secret" description="邮件服务器密码" defaultValue="xxx"/>
         <property name="future.sms.domain" description="短信服务器域名" defaultValue="sms.aliyuncs.com"/>
-        <property name="future.sms.signName" description="短信签名" defaultValue="东方娇子"/>
+        <property name="future.sms.signName" description="短信签名" defaultValue="未来科技"/>
         <property name="future.sms.templateCode" description="模板CODE" defaultValue="xxx"/>
         <property name="future.sms.debug" description="调试模式" defaultValue="true"/>
         
