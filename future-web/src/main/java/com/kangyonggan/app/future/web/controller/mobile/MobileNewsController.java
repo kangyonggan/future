@@ -43,12 +43,13 @@ public class MobileNewsController {
 
         try {
             JSONObject params = NewsHelper.getUrlParam();
-            int maxReTryCount = 10;
+            int maxReTryCount = 50;
             int reTryCount = 1;
             String result = null;
             while (reTryCount <= maxReTryCount) {
                 try {
                     result = HttpUtil.sendGet(DOMAIN + "list/", String.format("tag=%s&ac=wap&count=20&format=json_raw&as=%s&cp=%s&min_behot_time=%s", tag, params.getString("as"), params.getString("cp"), minBehotTime));
+                    log.info("抓取成功，内容：{}", result);
                     break;
                 } catch (Exception e) {
                     log.info("抓取新闻第{}次异常, 最多重试{}次", reTryCount++, maxReTryCount);
