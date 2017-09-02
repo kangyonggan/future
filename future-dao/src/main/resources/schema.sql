@@ -316,7 +316,7 @@ CREATE TABLE category
   name         VARCHAR(32)                           NOT NULL
   COMMENT '分类名称',
   type         VARCHAR(16)                           NOT NULL
-  COMMENT '分类类型{"book": "小说", "blog": "博客", "news": "新闻"}',
+  COMMENT '分类类型{"book": "小说", "blog": "博客"}',
   picUrl       VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-category.png'
   COMMENT '图片地址',
   sort         INT(11)                               NOT NULL                    DEFAULT 0

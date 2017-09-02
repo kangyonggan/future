@@ -40,9 +40,6 @@ public class HttpUtil {
             URL realUrl = new URL(url + "?" + param);
             URLConnection connection = realUrl.openConnection();
 
-//            connection.setRequestProperty("accept", "*/*");
-//            connection.setRequestProperty("connection", "Keep-Alive");
-//            connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
             connection.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
             connection.connect();
 
