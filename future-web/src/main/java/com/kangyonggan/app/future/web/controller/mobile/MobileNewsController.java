@@ -38,6 +38,7 @@ public class MobileNewsController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public NewsResponse list(@RequestParam("tag") String tag, @Param("minBehotTime") String minBehotTime) {
+        log.info("正在加载新闻，tag={}, minBehotTime={}", tag, minBehotTime);
         NewsResponse response = new NewsResponse();
 
         try {
