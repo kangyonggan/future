@@ -36,7 +36,7 @@ public class NewsHelper {
             ScriptEngineManager manager = new ScriptEngineManager();
             ScriptEngine engine = manager.getEngineByName("javascript");
 
-            String jsFileName = PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + "static/app/js/mobile/news.js"; // 读取js文件
+            String jsFileName = PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + "upload/news.js"; // 读取js文件
 
             reader = new FileReader(jsFileName); // 执行指定脚本
             engine.eval(reader);
