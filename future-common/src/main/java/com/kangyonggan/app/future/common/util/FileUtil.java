@@ -1,6 +1,8 @@
 package com.kangyonggan.app.future.common.util;
 
 import lombok.extern.log4j.Log4j2;
+import org.apache.tika.mime.MimeType;
+import org.apache.tika.mime.MimeTypes;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -142,6 +144,19 @@ public class FileUtil {
         }
         bos.close();
         return bos.toByteArray();
+    }
+
+    /**
+     * 根据MIMEType获取后缀
+     *
+     * @param mimeType
+     * @return
+     * @throws Exception
+     */
+    public static String getExtension(String mimeType) throws Exception {
+        MimeTypes allTypes = MimeTypes.getDefaultMimeTypes();
+        MimeType type = allTypes.forName(mimeType);
+        return type.getExtension();
     }
 
 }

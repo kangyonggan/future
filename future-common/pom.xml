@@ -101,6 +101,14 @@
             <groupId>org.pegdown</groupId>
             <artifactId>pegdown</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org</groupId>
+            <artifactId>jaudiotagger</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

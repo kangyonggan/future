@@ -100,6 +100,8 @@
         <xstream.version>1.4.9</xstream.version>
         <aliyun.core>2.4.2</aliyun.core>
         <aliyun.sms>3.0.0-rc1</aliyun.sms>
+        <jaudiotagger.version>2.0.3</jaudiotagger.version>
+        <tika.version>1.16</tika.version>
     </properties>
 
     <build>
@@ -520,6 +522,17 @@
                 <artifactId>pegdown</artifactId>
                 <version>${pegdown.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org</groupId>
+                <artifactId>jaudiotagger</artifactId>
+                <version>${jaudiotagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tika</groupId>
+                <artifactId>tika-core</artifactId>
+                <version>${tika.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>

@@ -594,3 +594,59 @@ INSERT INTO menu
 INSERT INTO role_menu (role_code, menu_code) VALUES
   ('ROLE_ADMIN', 'WEB'),
   ('ROLE_ADMIN', 'WEB_GUESTBOOK');
+
+-- ----------------------------
+--  Table structure for music
+-- ----------------------------
+DROP TABLE
+IF EXISTS music;
+
+CREATE TABLE music
+(
+  id              BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  name            VARCHAR(64)                           NOT NULL
+  COMMENT '歌曲名',
+  singer          VARCHAR(64)                           NOT NULL
+  COMMENT '歌手',
+  album           VARCHAR(64)                           NOT NULL
+  COMMENT '专辑',
+  album_cover_path  VARCHAR(128)                          NOT NULL
+  COMMENT '专辑封面路径',
+  duration        INT(11)                               NOT NULL
+  COMMENT '时长(秒)',
+  size            BIGINT(20)                            NOT NULL
+  COMMENT '文件大小(byte)',
+  tags            VARCHAR(128)                          NOT NULL                    DEFAULT ''
+  COMMENT '标签',
+  upload_username VARCHAR(16)                           NOT NULL                    DEFAULT ''
+  COMMENT '上传人',
+  status          VARCHAR(16)                           NOT NULL                    DEFAULT 'waiting'
+  COMMENT '状态:{"waiting":"待审核", "reject":"审核未通过", "complete":"审核通过"}',
+  adjust_username VARCHAR(16)                           NOT NULL                    DEFAULT ''
+  COMMENT '审核人',
+  is_stick        TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '是否置顶:{0:未置顶, 1:已置顶}',
+  is_deleted      TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time    TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time    TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '音乐表';
+CREATE INDEX id_updated_time
+  ON music (updated_time);
+
+INSERT INTO menu
+(code, name, pcode, url, sort, icon)
+  VALUE
+  ('WEB_MUSIC_STORE', '音乐库', 'WEB', 'web/music/store', 1, ''),
+  ('WEB_MUSIC_MANAGER', '音乐管理', 'WEB', 'web/music/manager', 2, '');
+
+INSERT INTO role_menu (role_code, menu_code) VALUES
+  ('ROLE_ADMIN', 'WEB_MUSIC_STORE'),
+  ('ROLE_ADMIN', 'WEB_MUSIC_MANAGER'),
+  ('ROLE_USER', 'WEB'),
+  ('ROLE_USER', 'WEB_MUSIC_STORE');
+
