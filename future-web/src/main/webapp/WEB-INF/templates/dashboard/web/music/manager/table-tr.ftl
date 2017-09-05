@@ -26,24 +26,24 @@
             <#--待审核-->
                 <li>
                     <a href="javascript:" data-role="music-tr" title="审核通过"
-                       data-url="${ctx}/dashboard/user/review/${music.id}/complete">审核通过</a>
+                       data-url="${ctx}/dashboard/web/music/manager/${music.id}/complete">审核通过</a>
                 </li>
                 <li>
                     <a href="javascript:" data-role="music-tr" title="审核不通过"
-                       data-url="${ctx}/dashboard/user/review/${music.id}/reject">审核不通过</a>
+                       data-url="${ctx}/dashboard/web/music/manager/${music.id}/reject">审核不通过</a>
                 </li>
             <#elseif music.status=="reject" || music.status=="complete">
             <#--审核不通过 和 审核通过-->
                 <li>
                     <a href="javascript:" data-role="music-tr" title="撤销审核"
-                       data-url="${ctx}/dashboard/user/review/${music.id}/waiting">撤销审核</a>
+                       data-url="${ctx}/dashboard/web/music/manager/${music.id}/waiting">撤销审核</a>
                 </li>
             </#if>
 
             <#if music.isDeleted==1>
                 <li>
                     <a href="javascript:" data-role="music-remove" title="彻底删除"
-                       data-url="${ctx}/dashboard/user/review/${music.id}/remove">彻底删除</a>
+                       data-url="${ctx}/dashboard/web/music/manager/${music.id}/remove">彻底删除</a>
                 </li>
             </#if>
             </ul>
