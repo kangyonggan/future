@@ -1,13 +1,15 @@
 <#assign ctx="${(rca.contextPath)!''}">
-<#assign modal_title="回复留言" />
+<#assign modal_title="上传音乐" />
 
 <@override name="modal-body">
-<form class="form-horizontal" role="form" id="modal-form" method="post"
-      action="${ctx}/dashboard/web/guestbook/${id}/reply">
+<form class="form-horizontal" role="form" id="modal-form" method="post" action="${ctx}/dashboard/web/music/store/save" enctype="multipart/form-data">
     <div class="row">
         <div class="row form-group">
-            <div class="col-md-offset-1 col-md-10 col-md-offset-1">
-                <textarea class="form-control limited" id="replyMessage" placeholder="支持markdown语法" name="replyMessage" maxlength="10240" style="height:200px;"></textarea>
+            <div class="col-md-3 control-label">
+                <label>选择mp3文件<span class="red">*</span></label>
+            </div>
+            <div class="col-md-7 controls">
+                <input type="file" id="file" name="file" class="ace ace-file-input"/>
             </div>
         </div>
     </div>
@@ -25,8 +27,7 @@
     <@s.message "app.button.save"/>
 </button>
 
-<script src="${ctx}/static/libs/jquery/jquery.inputlimiter.min.js"></script>
-<script src="${ctx}/static/app/js/dashboard/web/guestbook/form-modal.js"></script>
+<script src="${ctx}/static/app/js/dashboard/web/music/store/form-modal.js"></script>
 </@override>
 
-<@extends name="../../../modal-layout.ftl"/>
+<@extends name="../../../../modal-layout.ftl"/>

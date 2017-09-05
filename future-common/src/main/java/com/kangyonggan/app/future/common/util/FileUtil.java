@@ -159,4 +159,12 @@ public class FileUtil {
         return type.getExtension();
     }
 
+    /**
+     * 删除文件
+     *
+     * @param path
+     */
+    public static void delete(String path) {
+        new File(path).delete();
+    }
 }

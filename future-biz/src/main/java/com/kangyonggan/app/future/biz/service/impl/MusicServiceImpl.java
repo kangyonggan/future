@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author kangyonggan
@@ -22,7 +23,31 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
 
     @Override
     @LogTime
-    public List<Music> searchMusics(int pageNum, String name, String singer, String tags, String uploadUsername, String status, String isStick, String isDeleted) {
+    public List<Music> searchMusics(int pageNum, String name, String singer, String uploadUsername) {
+        Example example = new Example(Music.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("status", ArticleStatus.COMPLETE.getStatus());
+        criteria.andEqualTo("isDeleted", AppConstants.IS_DELETED_NO);
+
+        if (StringUtils.isNotEmpty(name)) {
+            criteria.andLike("name", StringUtil.toLikeString(name));
+        }
+        if (StringUtils.isNotEmpty(singer)) {
+            criteria.andLike("singer", StringUtil.toLikeString(singer));
+        }
+        if (StringUtils.isNotEmpty(uploadUsername)) {
+            criteria.andEqualTo("uploadUsername", uploadUsername);
+        }
+
+        example.setOrderByClause("is_stick desc, updated_time desc");
+
+        PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
+        return myMapper.selectByExample(example);
+    }
+
+    @Override
+    @LogTime
+    public List<Music> searchMusics4Admin(int pageNum, String name, String singer, String uploadUsername, String status, String isStick, String isDeleted) {
         Example example = new Example(Music.class);
         Example.Criteria criteria = example.createCriteria();
         if (StringUtils.isNotEmpty(name)) {
@@ -31,13 +56,8 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
         if (StringUtils.isNotEmpty(singer)) {
             criteria.andLike("singer", StringUtil.toLikeString(singer));
         }
-        if (StringUtils.isNotEmpty(tags)) {
-            criteria.andLike("tags", StringUtil.toLikeString(tags));
-        }
         if (StringUtils.isNotEmpty(status)) {
             criteria.andEqualTo("status", status);
-        } else {
-            criteria.andEqualTo("status", ArticleStatus.COMPLETE.getStatus());
         }
         if (StringUtils.isNotEmpty(uploadUsername)) {
             criteria.andEqualTo("uploadUsername", uploadUsername);
@@ -47,13 +67,26 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
         }
         if (StringUtils.isNotEmpty(isDeleted)) {
             criteria.andEqualTo("isDeleted", isDeleted);
-        } else {
-            criteria.andEqualTo("isDeleted", AppConstants.IS_DELETED_NO);
         }
 
-        example.setOrderByClause("isStick desc, updatedTime desc");
+        example.setOrderByClause("is_stick desc, updated_time desc");
 
         PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
         return myMapper.selectByExample(example);
+    }
+
+    @Override
+    @LogTime
+    public void save(Map<String, Object> resultMap) {
+        Music music = new Music();
+        music.setName((String) resultMap.get("name"));
+        music.setSinger((String) resultMap.get("singer"));
+        music.setAlbum((String) resultMap.get("album"));
+        music.setAlbumCoverPath("cover/" + resultMap.get("albumName"));
+        music.setDuration((Integer) resultMap.get("duration"));
+        music.setSize((Long) resultMap.get("size"));
+        music.setUploadUsername((String) resultMap.get("uploadUsername"));
+
+        myMapper.insertSelective(music);
     }
 }

@@ -12,7 +12,6 @@
         <result column="album_cover_path" property="albumCoverPath" jdbcType="VARCHAR"/>
         <result column="duration" property="duration" jdbcType="INTEGER"/>
         <result column="size" property="size" jdbcType="BIGINT"/>
-        <result column="tags" property="tags" jdbcType="VARCHAR"/>
         <result column="upload_username" property="uploadUsername" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
         <result column="adjust_username" property="adjustUsername" jdbcType="VARCHAR"/>

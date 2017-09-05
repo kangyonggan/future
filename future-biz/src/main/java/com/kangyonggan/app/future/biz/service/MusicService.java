@@ -3,6 +3,7 @@ package com.kangyonggan.app.future.biz.service;
 import com.kangyonggan.app.future.model.vo.Music;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author kangyonggan
@@ -16,12 +17,30 @@ public interface MusicService {
      * @param pageNum
      * @param name
      * @param singer
-     * @param tags
+     * @param uploadUsername
+     * @return
+     */
+    List<Music> searchMusics(int pageNum, String name, String singer, String uploadUsername);
+
+
+    /**
+     * 搜索音乐 4 admin
+     *
+     * @param pageNum
+     * @param name
+     * @param singer
      * @param uploadUsername
      * @param status
      * @param isStick
      * @param isDeleted
      * @return
      */
-    List<Music> searchMusics(int pageNum, String name, String singer, String tags, String uploadUsername, String status, String isStick, String isDeleted);
+    List<Music> searchMusics4Admin(int pageNum, String name, String singer, String uploadUsername, String status, String isStick, String isDeleted);
+
+    /**
+     * 保存音乐
+     *
+     * @param resultMap
+     */
+    void save(Map<String, Object> resultMap);
 }

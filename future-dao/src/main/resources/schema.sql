@@ -617,8 +617,6 @@ CREATE TABLE music
   COMMENT '时长(秒)',
   size            BIGINT(20)                            NOT NULL
   COMMENT '文件大小(byte)',
-  tags            VARCHAR(128)                          NOT NULL                    DEFAULT ''
-  COMMENT '标签',
   upload_username VARCHAR(16)                           NOT NULL                    DEFAULT ''
   COMMENT '上传人',
   status          VARCHAR(16)                           NOT NULL                    DEFAULT 'waiting'

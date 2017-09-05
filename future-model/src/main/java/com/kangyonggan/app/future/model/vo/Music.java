@@ -47,11 +47,6 @@ public class Music implements Serializable {
     private Long size;
 
     /**
-     * 标签
-     */
-    private String tags;
-
-    /**
      * 上传人
      */
     @Column(name = "upload_username")

@@ -41,7 +41,7 @@
 
         <div class="clearfix form-actions">
             <div class="col-xs-10 align-center">
-                <button class="btn btn-inverse" id="submit" data-toggle="form-submit" data-loading-text="正在保存...">
+                <button class="btn btn-inverse" id="submit" data-toggle="form-submit" data-loading-text="正在<@s.message "app.button.save"/>...">
                     <i class="ace-icon fa fa-check bigger-110"></i>
                 <@s.message "app.button.save"/>
                 </button>

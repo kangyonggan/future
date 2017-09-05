@@ -22,7 +22,7 @@
 </button>
 
 <button class="btn btn-sm btn-inverse" id="submit"
-        data-loading-text="正在保存..." data-toggle="form-submit" data-target="#modal-form">
+        data-loading-text="正在<@s.message "app.button.save"/>..." data-toggle="form-submit" data-target="#modal-form">
     <i class="ace-icon fa fa-check"></i>
     <@s.message "app.button.save"/>
 </button>

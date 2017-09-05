@@ -9,13 +9,60 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 
 /**
  * @author kangyonggan
  * @since 2016/12/6
  */
 public class FileUpload {
+
+    /**
+     * 文件复制
+     *
+     * @param filename
+     * @param newFilename
+     * @throws FileUploadException
+     */
+    public static void copy(String filename, String newFilename) throws FileUploadException {
+        try {
+            FileInputStream fin = null;
+            FileOutputStream fout = null;
+            FileChannel in = null;
+            FileChannel out = null;
+            try {
+                fin = new FileInputStream(PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filename);
+                fout = new FileOutputStream(PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + newFilename);
+                in = fin.getChannel();
+                out = fout.getChannel();
+                in.transferTo(0, in.size(), out);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                    if (fout != null) {
+                        fout.close();
+                    }
+                    if (in != null) {
+                        in.close();
+                    }
+                    if (fin != null) {
+                        fin.close();
+                    }
+                } catch (Exception e) {
+                    throw new FileUploadException("文件复制异常", e);
+                }
+            }
+        } catch (Exception e) {
+            throw new FileUploadException("文件复制异常", e);
+        }
+    }
 
     /**
      * 上传文件

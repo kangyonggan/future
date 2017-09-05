@@ -1,19 +1,19 @@
 $(function () {
-    updateState("user/info");
 
-    var $form = $('#form');
+    var $form = $('#modal-form');
     var $btn = $("#submit");
+    var $modal = $form.parents('.modal');
 
     var file_input = $form.find('input[type=file]');
     file_input.ace_file_input({
         style: 'well',
-        btn_choose: '点击这里添加图片',
+        btn_choose: '点击这里添加mp3文件',
         btn_change: null,
-        no_icon: 'ace-icon fa fa-picture-o',
+        no_icon: 'ace-icon fa fa-music',
         droppable: false,
-        allowExt: ["jpeg", "jpg", "png", "gif"],
-        allowMime: ["image/jpeg", "image/jpg", "image/png", "image/gif"],
-        maxSize: 2097152,//bytes
+        allowExt: ["mp3"],
+        allowMime: ["audio/mp3", "audio/mpeg"],
+        maxSize: 104857600,//bytes
         thumbnail: 'fit'
     });
 
@@ -25,16 +25,7 @@ $(function () {
 
     $form.validate({
         rules: {
-            password: {
-                required: true,
-                isPassword: true
-            },
-            rePassword: {
-                required: true,
-                equalTo: "#password"
-            },
-            realname: {
-                isRealName: true,
+            file: {
                 required: true
             }
         },
@@ -44,19 +35,18 @@ $(function () {
             $(form).ajaxSubmit({
                 dataType: 'json',
                 success: function (response) {
+                    $btn.button('reset');
+                    $modal.modal('hide');
                     if (response.errCode == 'success') {
-                        Message.success("修改成功");
-                        var user = response.user;
-                        $("#navFullname").html(user.realname);
-                        $("#userAvatar").attr("src", user.smallAvatar);
+                        Message.success(response.errMsg);
                     } else {
                         Message.error(response.errMsg);
                     }
-                    $btn.button('reset');
                 },
                 error: function () {
                     Message.error("服务器内部错误，请稍后再试。");
                     $btn.button('reset');
+                    $modal.modal('hide');
                 }
             });
         },
@@ -67,4 +57,3 @@ $(function () {
         errorClass: "error"
     });
 });
-
