@@ -107,4 +107,18 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
     public void deleteMusicById(Long id) {
         myMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    @LogTime
+    public List<Music> findMusicsByPage(int pageNum) {
+        Example example = new Example(Music.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("status", ArticleStatus.COMPLETE.getStatus());
+        criteria.andEqualTo("isDeleted", AppConstants.IS_DELETED_NO);
+
+        example.setOrderByClause("is_stick desc, updated_time desc");
+
+        PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
+        return myMapper.selectByExample(example);
+    }
 }

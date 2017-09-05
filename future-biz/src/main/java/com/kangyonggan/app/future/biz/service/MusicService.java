@@ -66,4 +66,12 @@ public interface MusicService {
      */
     void deleteMusicById(Long id);
 
+    /**
+     * 查找音乐列表
+     *
+     * @param pageNum
+     * @return
+     */
+    List<Music> findMusicsByPage(int pageNum);
+
 }
