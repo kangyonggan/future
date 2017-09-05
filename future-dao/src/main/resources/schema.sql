@@ -635,6 +635,8 @@ CREATE TABLE music
   COMMENT '音乐表';
 CREATE INDEX id_updated_time
   ON music (updated_time);
+CREATE UNIQUE INDEX  id_unique_name_singer
+  ON music (name, singer);
 
 INSERT INTO menu
 (code, name, pcode, url, sort, icon)

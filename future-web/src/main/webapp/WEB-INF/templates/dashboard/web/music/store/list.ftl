@@ -47,7 +47,7 @@
         <th>上传者</th>
         <th>是否置顶</th>
         <th>更新时间</th>
-        <th>操作</th>
+        <th>试听</th>
     </tr>
     </thead>
     <tbody>

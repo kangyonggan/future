@@ -69,7 +69,7 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
             criteria.andEqualTo("isDeleted", isDeleted);
         }
 
-        example.setOrderByClause("is_stick desc, updated_time desc");
+        example.setOrderByClause("id desc");
 
         PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
         return myMapper.selectByExample(example);
@@ -88,5 +88,23 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
         music.setUploadUsername((String) resultMap.get("uploadUsername"));
 
         myMapper.insertSelective(music);
+    }
+
+    @Override
+    @LogTime
+    public Music findMusicById(Long id) {
+        return myMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    @LogTime
+    public void updateMusic(Music music) {
+        myMapper.updateByPrimaryKeySelective(music);
+    }
+
+    @Override
+    @LogTime
+    public void deleteMusicById(Long id) {
+        myMapper.deleteByPrimaryKey(id);
     }
 }

@@ -43,4 +43,27 @@ public interface MusicService {
      * @param resultMap
      */
     void save(Map<String, Object> resultMap);
+
+    /**
+     * 查找音乐
+     *
+     * @param id
+     * @return
+     */
+    Music findMusicById(Long id);
+
+    /**
+     * 更新音乐
+     *
+     * @param music
+     */
+    void updateMusic(Music music);
+
+    /**
+     * 物理删除
+     *
+     * @param id
+     */
+    void deleteMusicById(Long id);
+
 }

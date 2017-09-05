@@ -100,7 +100,11 @@ public class DashboardWebMusicStoreController extends BaseController {
 
                 // 落库
                 map.put("uploadUsername", shiroUser.getUsername());
-                musicService.save(map);
+                try {
+                    musicService.save(map);
+                } catch (Exception e) {
+                    setResultMapFailure(resultMap, "此音乐已存在，不可重复上传");
+                }
             } else {
                 setResultMapFailure(resultMap, (String) map.get("respMsg"));
             }

@@ -38,7 +38,7 @@ $(function () {
                     $btn.button('reset');
                     $modal.modal('hide');
                     if (response.errCode == 'success') {
-                        Message.success(response.errMsg);
+                        Message.success("上传成功，等待管理员审核...");
                     } else {
                         Message.error(response.errMsg);
                     }
