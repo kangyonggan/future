@@ -75,4 +75,10 @@ public interface MusicService {
      */
     List<Music> findMusicsByPage(int pageNum, int pageSize);
 
+    /**
+     * 查询音乐总数
+     *
+     * @return
+     */
+    int findMusicCount();
 }

@@ -121,4 +121,14 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
         PageHelper.startPage(pageNum, pageSize);
         return myMapper.selectByExample(example);
     }
+
+    @Override
+    @LogTime
+    public int findMusicCount() {
+        Music music = new Music();
+        music.setStatus(ArticleStatus.COMPLETE.getStatus());
+        music.setIsDeleted(AppConstants.IS_DELETED_NO);
+
+        return myMapper.selectCount(music);
+    }
 }
