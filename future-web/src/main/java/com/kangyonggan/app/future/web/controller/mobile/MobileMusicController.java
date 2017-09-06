@@ -58,7 +58,7 @@ public class MobileMusicController {
      *
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "count", method = RequestMethod.POST)
     public CountResponse getSize() {
         CountResponse response = new CountResponse();
 
