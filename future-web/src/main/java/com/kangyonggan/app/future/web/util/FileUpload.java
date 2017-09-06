@@ -65,6 +65,50 @@ public class FileUpload {
     }
 
     /**
+     * 文件复制
+     *
+     * @param filename
+     * @param newFilename
+     * @throws FileUploadException
+     */
+    public static void copyAbs(String filename, String newFilename) throws FileUploadException {
+        try {
+            FileInputStream fin = null;
+            FileOutputStream fout = null;
+            FileChannel in = null;
+            FileChannel out = null;
+            try {
+                fin = new FileInputStream(filename);
+                fout = new FileOutputStream(PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + newFilename);
+                in = fin.getChannel();
+                out = fout.getChannel();
+                in.transferTo(0, in.size(), out);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                    if (fout != null) {
+                        fout.close();
+                    }
+                    if (in != null) {
+                        in.close();
+                    }
+                    if (fin != null) {
+                        fin.close();
+                    }
+                } catch (Exception e) {
+                    throw new FileUploadException("文件复制异常", e);
+                }
+            }
+        } catch (Exception e) {
+            throw new FileUploadException("文件复制异常", e);
+        }
+    }
+
+    /**
      * 上传文件
      *
      * @param file
