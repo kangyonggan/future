@@ -29,14 +29,16 @@ public class MobileMusicController {
      * 查询音乐列表
      *
      * @param pageNum
+     * @param pageSize
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-    public MusicsResponse list(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNum) {
+    public MusicsResponse list(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNum,
+                               @RequestParam(value = "pageSize", required = false, defaultValue = "50") int pageSize) {
         MusicsResponse response = new MusicsResponse();
 
         try {
-            List<Music> musics = musicService.findMusicsByPage(pageNum);
+            List<Music> musics = musicService.findMusicsByPage(pageNum, pageSize);
 
             response.setRespCo(Resp.SUCCESS.getRespCo());
             response.setRespMsg(Resp.SUCCESS.getRespMsg());

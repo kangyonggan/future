@@ -110,7 +110,7 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
 
     @Override
     @LogTime
-    public List<Music> findMusicsByPage(int pageNum) {
+    public List<Music> findMusicsByPage(int pageNum, int pageSize) {
         Example example = new Example(Music.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("status", ArticleStatus.COMPLETE.getStatus());
@@ -118,7 +118,7 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
 
         example.setOrderByClause("is_stick desc, updated_time desc");
 
-        PageHelper.startPage(pageNum, AppConstants.PAGE_SIZE);
+        PageHelper.startPage(pageNum, pageSize);
         return myMapper.selectByExample(example);
     }
 }

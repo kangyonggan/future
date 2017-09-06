@@ -70,8 +70,9 @@ public interface MusicService {
      * 查找音乐列表
      *
      * @param pageNum
+     * @param pageSize
      * @return
      */
-    List<Music> findMusicsByPage(int pageNum);
+    List<Music> findMusicsByPage(int pageNum, int pageSize);
 
 }
