@@ -12,6 +12,7 @@ import com.kangyonggan.app.future.mapper.StorageMapper;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Storage;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -88,10 +89,13 @@ public class StorageServiceImpl extends BaseService<Storage> implements StorageS
                 storage.setExplains(item.getString("explains"));
                 String url = item.getString("url");
 
-                String filename = "jztk/" + subject + i;
-                FileUtil.downloadFromUrl(url, PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filename);
-
-                storage.setUrl(filename);
+                if (StringUtils.isNotEmpty(url)) {
+                    String filename = "jztk/" + subject + i;
+                    FileUtil.downloadFromUrl(url, PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filename);
+                    storage.setUrl(filename);
+                } else {
+                    storage.setUrl("");
+                }
 
                 storages.add(storage);
             }
