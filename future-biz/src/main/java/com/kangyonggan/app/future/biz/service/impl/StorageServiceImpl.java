@@ -61,10 +61,11 @@ public class StorageServiceImpl extends BaseService<Storage> implements StorageS
      * @throws Exception
      */
     private void saveJZTK(String subject) throws Exception {
+        String params = "key=" + PropertiesUtil.getProperties("app.key") + "&subject=" + subject + "&testType=order";
         if (subject.equals("1")) {
-            subject += "&model=c1";
+            params = "key=" + PropertiesUtil.getProperties("app.key") + "&subject=" + subject + "&model=c1&testType=order";
         }
-        String result = HttpUtil.sendGet("http://api.avatardata.cn/Jztk/Query", "key=" + PropertiesUtil.getProperties("app.key") + "&subject=" + subject + "&testType=order");
+        String result = HttpUtil.sendGet("http://api.avatardata.cn/Jztk/Query", params);
         JSONObject jsonObject = JSON.parseObject(result);
 
         String errorCode = jsonObject.getString("error_code");
@@ -92,7 +93,7 @@ public class StorageServiceImpl extends BaseService<Storage> implements StorageS
                 String url = item.getString("url");
 
                 if (StringUtils.isNotEmpty(url)) {
-                    String filename = "jztk/" + subject + i + url.substring(url.lastIndexOf("."));
+                    String filename = "jztk/" + subject + "-" + i + url.substring(url.lastIndexOf("."));
                     FileUtil.downloadFromUrl(url, PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filename);
                     storage.setUrl(filename);
                 } else {
