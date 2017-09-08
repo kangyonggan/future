@@ -6,8 +6,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.StorageService;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
+import com.kangyonggan.app.future.common.util.FileUtil;
 import com.kangyonggan.app.future.common.util.HttpUtil;
 import com.kangyonggan.app.future.mapper.StorageMapper;
+import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Storage;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +86,12 @@ public class StorageServiceImpl extends BaseService<Storage> implements StorageS
                 storage.setOption3(item.getString("item3"));
                 storage.setOption4(item.getString("item4"));
                 storage.setExplains(item.getString("explains"));
-                storage.setUrl(item.getString("url"));
+                String url = item.getString("url");
+
+                String filename = "jztk/" + subject + i;
+                FileUtil.downloadFromUrl(url, PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filename);
+
+                storage.setUrl(filename);
 
                 storages.add(storage);
             }
