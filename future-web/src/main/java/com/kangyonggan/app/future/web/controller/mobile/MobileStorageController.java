@@ -30,14 +30,15 @@ public class MobileStorageController {
     /**
      * 初始化题库
      *
+     * @param subject
      * @return
      */
     @RequestMapping(value = "parse", method = RequestMethod.GET)
     @RequiresPermissions("SYSTEM_USER")
-    public CommonResponse parse() {
+    public CommonResponse parse(@RequestParam("s") String subject) {
         CommonResponse response = new CommonResponse();
 
-        storageService.saveJZTKStorages();
+        storageService.saveJZTKStorages(subject);
 
         response.setRespCo(Resp.SUCCESS.getRespCo());
         response.setRespMsg(Resp.SUCCESS.getRespMsg());

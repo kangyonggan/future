@@ -12,8 +12,10 @@ public interface StorageService {
 
     /**
      * 批量保存驾照题库
+     *
+     * @param subject
      */
-    void saveJZTKStorages();
+    void saveJZTKStorages(String subject);
 
     /**
      * 分页获取题目

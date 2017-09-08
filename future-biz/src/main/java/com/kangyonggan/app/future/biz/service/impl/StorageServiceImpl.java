@@ -32,13 +32,10 @@ public class StorageServiceImpl extends BaseService<Storage> implements StorageS
     private StorageMapper storageMapper;
 
     @Override
-    public void saveJZTKStorages() {
+    public void saveJZTKStorages(String subject) {
         try {
-            // 抓取科目1
-            saveJZTK("1");
-
-            // 抓取科目4
-            saveJZTK("4");
+            // 抓取科目
+            saveJZTK(subject);
         } catch (Exception e) {
             log.warn("初始化驾照题库失败", e);
         }
