@@ -35,10 +35,10 @@ public class StorageServiceImpl extends BaseService<Storage> implements StorageS
     public void saveJZTKStorages() {
         try {
             // 抓取科目1
-            parseJZTK("1");
+            saveJZTK("1");
 
             // 抓取科目4
-            parseJZTK("4");
+            saveJZTK("4");
         } catch (Exception e) {
             log.warn("初始化驾照题库失败", e);
         }
@@ -61,7 +61,7 @@ public class StorageServiceImpl extends BaseService<Storage> implements StorageS
      * @param subject
      * @throws Exception
      */
-    private void parseJZTK(String subject) throws Exception {
+    private void saveJZTK(String subject) throws Exception {
         String result = HttpUtil.sendGet("http://api.avatardata.cn/Jztk/Query", "key=" + PropertiesUtil.getProperties("app.key") + "&subject=" + subject + "&testType=order");
         JSONObject jsonObject = JSON.parseObject(result);
 
