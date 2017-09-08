@@ -59,6 +59,9 @@ public class StorageServiceImpl extends BaseService<Storage> implements StorageS
      * @throws Exception
      */
     private void saveJZTK(String subject) throws Exception {
+        if (subject.equals("1")) {
+            subject += "&model=c1";
+        }
         String result = HttpUtil.sendGet("http://api.avatardata.cn/Jztk/Query", "key=" + PropertiesUtil.getProperties("app.key") + "&subject=" + subject + "&testType=order");
         JSONObject jsonObject = JSON.parseObject(result);
 
