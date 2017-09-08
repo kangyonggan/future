@@ -90,7 +90,7 @@ public class StorageServiceImpl extends BaseService<Storage> implements StorageS
                 String url = item.getString("url");
 
                 if (StringUtils.isNotEmpty(url)) {
-                    String filename = "jztk/" + subject + i;
+                    String filename = "jztk/" + subject + i + url.substring(url.lastIndexOf("."));
                     FileUtil.downloadFromUrl(url, PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filename);
                     storage.setUrl(filename);
                 } else {
