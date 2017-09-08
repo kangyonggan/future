@@ -35,7 +35,9 @@ public class StorageServiceImpl extends BaseService<Storage> implements StorageS
     public void saveJZTKStorages(String subject) {
         try {
             // 抓取科目
+            log.info("开始抓取科目{}", subject);
             saveJZTK(subject);
+            log.info("抓取科目{}完成", subject);
         } catch (Exception e) {
             log.warn("初始化驾照题库失败", e);
         }
