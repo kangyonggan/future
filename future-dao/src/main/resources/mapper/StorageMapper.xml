@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.kangyonggan.app.future.mapper.StorageMapper">
+    <resultMap id="BaseResultMap" type="com.kangyonggan.app.future.model.vo.Storage">
+        <!--
+          WARNING - @mbggenerated
+        -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="subject" property="subject" jdbcType="VARCHAR"/>
+        <result column="model" property="model" jdbcType="VARCHAR"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="option1" property="option1" jdbcType="VARCHAR"/>
+        <result column="option2" property="option2" jdbcType="VARCHAR"/>
+        <result column="option3" property="option3" jdbcType="VARCHAR"/>
+        <result column="option4" property="option4" jdbcType="VARCHAR"/>
+        <result column="answer" property="answer" jdbcType="VARCHAR"/>
+        <result column="explains" property="explains" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+        <result column="question" property="question" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <insert id="insertStorages">
+        INSERT INTO storage
+        (type, subject, model, url, option1, option2, option3, option4, answer, explains, question)
+        VALUES
+        <foreach collection="storages" item="storage" separator=",">
+            (#{storage.type}, #{storage.subject}, #{storage.model}, #{storage.url}, #{storage.option1}, #{storage.option2}, #{storage.option3}
+            , #{storage.option4}, #{storage.answer}, #{storage.option1}, #{storage.question})
+        </foreach>
+    </insert>
+</mapper>

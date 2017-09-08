@@ -7,6 +7,7 @@
         <property name="future.app.author" description="项目负责人" defaultValue="康永敢"/>
         <property name="future.app.author.en" description="项目负责人" defaultValue="Yonggan Kang"/>
         <property name="future.app.ba.no" description="备案号" defaultValue="皖ICP备16017743号-1"/>
+        <property name="future.app.key" description="阿凡达数据key" defaultValue="xxx"/>
 
         <!-- redis -->
         <property name="future.redis.maxTotal" description="redis最大连接数" defaultValue="1000"/>

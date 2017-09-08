@@ -603,39 +603,39 @@ IF EXISTS music;
 
 CREATE TABLE music
 (
-  id              BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  id               BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
   COMMENT '主键, 自增',
-  name            VARCHAR(64)                           NOT NULL
+  name             VARCHAR(64)                           NOT NULL
   COMMENT '歌曲名',
-  singer          VARCHAR(64)                           NOT NULL
+  singer           VARCHAR(64)                           NOT NULL
   COMMENT '歌手',
-  album           VARCHAR(64)                           NOT NULL
+  album            VARCHAR(64)                           NOT NULL
   COMMENT '专辑',
-  album_cover_path  VARCHAR(128)                          NOT NULL
+  album_cover_path VARCHAR(128)                          NOT NULL
   COMMENT '专辑封面路径',
-  duration        INT(11)                               NOT NULL
+  duration         INT(11)                               NOT NULL
   COMMENT '时长(秒)',
-  size            BIGINT(20)                            NOT NULL
+  size             BIGINT(20)                            NOT NULL
   COMMENT '文件大小(byte)',
-  upload_username VARCHAR(16)                           NOT NULL                    DEFAULT ''
+  upload_username  VARCHAR(16)                           NOT NULL                    DEFAULT ''
   COMMENT '上传人',
-  status          VARCHAR(16)                           NOT NULL                    DEFAULT 'waiting'
+  status           VARCHAR(16)                           NOT NULL                    DEFAULT 'waiting'
   COMMENT '状态:{"waiting":"待审核", "reject":"审核未通过", "complete":"审核通过"}',
-  adjust_username VARCHAR(16)                           NOT NULL                    DEFAULT ''
+  adjust_username  VARCHAR(16)                           NOT NULL                    DEFAULT ''
   COMMENT '审核人',
-  is_stick        TINYINT                               NOT NULL                    DEFAULT 0
+  is_stick         TINYINT                               NOT NULL                    DEFAULT 0
   COMMENT '是否置顶:{0:未置顶, 1:已置顶}',
-  is_deleted      TINYINT                               NOT NULL                    DEFAULT 0
+  is_deleted       TINYINT                               NOT NULL                    DEFAULT 0
   COMMENT '逻辑删除:{0:未删除, 1:已删除}',
-  created_time    TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  created_time     TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
   COMMENT '创建时间',
-  updated_time    TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  updated_time     TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
   COMMENT '更新时间'
 )
   COMMENT '音乐表';
 CREATE INDEX id_updated_time
   ON music (updated_time);
-CREATE UNIQUE INDEX  id_unique_name_singer
+CREATE UNIQUE INDEX id_unique_name_singer
   ON music (name, singer);
 
 INSERT INTO menu
@@ -650,3 +650,45 @@ INSERT INTO role_menu (role_code, menu_code) VALUES
   ('ROLE_USER', 'WEB'),
   ('ROLE_USER', 'WEB_MUSIC_STORE');
 
+-- ----------------------------
+--  Table structure for storage
+-- ----------------------------
+DROP TABLE
+IF EXISTS storage;
+
+CREATE TABLE storage
+(
+  id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  type         VARCHAR(16)                           NOT NULL
+  COMMENT '题目类型:{"jztk": "驾照题库"}',
+  subject      VARCHAR(32)                           NOT NULL
+  COMMENT '科目',
+  model        VARCHAR(32)                           NOT NULL                    DEFAULT ''
+  COMMENT '模式',
+  question     LONGTEXT                              NOT NULL
+  COMMENT '问题',
+  url          VARCHAR(256)                          NOT NULL                    DEFAULT ''
+  COMMENT '问题配图',
+  option1      VARCHAR(512)                          NOT NULL                    DEFAULT ''
+  COMMENT '选项1',
+  option2      VARCHAR(512)                          NOT NULL                    DEFAULT ''
+  COMMENT '选项2',
+  option3      VARCHAR(512)                          NOT NULL                    DEFAULT ''
+  COMMENT '选项3',
+  option4      VARCHAR(512)                          NOT NULL                    DEFAULT ''
+  COMMENT '选项4',
+  answer       VARCHAR(1024)                         NOT NULL                    DEFAULT ''
+  COMMENT '答案',
+  explains     VARCHAR(1024)                         NOT NULL                    DEFAULT ''
+  COMMENT '解析',
+  is_deleted   TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '题库表';
+CREATE INDEX id_created_time
+  ON storage (created_time);
