@@ -22,7 +22,8 @@ $(function () {
         return false;
     });
 
-    $(".detail-pay > div > img").mouseover(function () {
+    $(".detail-pay > div > div.channel > img").mouseover(function () {
+        $text = $(this).parent().find("div");
         payOut();
         taskPay = setInterval("payIn()", 5);
     }).mouseout(function () {
@@ -31,7 +32,7 @@ $(function () {
 });
 
 var taskPay, degPay = 0;
-var $text = $(".detail-pay > div > div");
+var $text;
 var temp = 10;
 
 function payOut() {
