@@ -46,7 +46,7 @@ public class StorageServiceImpl extends BaseService<Storage> implements StorageS
     @Override
     public List<Storage> findStoragesByPage(int pageNum, String subject) {
         Example example = new Example(Storage.class);
-        example.createCriteria().andEqualTo("subject", subject);
+        example.createCriteria().andEqualTo("subject", subject).andEqualTo("isDeleted", AppConstants.IS_DELETED_NO);
 
         example.setOrderByClause("id desc");
 
