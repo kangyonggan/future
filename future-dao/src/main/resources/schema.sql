@@ -692,3 +692,32 @@ CREATE TABLE storage
   COMMENT '题库表';
 CREATE INDEX id_created_time
   ON storage (created_time);
+
+-- ----------------------------
+--  Table structure for history
+-- ----------------------------
+DROP TABLE
+IF EXISTS history;
+
+CREATE TABLE history
+(
+  id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  year         INT(11)                               NOT NULL
+  COMMENT '年',
+  month        INT(11)                               NOT NULL
+  COMMENT '月',
+  day          INT(11)                               NOT NULL
+  COMMENT '日',
+  title        LONGTEXT                              NOT NULL
+  COMMENT '事件',
+  is_deleted   TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '历史今天表';
+CREATE INDEX id_created_time
+  ON history (created_time);
