@@ -135,7 +135,7 @@ public class FileUtil {
      * @return
      * @throws IOException
      */
-    private static byte[] readInputStream(InputStream inputStream) throws IOException {
+    public static byte[] readInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[1024];
         int len;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
