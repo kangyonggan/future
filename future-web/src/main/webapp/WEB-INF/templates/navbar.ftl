@@ -57,7 +57,7 @@
         <@shiro.guest>
             <ul class="nav navbar-nav hidden-xs">
                 <li>
-                    <a href="#login">登录</a>
+                    <a href="#index">登录</a>
                 </li>
             </ul>
         </@shiro.guest>

@@ -72,7 +72,7 @@
     <!-- Shiro Filter -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="/user#login"/>
+        <property name="loginUrl" value="/user#index"/>
         <property name="unauthorizedUrl" value="/user#403"/>
         <property name="filterChainDefinitions">
             <value>

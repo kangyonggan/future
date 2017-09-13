@@ -46,8 +46,8 @@ public class LoginController extends BaseController {
      *
      * @return
      */
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String login() {
+    @RequestMapping(value = "index", method = RequestMethod.GET)
+    public String index() {
         return getPathIndex();
     }
 

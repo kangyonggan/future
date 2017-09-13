@@ -71,7 +71,7 @@
 
         <div class="toolbar clearfix">
             <div>
-                <a href="#login" class="forgot-password-link">
+                <a href="#index" class="forgot-password-link">
                     <i class="ace-icon fa fa-arrow-left"></i>
                     已有账号？去登录
                 </a>

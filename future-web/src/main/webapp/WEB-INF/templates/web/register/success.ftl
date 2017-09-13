@@ -12,7 +12,7 @@
     </p>
 
     <p class="center">
-        <a class="btn btn-sm btn-success" href="#login" id="to-login">去登录(5s)</a>
+        <a class="btn btn-sm btn-success" href="#index" id="to-login">去登录(5s)</a>
     </p>
 </div>
 </@override>

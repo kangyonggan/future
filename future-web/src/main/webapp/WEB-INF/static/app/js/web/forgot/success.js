@@ -9,7 +9,7 @@ $(function () {
         $btn.html("去登录(" + time + "s)");
         if (time == 0) {
             clearInterval(t);
-            window.location.href = ctx + "#login";
+            window.location.href = ctx + "#index";
         }
     }, 1000)
 });
