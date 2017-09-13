@@ -1,7 +1,8 @@
 <#assign ctx="${(rca.contextPath)!''}">
 <#assign data = RequestParameters.data!'' />
 
-<h2 class="tool-title">CSS压缩</h2>
+<#assign toolTitle="CSS压缩">
+<#include "breadcrumbs.ftl">
 
 <div>
     <h4>待压缩的CSS：</h4>

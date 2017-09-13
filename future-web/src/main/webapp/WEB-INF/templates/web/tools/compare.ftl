@@ -1,6 +1,7 @@
 <#assign ctx="${(rca.contextPath)!''}">
 
-<div class="tool-title">properties文件对比</div>
+<#assign toolTitle="properties文件对比">
+<#include "breadcrumbs.ftl">
 
 <div>
     <form action="${ctx}/tools/compare" method="post" id="compare-form" enctype="multipart/form-data">

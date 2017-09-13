@@ -2,6 +2,15 @@
 
 <link rel="stylesheet" href="${ctx}/static/ace/dist/css/prettify.min.css"/>
 
+<div class="navigation">
+    当前位置：&nbsp;
+    <a href="#index">首页</a>
+    &nbsp;>&nbsp;
+    <a href="javascript:" class="active">留言</a>
+</div>
+<div class="navigation-line"></div>
+<div class="space-10"></div>
+
 <form class="guestbook-form" id="guestbook-form" action="${ctx}/guestbook/save" method="post">
     <div class="form-group">
         <textarea class="form-control" name="content" rows="5" placeholder="相遇便是缘分，留句话吧..."></textarea>

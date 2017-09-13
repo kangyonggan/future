@@ -1,6 +1,7 @@
 <#assign ctx="${(rca.contextPath)!''}">
 
-<div class="tool-title">HTML转义字符</div>
+<#assign toolTitle="HTML转义字符">
+<#include "breadcrumbs.ftl">
 
 <#list 0..3 as i>
 <table class="table table-striped table-bordered table-hover ascll-table">

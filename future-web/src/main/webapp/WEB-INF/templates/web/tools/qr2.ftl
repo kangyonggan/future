@@ -2,7 +2,8 @@
 <#assign type = RequestParameters.type!'0' />
 <#assign data = RequestParameters.data!'' />
 
-<div class="tool-title">解析二维码</div>
+<#assign toolTitle="解析二维码">
+<#include "breadcrumbs.ftl">
 
 <div>
     <form action="${ctx}/tools/qr2" method="post" id="qr2-fromat-form" class="tools-form" enctype="multipart/form-data">

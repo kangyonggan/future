@@ -1,7 +1,8 @@
 <#assign ctx="${(rca.contextPath)!''}">
 <#assign data = RequestParameters.data!'' />
 
-<div class="tool-title">JS压缩</div>
+<#assign toolTitle="JS压缩">
+<#include "breadcrumbs.ftl">
 
 <div>
     <h4>待压缩的JS：</h4>

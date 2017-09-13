@@ -2,7 +2,8 @@
 <#assign data = RequestParameters.data!'' />
 <#assign dialect = RequestParameters.dialect!'' />
 
-<div class="tool-title">SQL格式化</div>
+<#assign toolTitle="SQL格式化">
+<#include "breadcrumbs.ftl">
 
 <div>
     <h4>待格式化的SQL：</h4>

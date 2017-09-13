@@ -2,7 +2,8 @@
 <#assign data = RequestParameters.data!'' />
 <#assign size = RequestParameters.size!'200' />
 
-<div class="tool-title">生成二维码</div>
+<#assign toolTitle="生成二维码">
+<#include "breadcrumbs.ftl">
 
 <div>
     <form action="#tools/qr" method="post" id="qr-fromat-form" class="tools-form">

@@ -6,7 +6,8 @@
 <#assign len = RequestParameters.len!'18' />
 <#assign size = RequestParameters.size!'10' />
 
-<h2 class="tool-title">生成身份证</h2>
+<#assign toolTitle="生成身份证">
+<#include "breadcrumbs.ftl">
 
 <div>
     <h4>生成条件：</h4>

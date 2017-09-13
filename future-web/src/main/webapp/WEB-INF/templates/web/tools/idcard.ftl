@@ -1,7 +1,8 @@
 <#assign ctx="${(rca.contextPath)!''}">
 <#assign data = RequestParameters.data!'' />
 
-<div class="tool-title">身份证查询</div>
+<#assign toolTitle="身份证查询">
+<#include "breadcrumbs.ftl">
 
 <div>
     <h4>待查询的身份证：</h4>

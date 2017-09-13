@@ -2,8 +2,11 @@ package com.kangyonggan.app.future.web.controller.web;
 
 import com.github.pagehelper.PageInfo;
 import com.kangyonggan.app.future.biz.service.ArticleService;
+import com.kangyonggan.app.future.biz.service.CategoryService;
 import com.kangyonggan.app.future.common.util.MarkdownUtil;
+import com.kangyonggan.app.future.model.constants.CategoryType;
 import com.kangyonggan.app.future.model.vo.Article;
+import com.kangyonggan.app.future.model.vo.Category;
 import com.kangyonggan.app.future.web.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +28,9 @@ public class IndexController extends BaseController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     /**
      * 网站模板
@@ -90,8 +96,10 @@ public class IndexController extends BaseController {
                            Model model) {
         List<Article> articles = articleService.searchArticles(pageNum, code, null);
         PageInfo<Article> page = new PageInfo(articles);
+        Category category = categoryService.findCategoryByTypeAndCode(CategoryType.ARTICLE.getType(), code);
 
         model.addAttribute("page", page);
+        model.addAttribute("category", category);
         model.addAttribute("type", "category/" + code);
         return getPathIndex();
     }

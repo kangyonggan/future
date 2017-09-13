@@ -1,7 +1,8 @@
 <#assign ctx="${(rca.contextPath)!''}">
 <#assign data = RequestParameters.data!'' />
 
-<div class="tool-title">JSON格式化</div>
+<#assign toolTitle="JSON格式化">
+<#include "breadcrumbs.ftl">
 
 <div>
     <h4>待格式化的JSON：</h4>

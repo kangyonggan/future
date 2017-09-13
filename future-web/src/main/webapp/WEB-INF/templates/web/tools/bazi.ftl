@@ -5,7 +5,8 @@
 <#assign day = RequestParameters.day!'' />
 <#assign hour = RequestParameters.hour!'' />
 
-<div class="tool-title">八字、五行</div>
+<#assign toolTitle="八字、五行">
+<#include "breadcrumbs.ftl">
 
 <div>
     <h4>待推算的出生日期：</h4>

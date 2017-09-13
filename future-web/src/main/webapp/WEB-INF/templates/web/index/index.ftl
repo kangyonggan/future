@@ -3,6 +3,22 @@
 
 <link rel="stylesheet" href="${ctx}/static/ace/dist/css/prettify.min.css"/>
 
+<div class="navigation">
+    当前位置：&nbsp;
+    <#if type="index">
+        <a href="javascript:" class="active">首页</a>
+    <#elseif type="search">
+        <a href="#index">首页</a>
+        &nbsp;>&nbsp;
+        <a href="javascript:" class="active">搜索结果(共找到${page.total}条记录)</a>
+    <#else>
+        <a href="#index">首页</a>
+        &nbsp;>&nbsp;
+        <a href="javascript:" class="active">${category.name}</a>
+    </#if>
+</div>
+<div class="navigation-line"></div>
+
 <#if page.list?size gt 0>
 <ul class="article-list">
     <#list page.list as article>

@@ -1,6 +1,16 @@
 <#assign ctx="${(rca.contextPath)!''}">
 <link rel="stylesheet" href="${ctx}/static/ace/dist/css/prettify.min.css"/>
 
+<div class="navigation">
+    当前位置：
+    &nbsp;<a href="#index">首页</a>
+    &nbsp;>&nbsp;
+    <a href="#category/${article.categoryCode}">${article.categoryName}</a>
+    &nbsp;>&nbsp;
+    <a href="javascript:" class="active">${article.title}</a>
+</div>
+<div class="navigation-line"></div>
+
 <div class="detail">
     <div class="title">${article.title}</div>
     <div class="info">

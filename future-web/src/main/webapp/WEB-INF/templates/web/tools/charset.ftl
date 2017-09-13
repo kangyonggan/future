@@ -2,7 +2,8 @@
 <#assign data = RequestParameters.data!'' />
 <#assign charset = RequestParameters.charset!'' />
 
-<div class="tool-title">编码转换</div>
+<#assign toolTitle="编码转换">
+<#include "breadcrumbs.ftl">
 
 <div>
     <h4>待转码的字符串：</h4>

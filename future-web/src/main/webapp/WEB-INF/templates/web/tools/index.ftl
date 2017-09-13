@@ -1,6 +1,14 @@
 <#assign ctx="${(rca.contextPath)!''}">
 <#assign key = RequestParameters.key!'' />
 
+<div class="navigation">
+    当前位置：&nbsp;
+    <a href="#index">首页</a>
+    &nbsp;>&nbsp;
+    <a href="javascript:" class="active">工具</a>
+</div>
+<div class="navigation-line"></div>
+
 <div class="tools-list">
     <div class="item">
         <a href="#tools/qr">
@@ -18,12 +26,6 @@
         <a href="#tools/ascll">
             <img src="${ctx}/static/app/images/tools/table.png"/>
             <p>ASCLL对照表</p>
-        </a>
-    </div>
-    <div class="item">
-        <a href="#tools/http">
-            <img src="${ctx}/static/app/images/tools/http.png"/>
-            <p>HTTP状态码详解</p>
         </a>
     </div>
     <div class="item">

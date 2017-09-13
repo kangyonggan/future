@@ -2,7 +2,8 @@
 <#assign data = RequestParameters.data!'' />
 <link rel="stylesheet" href="${ctx}/static/ace/dist/css/prettify.min.css"/>
 
-<div class="tool-title">Markdown编辑器</div>
+<#assign toolTitle="Markdown编辑器">
+<#include "breadcrumbs.ftl">
 
 <div>
     <h4>把markdown转成html：</h4>
