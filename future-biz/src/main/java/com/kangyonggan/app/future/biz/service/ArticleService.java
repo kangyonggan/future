@@ -71,6 +71,14 @@ public interface ArticleService {
     Article findPrevArticle(Long id, String username);
 
     /**
+     * 查找上一章
+     *
+     * @param id
+     * @return
+     */
+    Article findPrevArticle(Long id);
+
+    /**
      * 查找下一章
      *
      * @param id
@@ -78,6 +86,14 @@ public interface ArticleService {
      * @return
      */
     Article findNextArticle(Long id, String username);
+
+    /**
+     * 查找下一章
+     *
+     * @param id
+     * @return
+     */
+    Article findNextArticle(Long id);
 
     /**
      * 获取可用的文章

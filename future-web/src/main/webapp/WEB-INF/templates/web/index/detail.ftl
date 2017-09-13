@@ -15,6 +15,12 @@
     <div class="markdown">${article.content}</div>
 
     <div class="space-20"></div>
+
+    <div class="article-bottom-nav">
+        <a href="#article/${article.id}/prev" class="dark">&lt;&lt;&nbsp;上一篇文章</a>
+        <a href="#article/${article.id}/next" class="pull-right dark">下一篇文章&nbsp;&gt;&gt;</a>
+    </div>
+
     <div class="space-20"></div>
     <div class="detail-pay">
         <a href="javascript:">赏 <small>1分钱</small></a>

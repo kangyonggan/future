@@ -113,4 +113,50 @@ public class IndexController extends BaseController {
         return getPathRoot() + "/detail";
     }
 
+
+
+    /**
+     * 上一章
+     *
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "article/{id:[\\d]+}/prev", method = RequestMethod.GET)
+    public String prevArticle(@PathVariable("id") Long id, Model model) {
+        Article article = articleService.findPrevArticle(id);
+        if (article == null) {
+            model.addAttribute("message", "这已经是第一篇文章了");
+            model.addAttribute("id", id);
+            return getPathRoot() + "/no-article";
+        }
+
+        article.setContent(MarkdownUtil.markdownToHtml(article.getContent()));
+
+        model.addAttribute("article", article);
+        return getPathRoot() + "/detail";
+    }
+
+    /**
+     * 下一章
+     *
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "article/{id:[\\d]+}/next", method = RequestMethod.GET)
+    public String nextArticle(@PathVariable("id") Long id, Model model) {
+        Article article = articleService.findNextArticle(id);
+        if (article == null) {
+            model.addAttribute("message", "这已经是最后一篇文章了");
+            model.addAttribute("id", id);
+            return getPathRoot() + "/no-article";
+        }
+
+        article.setContent(MarkdownUtil.markdownToHtml(article.getContent()));
+
+        model.addAttribute("article", article);
+        return getPathRoot() + "/detail";
+    }
+
 }

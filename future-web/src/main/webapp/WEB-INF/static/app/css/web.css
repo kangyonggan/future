@@ -420,6 +420,14 @@ body {
     border: 2px solid #f2f2f2;
 }
 
+.article-bottom-nav a:hover {
+    color: #333;
+}
+
+.dark {
+    color: #333;
+}
+
 .error {
     color: #c00;
 }

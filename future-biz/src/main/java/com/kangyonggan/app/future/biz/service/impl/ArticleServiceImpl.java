@@ -137,6 +137,22 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
 
     @Override
     @LogTime
+    public Article findPrevArticle(Long id) {
+        Example example = new Example(Article.class);
+        Example.Criteria criteria = example.createCriteria();
+
+        criteria.andLessThan("id", id);
+        criteria.andEqualTo("isDeleted", AppConstants.IS_DELETED_NO);
+        example.setOrderByClause("id desc");
+
+        PageHelper.startPage(1, 1);
+        List<Article> articles = myMapper.selectByExample(example);
+
+        return articles.isEmpty() ? null : articles.get(0);
+    }
+
+    @Override
+    @LogTime
     public Article findNextArticle(Long id, String username) {
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();
@@ -146,6 +162,22 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
             criteria.andEqualTo("username", username);
         }
 
+        example.setOrderByClause("id asc");
+
+        PageHelper.startPage(1, 1);
+        List<Article> articles = myMapper.selectByExample(example);
+
+        return articles.isEmpty() ? null : articles.get(0);
+    }
+
+    @Override
+    @LogTime
+    public Article findNextArticle(Long id) {
+        Example example = new Example(Article.class);
+        Example.Criteria criteria = example.createCriteria();
+
+        criteria.andGreaterThan("id", id);
+        criteria.andEqualTo("isDeleted", AppConstants.IS_DELETED_NO);
         example.setOrderByClause("id asc");
 
         PageHelper.startPage(1, 1);
