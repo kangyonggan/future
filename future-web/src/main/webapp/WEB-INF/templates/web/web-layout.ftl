@@ -39,6 +39,8 @@
     <div class="sim-page"></div>
 </div>
 
+<a href="javascript:scrollTo(0, 0)" class="scroll-top" style="display: none"><img src="${ctx}/static/app/images/top.png" width="40" height="40"/></a>
+
 <#include "footer.ftl">
 
 <script>var ctx = '${ctx}';</script>
