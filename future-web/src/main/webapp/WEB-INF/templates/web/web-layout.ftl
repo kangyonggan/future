@@ -18,7 +18,7 @@
 
 <div id="main">
     <div class="search">
-        <form action="#search" method="get" class="hidden-sm" novalidate>
+        <form action="#search" method="get" novalidate>
             <input type="text" name="key" placeholder="搜出你的梦想，搜出你的未来..." autocomplete="off"/>
             <div class="hot">热搜：
                 <a href="#search?key=linux">Linux</a>
