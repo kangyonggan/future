@@ -8,7 +8,7 @@
     <form action="${ctx}/tools/excel" method="post" id="excel-fromat-form" class="tools-form"
           enctype="multipart/form-data">
         <div class="form-group">
-            <label>自定义代码: &nbsp;<a href="#">查看例子</a></label>
+            <label>自定义代码: &nbsp;<a href="${ctx}#article/94" target="_blank">查看例子</a></label>
             <textarea class="form-control" rows="10" id="data" name="data" placeholder="请输入自定义输出的代码，请参考例子"
                       required>${data}</textarea>
         </div>
