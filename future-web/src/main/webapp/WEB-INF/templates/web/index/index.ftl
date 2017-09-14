@@ -27,7 +27,6 @@
                 <a href="#article/${article.id}">${article.title}</a>
                 <div class="line line-hide"></div>
             </h2>
-            ${article_has_next}
             <div class="info">
                 <span>来源：${article.username}</span>
                 <span>栏目：<a href="#category/${article.categoryCode}">${article.categoryName}</a></span>
