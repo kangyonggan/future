@@ -100,6 +100,12 @@
             <p>八字、五行</p>
         </a>
     </div>
+    <div class="item">
+        <a href="#tools/excel">
+            <img src="${ctx}/static/app/images/tools/excel.png"/>
+            <p>Excel自定义输出</p>
+        </a>
+    </div>
 </div>
 
 <script>

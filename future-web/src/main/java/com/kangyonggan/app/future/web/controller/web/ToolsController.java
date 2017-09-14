@@ -4,8 +4,10 @@ import com.kangyonggan.app.future.biz.service.DictionaryService;
 import com.kangyonggan.app.future.biz.service.ToolService;
 import com.kangyonggan.app.future.biz.util.*;
 import com.kangyonggan.app.future.common.util.*;
+import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Dictionary;
 import com.kangyonggan.app.future.web.controller.BaseController;
+import com.kangyonggan.app.future.web.util.FileUpload;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
@@ -523,6 +525,41 @@ public class ToolsController extends BaseController {
 
         model.addAttribute("result", result);
         return getPathRoot() + "/bazi";
+    }
+
+    /**
+     * excel自定义输出
+     *
+     * @return
+     */
+    @RequestMapping(value = "excel", method = RequestMethod.GET)
+    public String excel() {
+        return getPathRoot() + "/excel";
+    }
+
+    /**
+     * excel自定义输出
+     *
+     * @param data
+     * @param file
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "excel", method = RequestMethod.POST)
+    @ResponseBody
+    public String excel(@RequestParam("data") String data,
+                        @RequestParam(value = "file", required = false) MultipartFile file,
+                        Model model) throws Exception {
+        String result;
+        try {
+            String filename = FileUpload.upload(file);
+            List<List<String[]>> sheets = Excel.getSheets(com.kangyonggan.app.future.biz.util.PropertiesUtil.getProperties(AppConstants.FILE_PATH_ROOT) + filename);
+            result = ExcelConvert.process(data, sheets);
+        } catch (Exception e) {
+            result = e.getMessage();
+        }
+
+        return result;
     }
 
     /**

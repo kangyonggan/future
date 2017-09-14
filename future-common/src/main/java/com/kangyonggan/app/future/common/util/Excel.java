@@ -48,6 +48,42 @@ public class Excel {
     }
 
     /**
+     * 获取所有sheet的数据
+     *
+     * @param fileName
+     * @return
+     * @throws Exception
+     */
+    public static List<List<String[]>> getSheets(String fileName) throws Exception {
+        List<List<String[]>> result = new ArrayList();
+
+        String extension = getFileExtension(fileName);
+        FileInputStream fis = new FileInputStream(fileName);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Workbook wb;
+
+        if ("xlsx".equals(extension)) {
+            // 2007
+            wb = new XSSFWorkbook(fis);
+        } else if ("xls".equals(extension)) {
+            // 2003
+            wb = new HSSFWorkbook(fis);
+        } else {
+            throw new Exception("文件类型不对, 必须为excel类型！");
+        }
+
+        // 遍历sheet
+        for (int i = 0; i < wb.getNumberOfSheets(); i++) {
+            List<String[]> list = new ArrayList();
+            Sheet sheet = wb.getSheetAt(i);
+            loopExcelSheet(list, sheet, 1, sdf);
+            result.add(list);
+        }
+
+        return result;
+    }
+
+    /**
      * 读取excel文件的内容，把返回的内容用list封装起来
      *
      * @param fileName  文件全名
@@ -315,5 +351,4 @@ public class Excel {
             }
         }
     }
-
 }
