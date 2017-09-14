@@ -109,6 +109,7 @@
 </div>
 
 <script>
+    document.title = "工具";
     var key = '${key!''}';
     if (key != '') {
         $("#main .search input").val(key);

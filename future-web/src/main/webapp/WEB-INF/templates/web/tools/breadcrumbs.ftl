@@ -8,3 +8,7 @@
 </div>
 <div class="navigation-line"></div>
 <div class="space-10"></div>
+
+<script>
+    document.title = "${toolTitle}";
+</script>
