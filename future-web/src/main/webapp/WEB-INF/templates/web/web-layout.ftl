@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
     <meta name="keywords" content="未来,康永敢,技术分享,java,web,mysql,ssh,工具"/>
-    <meta name="description" content="这是一个博客网站，用于记录学习笔记，提供一些常用工具。" />
+    <meta name="description" content="这是一个博客网站，用于记录学习笔记，提供一些常用工具。"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
     <link rel="shortcut icon" href="${ctx}/static/app/images/favicon.ico" type="image/x-icon">
@@ -40,12 +40,24 @@
     <div class="sim-page"></div>
 </div>
 
-<a href="javascript:scrollTo(0, 0)" class="scroll-top" style="display: none"><img src="${ctx}/static/app/images/top.png" width="40" height="40"/></a>
+<a href="javascript:scrollTo(0, 0)" class="scroll-top" style="display: none"><img src="${ctx}/static/app/images/top.png"
+                                                                                  width="40" height="40"/></a>
 
 <#include "footer.ftl">
 
 <#--百度分享-->
-<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"1","bdPos":"right","bdTop":"154"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='https://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+<script>window._bd_share_config = {
+    "common": {
+        "bdSnsKey": {},
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": "",
+        "bdStyle": "0",
+        "bdSize": "16"
+    }, "slide": {"type": "slide", "bdImg": "1", "bdPos": "right", "bdTop": "154"}
+};
+with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = '${ctx}/static/app/js/web/share.js'];</script>
 
 <script>var ctx = '${ctx}';</script>
 <script src="${ctx}/static/ace/dist/js/jquery.min.js"></script>
