@@ -210,6 +210,8 @@ public class DashboardWebGuestbookController extends BaseController {
 
         guestbookService.updateGuestbook(guestbook);
 
+        replyMessage += "\n\n---\n\n地址：[https://kangyonggan.com/#guestbook](https://kangyonggan.com/#guestbook)";
+
         // 发邮件通知
         mailService.send(guestbook.getEmail(), "未来网站的站长回复了您的留言", MarkdownUtil.markdownToHtml(replyMessage));
 

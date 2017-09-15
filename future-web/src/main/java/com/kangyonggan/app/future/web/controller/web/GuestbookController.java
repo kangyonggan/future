@@ -81,7 +81,7 @@ public class GuestbookController extends BaseController {
             guestbookService.updateGuestbookIpInfo(guestbook.getId(), ip);
 
             // 发邮件通知站长
-            mailService.send(PropertiesUtil.getProperties("mail.receiver"), "未来网站 - 收到 " + guestbook.getRealname() + " 的留言信息，请及时审核。", guestbook.getContent());
+            mailService.send(PropertiesUtil.getProperties("mail.receiver"), "未来网站 - 收到 " + guestbook.getRealname() + " 的留言信息，请及时审核。", guestbook.getContent() + "<br/><br/>留言审核：<a href='https://kangyonggan.com/dashboard#web/guestbook'>https://kangyonggan.com/dashboard#web/guestbook</a>");
         } else {
             resultMap.put(ERR_CODE, FAILURE);
             resultMap.put(ERR_MSG, "为防止灌水，请于三分钟之后再次评论");
