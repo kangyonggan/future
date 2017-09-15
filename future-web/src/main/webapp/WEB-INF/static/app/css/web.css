@@ -69,10 +69,6 @@ body {
     margin-top: 70px;
 }
 
-.sim-page-loading {
-    color: #c00;
-}
-
 .article-list {
     list-style: none;
     padding-left: 0;
@@ -270,6 +266,7 @@ body {
 .markdown {
     margin-top: 10px;
 }
+
 .markdown p {
     color: #555;
     line-height: 2;
@@ -538,5 +535,99 @@ body {
 
     .ascll-table {
         width: 50%;
+    }
+}
+
+/*simpage*/
+.sim-page-loading {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    margin: auto;
+    z-index: 9999;
+}
+
+.sim-page-loading span {
+    width: 4px;
+    height: 20px;
+    background-color: #ccc;
+    position: absolute;
+    left: 38px;
+    -webkit-animation: loading 1s infinite;
+}
+
+.sim-page-loading .line1 {
+    background-color: #000;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-animation-delay: .3s;
+}
+
+.sim-page-loading .line2 {
+    top: 5px;
+    left: 52px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-animation-delay: .4s;
+}
+
+.sim-page-loading .line3 {
+    top: 18px;
+    left: 57px;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+    -webkit-animation-delay: .5s;
+}
+
+.sim-page-loading .line4 {
+    top: 31px;
+    left: 52px;
+    -webkit-transform: rotate(135deg);
+    transform: rotate(135deg);
+    -webkit-animation-delay: .6s;
+}
+
+.sim-page-loading .line5 {
+    top: 37px;
+    -webkit-animation-delay: .7s;
+}
+
+.sim-page-loading .line6 {
+    top: 32px;
+    left: 24px;
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+    -webkit-animation-delay: .8s;
+}
+
+.sim-page-loading .line7 {
+    top: 18px;
+    left: 19px;
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+    -webkit-animation-delay: .9s;
+}
+
+.sim-page-loading .line8 {
+    top: 5px;
+    left: 24px;
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-animation-delay: 1s;
+}
+
+@-webkit-keyframes loading {
+    0% {
+        background-color: #ccc;
+    }
+    50% {
+        background-color: #000;
+    }
+    100% {
+        background-color: #ccc;
     }
 }
