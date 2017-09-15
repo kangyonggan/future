@@ -10,5 +10,5 @@
 <div class="space-10"></div>
 
 <script>
-    document.title = "${toolTitle}";
+    document.title = "<@s.message "app.name"/> - ${toolTitle}";
 </script>

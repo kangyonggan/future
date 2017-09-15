@@ -76,7 +76,16 @@
 </div>
 </#if>
 
-<script>var key = '${key!''}';</script>
+<script>
+    var key = '${key!''}';
+    <#if type="index">
+        document.title = "<@s.message "app.name"/> - 首页";
+    <#elseif type="search">
+        document.title = "<@s.message "app.name"/> - ${key!''}";
+    <#else>
+        document.title = "<@s.message "app.name"/> - ${category.name}";
+    </#if>
+</script>
 <script src="${ctx}/static/ace/dist/js/prettify.min.js"></script>
 <script src="${ctx}/static/app/js/web/index/index.js"></script>
 

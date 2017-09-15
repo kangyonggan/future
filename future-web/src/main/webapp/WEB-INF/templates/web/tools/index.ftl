@@ -109,7 +109,7 @@
 </div>
 
 <script>
-    document.title = "工具";
+    document.title = "<@s.message "app.name"/> - 工具";
     var key = '${key!''}';
     if (key != '') {
         $("#main .search input").val(key);

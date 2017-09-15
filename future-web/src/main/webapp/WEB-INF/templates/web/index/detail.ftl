@@ -47,5 +47,8 @@
     </div>
 </div>
 
+<script>
+    document.title = "<@s.message "app.name"/> - ${article.title}";
+</script>
 <script src="${ctx}/static/ace/dist/js/prettify.min.js"></script>
 <script src="${ctx}/static/app/js/web/index/detail.js"></script>

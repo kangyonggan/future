@@ -111,6 +111,9 @@
 </div>
 </#if>
 
+<script>
+    document.title = "<@s.message "app.name"/> - 留言";
+</script>
 <script src="${ctx}/static/ace/dist/js/bootstrap.min.js"></script>
 <script src="${ctx}/static/libs/jquery/jquery.form.min.js"></script>
 <script src="${ctx}/static/libs/jquery/jquery.validate.min.js"></script>
