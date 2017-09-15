@@ -8,9 +8,7 @@ $(function () {
 
     prettyPrint();
 
-    if (key != '') {
-        $("#main .search input").val(key);
-    }
+    $("#main .search input").val(key);
 
     var $title = $(".article-list .article .title a");
 
