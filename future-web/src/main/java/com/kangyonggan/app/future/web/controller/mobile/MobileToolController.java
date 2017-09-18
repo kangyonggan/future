@@ -5,6 +5,7 @@ import com.kangyonggan.app.future.common.util.IDCardUtil;
 import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.dto.IdcardGenerateResponse;
 import com.kangyonggan.app.future.model.dto.IdcardResponse;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,7 +19,25 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("mobile/tool")
+@Log4j2
 public class MobileToolController {
+
+    /**
+     * 测试超时
+     *
+     * @return
+     */
+    @RequestMapping(value = "test", method = RequestMethod.POST)
+    public String test() {
+        log.info("进入测试超时方法");
+        try {
+            Thread.sleep(1 * 60 * 60 * 1000);
+        } catch (InterruptedException e) {
+            log.info("测试超时方法异常", e);
+        }
+        log.info("离开测试超时方法");
+        return "ok";
+    }
 
     /**
      * 身份证号码校验
