@@ -48,7 +48,7 @@ body {
     font-size: 17px;
     outline: none;
     border: 1px solid #202020;
-    background: url("../images/search.png") 5px 4px #fdfdfd no-repeat;
+    background: url("../images/search.png") 7px 7px #fdfdfd no-repeat;
 }
 
 #main .search .hot {
