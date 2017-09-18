@@ -721,3 +721,50 @@ CREATE TABLE history
   COMMENT '历史今天表';
 CREATE INDEX id_created_time
   ON history (created_time);
+
+-- ----------------------------
+--  Table structure for template
+-- ----------------------------
+DROP TABLE
+IF EXISTS template;
+
+CREATE TABLE template
+(
+  id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  name         VARCHAR(64)                           NOT NULL
+  COMMENT '名称',
+  type         VARCHAR(32)                           NOT NULL                    DEFAULT '默认'
+  COMMENT '分类',
+  description  VARCHAR(512)                          NOT NULL                    DEFAULT ''
+  COMMENT '描述',
+  template     LONGTEXT                              NOT NULL
+  COMMENT '模板',
+  data_source  LONGTEXT                              NOT NULL
+  COMMENT '数据源(json格式)',
+  username     VARCHAR(20)                           NOT NULL
+  COMMENT '所属用户',
+  is_deleted   TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '模板表';
+CREATE UNIQUE INDEX id_name_username
+  ON template (name, username);
+CREATE INDEX id_created_time
+  ON template (created_time);
+
+INSERT INTO menu
+(code, name, pcode, url, sort, icon)
+  VALUE
+  ('TOOL', '工具', 'DASHBOARD', 'tool', 3, 'menu-icon fa fa-gavel'),
+  ('TOOL_TEMPLATE', '我的模板', 'TOOL', 'tool/template', 0, '');
+
+INSERT INTO role_menu (role_code, menu_code) VALUES
+  ('ROLE_ADMIN', 'TOOL'),
+  ('ROLE_ADMIN', 'TOOL_TEMPLATE'),
+  ('ROLE_USER', 'TOOL'),
+  ('ROLE_USER', 'TOOL_TEMPLATE');
