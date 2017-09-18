@@ -6,8 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
     <meta name="keywords" content="未来,康永敢,技术分享,java,web,mysql,ssh,工具"/>
-    <meta name="description" content="这是一个博客网站，用于记录学习笔记，提供一些常用工具。"/>
+    <meta name="description" content="这是一个个人博客网站，用于记录学习笔记，提供一些常用工具。"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="未来">
+    <meta property="og:url" content="https://kangyonggan.com">
+    <meta property="og:site_name" content="未来">
+    <meta property="og:description" content="个人博客网站">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="未来">
+    <meta name="twitter:description" content="个人博客网站">
 
     <link rel="shortcut icon" href="${ctx}/static/app/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="${ctx}/static/ace/dist/css/bootstrap.min.css"/>
