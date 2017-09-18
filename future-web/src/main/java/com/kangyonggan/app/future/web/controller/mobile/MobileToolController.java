@@ -31,7 +31,7 @@ public class MobileToolController {
     public String test() {
         log.info("进入测试超时方法");
         try {
-            Thread.sleep(1 * 60 * 60 * 1000);
+            Thread.sleep(3 * 1000);
         } catch (InterruptedException e) {
             log.info("测试超时方法异常", e);
         }
