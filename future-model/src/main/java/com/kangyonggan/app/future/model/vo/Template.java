@@ -59,7 +59,7 @@ public class Template implements Serializable {
     private String template;
 
     /**
-     * 数据源(json格式)
+     * 上次使用的数据源(json格式)
      */
     @Column(name = "data_source")
     private String dataSource;

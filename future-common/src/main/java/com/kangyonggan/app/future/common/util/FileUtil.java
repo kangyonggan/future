@@ -30,7 +30,7 @@ public class FileUtil {
                 file.getParentFile().mkdirs();
             }
 
-            writer = new BufferedWriter(new FileWriter(file));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8"));
             writer.write(fileContent);
             writer.flush();
         } catch (Exception e) {

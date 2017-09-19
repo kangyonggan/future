@@ -16,14 +16,14 @@
         <div class="form-group">
             <label for="title" class="col-sm-3 control-label no-padding-right">模板名称<span class="red">*</span></label>
             <div class="col-xs-12 col-sm-5">
-            <@s.formInput "template.name" 'class="form-control" placeholder="请输入模板名称，最多64个字符"' />
+            <@s.formInput "template.name" 'class="form-control" placeholder="请输入模板名称，最多64个字符, 且以.ftl结尾，如：DemoController.ftl"' />
             </div>
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3 control-label no-padding-right">类型</label>
+            <label class="col-sm-3 control-label no-padding-right">分类</label>
             <div class="col-xs-12 col-sm-5">
-            <@s.formInput "template.type" 'class="form-control" placeholder="请输入类型，最多32个字符"' />
+            <@s.formInput "template.type" 'class="form-control" placeholder="请输入分类，最多32个字符, 缺省为:默认"' />
             </div>
         </div>
 
@@ -35,16 +35,12 @@
         </div>
 
         <div class="form-group">
-            <label for="body" class="col-sm-1 control-label no-padding-right">模板<span class="red">*</span></label>
+            <label for="body" class="col-sm-1 control-label no-padding-right">
+                模板<span class="red">*</span>
+                <a class="help-button" href="${ctx}/#article/98" target="_blank" title="模板使用说明">?</a>
+            </label>
             <div class="col-xs-12 col-sm-9">
             <@s.formTextarea "template.template" 'style="width:100%;height:400px;"' />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="body" class="col-sm-1 control-label no-padding-right">数据源<span class="red">*</span></label>
-            <div class="col-xs-12 col-sm-9">
-            <@s.formTextarea "template.dataSource" 'style="width:100%;height:400px;"' />
             </div>
         </div>
 

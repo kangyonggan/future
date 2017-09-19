@@ -741,7 +741,7 @@ CREATE TABLE template
   template     LONGTEXT                              NOT NULL
   COMMENT '模板',
   data_source  LONGTEXT                              NOT NULL
-  COMMENT '数据源(json格式)',
+  COMMENT '上次使用的数据源(json格式)',
   username     VARCHAR(20)                           NOT NULL
   COMMENT '所属用户',
   is_deleted   TINYINT                               NOT NULL                    DEFAULT 0
@@ -752,8 +752,8 @@ CREATE TABLE template
   COMMENT '更新时间'
 )
   COMMENT '模板表';
-CREATE UNIQUE INDEX id_name_username
-  ON template (name, username);
+CREATE UNIQUE INDEX id_name
+  ON template (name);
 CREATE INDEX id_created_time
   ON template (created_time);
 

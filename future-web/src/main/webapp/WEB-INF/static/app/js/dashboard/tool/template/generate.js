@@ -7,20 +7,7 @@ $(function () {
     // 表单校验
     $form.validate({
         rules: {
-            name: {
-                required: true,
-                isFreemarker: true,
-                rangelength: [5, 64]
-            },
-            type: {
-                required: false,
-                rangelength: [1, 32]
-            },
-            description: {
-                required: false,
-                rangelength: [1, 512]
-            },
-            template: {
+            dataSource: {
                 required: true
             }
         },
@@ -31,7 +18,14 @@ $(function () {
                 dataType: 'json',
                 success: function (response) {
                     if (response.errCode == 'success') {
-                        window.location.href = ctx + "/dashboard#tool/template";
+                        $form.addClass("hidden");
+                        $("#template-name").html(response.template.name);
+                        $("#template-type").html(response.template.type);
+                        $("#template-username").html(response.template.username);
+                        $("#template-result").html(response.result);
+                        $("#generate-result").removeClass("hidden");
+
+                        prettyPrint();
                     } else {
                         Message.error(response.errMsg);
                     }

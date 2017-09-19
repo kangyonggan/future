@@ -67,6 +67,11 @@ $.extend($.validator.addMethod("isMobile", function(value, element) {
     return this.optional(element) || (length == 11 && mobile.test(value));
 }, "请正确填写您的手机号码"));
 
+$.extend($.validator.addMethod("isFreemarker", function(value, element) {
+    var str = /\.ftl$/;
+    return str.test(value);
+}, "请以.ftl结尾"));
+
 $.extend($.validator.addMethod("isMenuUrl", function (value) {
     var str = /^[a-z\/]{1,32}$/;
     return str.test(value);

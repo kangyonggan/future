@@ -29,4 +29,41 @@ public interface TemplateService {
      */
     List<Template> searchTemplates(int pageNum, String name, String type, String username);
 
+    /**
+     * 保存模板
+     *
+     * @param template
+     */
+    void saveTemplate(Template template) throws Exception;
+
+    /**
+     * 查找模板
+     *
+     * @param id
+     * @return
+     */
+    Template findTempateById(Long id);
+
+    /**
+     * 更新模板
+     *
+     * @param template
+     */
+    void updateTemplate(Template template) throws Exception;
+
+    /**
+     * 删除模板
+     *
+     * @param id
+     */
+    void deleteTemplateById(Long id);
+
+    /**
+     * 代码生成
+     *
+     * @param name
+     * @param dataSource
+     * @return
+     */
+    String generate(String name, String dataSource);
 }

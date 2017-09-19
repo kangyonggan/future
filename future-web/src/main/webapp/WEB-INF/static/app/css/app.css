@@ -44,6 +44,11 @@ input[readonly].readonly {
     cursor: pointer !important;
 }
 
+textarea[readonly].readonly {
+    background: #fff !important;
+    cursor: pointer !important;
+}
+
 .book-info {
     margin-top: 20px;
 }

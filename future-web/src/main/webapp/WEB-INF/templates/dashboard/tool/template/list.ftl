@@ -6,7 +6,7 @@
     <h1>
         模板列表
         <small class="pull-right">
-            <a class="btn btn-sm btn-inverse" href="#tool/template/create">新增</a>
+            <a class="btn btn-sm btn-inverse" href="#tool/template/create">新增模板</a>
         </small>
     </h1>
 </div>
@@ -38,7 +38,7 @@
     <thead>
     <tr>
         <th>模板名称</th>
-        <th>类型</th>
+        <th>分类</th>
         <th>描述</th>
         <th>逻辑删除</th>
         <th>创建时间</th>
@@ -48,7 +48,7 @@
     </thead>
     <tbody>
     <#if page.list?size gt 0>
-        <#list page.list as book>
+        <#list page.list as template>
             <#include "table-tr.ftl"/>
         </#list>
     <#else>
