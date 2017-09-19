@@ -123,4 +123,13 @@ public class TemplateServiceImpl extends BaseService<Template> implements Templa
         }
     }
 
+    @Override
+    @LogTime
+    public boolean existsTemplateName(String name) {
+        Template template = new Template();
+        template.setName(name);
+
+        return super.exists(template);
+    }
+
 }

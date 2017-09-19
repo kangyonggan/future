@@ -66,4 +66,12 @@ public interface TemplateService {
      * @return
      */
     String generate(String name, String dataSource);
+
+    /**
+     * 模板名称是否存在
+     *
+     * @param name
+     * @return
+     */
+    boolean existsTemplateName(String name);
 }

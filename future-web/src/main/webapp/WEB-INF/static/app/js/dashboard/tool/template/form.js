@@ -10,7 +10,19 @@ $(function () {
             name: {
                 required: true,
                 isFreemarker: true,
-                rangelength: [5, 64]
+                rangelength: [5, 64],
+                remote: {
+                    url: ctx + "/validate/template",
+                    type: 'post',
+                    data: {
+                        'name': function () {
+                            return $('#name').val()
+                        },
+                        'oldName': function () {
+                            return $('#old-name').val();
+                        }
+                    }
+                }
             },
             type: {
                 required: false,

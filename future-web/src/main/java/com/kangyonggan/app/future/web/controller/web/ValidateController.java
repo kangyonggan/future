@@ -1,9 +1,6 @@
 package com.kangyonggan.app.future.web.controller.web;
 
-import com.kangyonggan.app.future.biz.service.DictionaryService;
-import com.kangyonggan.app.future.biz.service.MenuService;
-import com.kangyonggan.app.future.biz.service.RoleService;
-import com.kangyonggan.app.future.biz.service.UserService;
+import com.kangyonggan.app.future.biz.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +27,9 @@ public class ValidateController {
 
     @Autowired
     private DictionaryService dictionaryService;
+
+    @Autowired
+    private TemplateService templateService;
 
     /**
      * 校验手机号是否可用
@@ -113,6 +113,24 @@ public class ValidateController {
         }
 
         return !dictionaryService.existsDictionaryCode(code);
+    }
+
+    /**
+     * 模板名称是否可用
+     *
+     * @param name
+     * @param oldName
+     * @return
+     */
+    @RequestMapping(value = "template", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean validateTemplateName(@RequestParam("name") String name,
+                                          @RequestParam(value = "oldName", required = false, defaultValue = "") String oldName) {
+        if (name.equals(oldName)) {
+            return true;
+        }
+
+        return !templateService.existsTemplateName(name);
     }
 
 }

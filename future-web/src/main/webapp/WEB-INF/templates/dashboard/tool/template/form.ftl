@@ -17,6 +17,7 @@
             <label for="title" class="col-sm-3 control-label no-padding-right">模板名称<span class="red">*</span></label>
             <div class="col-xs-12 col-sm-5">
             <@s.formInput "template.name" 'class="form-control" placeholder="请输入模板名称，最多64个字符, 且以.ftl结尾，如：DemoController.ftl"' />
+                <input type="hidden" id="old-name" value="${template.name!''}"/>
             </div>
         </div>
 
