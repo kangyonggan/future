@@ -46,8 +46,8 @@ $(function () {
                         window.location.href = ctx + "/dashboard#tool/template";
                     } else {
                         Message.error(response.errMsg);
+                        $btn.button('reset');
                     }
-                    $btn.button('reset');
                 },
                 error: function () {
                     Message.error("服务器内部错误，请稍后再试。");

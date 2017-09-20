@@ -161,11 +161,11 @@ CREATE TABLE user
   COMMENT '密码',
   salt          VARCHAR(64)                           NOT NULL
   COMMENT '密码盐',
-  small_avatar  VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-user-small.jpg'
+  small_avatar  VARCHAR(256)                          NOT NULL                    DEFAULT 'upload/default-user-small.jpg'
   COMMENT '小头像',
-  medium_avatar VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-user-medium.jpg'
+  medium_avatar VARCHAR(256)                          NOT NULL                    DEFAULT 'upload/default-user-medium.jpg'
   COMMENT '中头像',
-  large_avatar  VARCHAR(256)                          NOT NULL                    DEFAULT '/upload/default-user-large.jpg'
+  large_avatar  VARCHAR(256)                          NOT NULL                    DEFAULT 'upload/default-user-large.jpg'
   COMMENT '大头像',
   email         VARCHAR(64)                           NOT NULL                    DEFAULT ''
   COMMENT '电子邮箱',
