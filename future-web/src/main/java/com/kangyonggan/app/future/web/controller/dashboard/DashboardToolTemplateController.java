@@ -246,16 +246,7 @@ public class DashboardToolTemplateController extends BaseController {
     @ResponseBody
     public Map<String, Object> generate(@PathVariable("id") Long id, @RequestParam("dataSource") String dataSource) {
         Map<String, Object> resultMap = getResultMap();
-
-        ShiroUser shiroUser = userService.getShiroUser();
         Template template = templateService.findTempateById(id);
-        // 防止使用别人的模板
-        if (!template.getUsername().equals(shiroUser.getUsername())) {
-            log.error("用户{}试图使用他人的模板，id:{}, name:{}", shiroUser.getUsername(), id, template.getName());
-            resultMap.put(ERR_CODE, FAILURE);
-            resultMap.put(ERR_MSG, "请勿试图使用他人的模板，已报警，予以警告！");
-            return resultMap;
-        }
 
         // 代码生成
         String result = templateService.generate(template.getName(), dataSource);
