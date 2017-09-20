@@ -242,7 +242,7 @@ public class DashboardToolTemplateController extends BaseController {
      * @return
      */
     @RequestMapping(value = "{id:[\\d]+}/generate", method = RequestMethod.POST)
-    @RequiresPermissions("TOOL_TEMPLATE")
+//    @RequiresPermissions("TOOL_TEMPLATE")
     @ResponseBody
     public Map<String, Object> generate(@PathVariable("id") Long id, @RequestParam("dataSource") String dataSource) {
         Map<String, Object> resultMap = getResultMap();
