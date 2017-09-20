@@ -42,7 +42,7 @@ public interface TemplateService {
      * @param id
      * @return
      */
-    Template findTempateById(Long id);
+    Template findTemplateById(Long id);
 
     /**
      * 更新模板
@@ -74,4 +74,12 @@ public interface TemplateService {
      * @return
      */
     boolean existsTemplateName(String name);
+
+    /**
+     * 按模板名称查找
+     *
+     * @param name
+     * @return
+     */
+    Template findTemplateByName(String name);
 }

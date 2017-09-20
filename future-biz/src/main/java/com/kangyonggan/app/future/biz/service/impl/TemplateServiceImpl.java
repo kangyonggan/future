@@ -82,7 +82,7 @@ public class TemplateServiceImpl extends BaseService<Template> implements Templa
 
     @Override
     @LogTime
-    public Template findTempateById(Long id) {
+    public Template findTemplateById(Long id) {
         return myMapper.selectByPrimaryKey(id);
     }
 
@@ -130,6 +130,16 @@ public class TemplateServiceImpl extends BaseService<Template> implements Templa
         template.setName(name);
 
         return super.exists(template);
+    }
+
+    @Override
+    @LogTime
+    public Template findTemplateByName(String name) {
+        Template template = new Template();
+        template.setIsDeleted(AppConstants.IS_DELETED_NO);
+        template.setName(name);
+
+        return myMapper.selectOne(template);
     }
 
 }

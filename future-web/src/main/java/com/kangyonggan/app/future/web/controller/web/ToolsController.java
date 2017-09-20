@@ -1,23 +1,23 @@
 package com.kangyonggan.app.future.web.controller.web;
 
 import com.kangyonggan.app.future.biz.service.DictionaryService;
+import com.kangyonggan.app.future.biz.service.TemplateService;
 import com.kangyonggan.app.future.biz.service.ToolService;
 import com.kangyonggan.app.future.biz.util.*;
 import com.kangyonggan.app.future.common.util.*;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Dictionary;
+import com.kangyonggan.app.future.model.vo.Template;
 import com.kangyonggan.app.future.web.controller.BaseController;
 import com.kangyonggan.app.future.web.util.FileUpload;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
@@ -39,6 +39,9 @@ public class ToolsController extends BaseController {
 
     @Autowired
     private ToolService toolService;
+
+    @Autowired
+    private TemplateService templateService;
 
     private SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
@@ -572,4 +575,29 @@ public class ToolsController extends BaseController {
         return getPathRoot() + "/chat";
     }
 
+
+
+    /**
+     * 更新
+     *
+     * @param name
+     * @param dataSource
+     * @return
+     */
+    @RequestMapping(value = "template", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> templateGenerate(@RequestParam("name") String name, @RequestParam("dataSource") String dataSource) {
+        Map<String, Object> resultMap = getResultMap();
+        Template template = templateService.findTemplateByName(name);
+
+        if (template == null) {
+            setResultMapFailure(resultMap, "模板不存在");
+            return resultMap;
+        }
+
+        // 代码生成
+        String result = templateService.generate(template.getName(), dataSource);
+        resultMap.put("result", result);
+        return resultMap;
+    }
 }

@@ -118,7 +118,7 @@ public class DashboardToolTemplateController extends BaseController {
     @RequestMapping(value = "{id:[\\d]+}/edit", method = RequestMethod.GET)
     @RequiresPermissions("TOOL_TEMPLATE")
     public String edit(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("template", templateService.findTempateById(id));
+        model.addAttribute("template", templateService.findTemplateById(id));
         return getPathForm();
     }
 
@@ -143,7 +143,7 @@ public class DashboardToolTemplateController extends BaseController {
         }
 
         ShiroUser shiroUser = userService.getShiroUser();
-        Template t = templateService.findTempateById(template.getId());
+        Template t = templateService.findTemplateById(template.getId());
         // 防止更新别人的文章
         if (!t.getUsername().equals(shiroUser.getUsername())) {
             log.error("用户{}试图更新他人的模板，id:{}, name:{}", shiroUser.getUsername(), template.getId(), template.getName());
@@ -175,7 +175,7 @@ public class DashboardToolTemplateController extends BaseController {
     @RequiresPermissions("TOOL_TEMPLATE")
     public String delete(@PathVariable("id") Long id, @PathVariable("isDeleted") String isDeleted, Model model) {
         ShiroUser shiroUser = userService.getShiroUser();
-        Template template = templateService.findTempateById(id);
+        Template template = templateService.findTemplateById(id);
 
         // 防止删除别人的模板
         if (template.getUsername().equals(shiroUser.getUsername())) {
@@ -206,7 +206,7 @@ public class DashboardToolTemplateController extends BaseController {
         Map<String, Object> resultMap = getResultMap();
 
         ShiroUser shiroUser = userService.getShiroUser();
-        Template template = templateService.findTempateById(id);
+        Template template = templateService.findTemplateById(id);
 
         // 防止删除别人的模板
         if (!template.getUsername().equals(shiroUser.getUsername())) {
@@ -230,7 +230,7 @@ public class DashboardToolTemplateController extends BaseController {
     @RequestMapping(value = "{id:[\\d]+}/generate", method = RequestMethod.GET)
     @RequiresPermissions("TOOL_TEMPLATE")
     public String generate(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("template", templateService.findTempateById(id));
+        model.addAttribute("template", templateService.findTemplateById(id));
         return getPathRoot() + "/generate";
     }
 
@@ -242,11 +242,11 @@ public class DashboardToolTemplateController extends BaseController {
      * @return
      */
     @RequestMapping(value = "{id:[\\d]+}/generate", method = RequestMethod.POST)
-//    @RequiresPermissions("TOOL_TEMPLATE")
+    @RequiresPermissions("TOOL_TEMPLATE")
     @ResponseBody
     public Map<String, Object> generate(@PathVariable("id") Long id, @RequestParam("dataSource") String dataSource) {
         Map<String, Object> resultMap = getResultMap();
-        Template template = templateService.findTempateById(id);
+        Template template = templateService.findTemplateById(id);
 
         // 代码生成
         String result = templateService.generate(template.getName(), dataSource);
