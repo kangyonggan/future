@@ -28,15 +28,17 @@ public class MobileToolController {
      * @return
      */
     @RequestMapping(value = "test", method = RequestMethod.POST)
-    public String test() {
-        log.info("进入测试超时方法");
+    public String test(@RequestParam(value = "timeout", required = false, defaultValue = "20000") Long timeout) {
+        long threadId = Thread.currentThread().getId();
+        log.info("进入测试超时方法, threadId:{}", threadId);
         try {
-            Thread.sleep(3 * 1000);
+            log.info("sleep {} ms, threadId:{}", timeout, threadId);
+            Thread.sleep(timeout);
         } catch (InterruptedException e) {
-            log.info("测试超时方法异常", e);
+            log.info("测试超时方法异常, threadId:" + threadId, e);
         }
-        log.info("离开测试超时方法");
-        return "ok";
+        log.info("离开测试超时方法, threadId:{}", threadId);
+        return "ok,threadId:" + threadId;
     }
 
     /**
