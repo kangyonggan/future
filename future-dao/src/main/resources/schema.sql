@@ -768,3 +768,12 @@ INSERT INTO role_menu (role_code, menu_code) VALUES
   ('ROLE_ADMIN', 'TOOL_TEMPLATE'),
   ('ROLE_USER', 'TOOL'),
   ('ROLE_USER', 'TOOL_TEMPLATE');
+
+INSERT INTO menu
+(code, name, pcode, url, sort, icon)
+  VALUE
+  ('TOOL_CODE', '代码生成', 'TOOL', 'tool/code', 1, '');
+
+INSERT INTO role_menu (role_code, menu_code) VALUES
+  ('ROLE_ADMIN', 'TOOL_CODE'),
+  ('ROLE_USER', 'TOOL_CODE');
