@@ -31,17 +31,17 @@
 
                                 <li data-step="3">
                                     <span class="step">3</span>
-                                    <span class="title">添加表格的列</span>
+                                    <span class="title">定制表格的列</span>
                                 </li>
 
                                 <li data-step="4">
                                     <span class="step">4</span>
-                                    <span class="title">添加搜索的列</span>
+                                    <span class="title">定制搜索的列</span>
                                 </li>
 
                                 <li data-step="5">
                                     <span class="step">5</span>
-                                    <span class="title">生成结果</span>
+                                    <span class="title">生成完成</span>
                                 </li>
                             </ul>
                         </div>

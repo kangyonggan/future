@@ -11,6 +11,11 @@ $(function () {
     });
 
     /**
+     * 提示
+     */
+    $('[data-rel=popover]').popover({container: 'body'});
+
+    /**
      * 设置界面名称
      */
     $("#pageName").change(function () {
@@ -39,6 +44,17 @@ $(function () {
     });
 
     /**
+     * 选择是否需要分页功能
+     */
+    $("#needPage").click(function () {
+        if (this.checked) {
+            $("#pageDisp").removeClass("hidden");
+        } else {
+            $("#pageDisp").addClass("hidden");
+        }
+    });
+
+    /**
      * 设置界面名称
      */
     $("#addBtnName").change(function () {
@@ -50,4 +66,6 @@ $(function () {
             $("#btnNameDisp").html("新增");
         }
     });
+
+
 });
