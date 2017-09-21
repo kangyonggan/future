@@ -54,24 +54,31 @@
 
 <#include "footer.ftl">
 
-<#--百度分享-->
-<script>window._bd_share_config = {
-    "common": {
-        "bdSnsKey": {},
-        "bdText": "",
-        "bdMini": "2",
-        "bdMiniList": false,
-        "bdPic": "",
-        "bdStyle": "0",
-        "bdSize": "16"
-    }, "slide": {"type": "slide", "bdImg": "1", "bdPos": "right", "bdTop": "154"}
-};
-with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = '${ctx}/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
-
 <script>var ctx = '${ctx}';</script>
 <script src="${ctx}/static/ace/dist/js/jquery.min.js"></script>
 <script src="${ctx}/static/libs/simpage/simpage.js"></script>
 <script src="${ctx}/static/app/js/web/web.js"></script>
 <@block name="web-script"/>
+
+<#--百度分享-->
+<script>
+    var pic = "https://kangyonggan.com/static/app/images/600.png";
+    if ($("img").length > 1) {
+        pic = $("img")[1].attr("src");
+    }
+    window._bd_share_config = {
+        "common": {
+            "bdSnsKey": {},
+            "bdText": document.title,
+            "bdMini": "2",
+            "bdMiniList": false,
+            "bdPic": pic,
+            "bdStyle": "0",
+            "bdSize": "16"
+        }, "slide": {"type": "slide", "bdImg": "1", "bdPos": "right", "bdTop": "154"}
+    };
+    with (document)0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = '${ctx}/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+</script>
+
 </body>
 </html>
