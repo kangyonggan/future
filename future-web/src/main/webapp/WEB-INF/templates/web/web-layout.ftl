@@ -63,13 +63,18 @@
 <#--百度分享-->
 <script>
     var pic = "https://kangyonggan.com/static/app/images/600.png";
-    if ($("img").length > 1) {
-        pic = "https://kangyonggan.com/" + $("img")[1].attr("src");
+    if ($("img").length > 2) {
+        pic = "https://kangyonggan.com/" + $($("img")[2]).attr("src");
     }
+
+    console.log(pic);
+
     window._bd_share_config = {
         "common": {
             "bdSnsKey": {},
             "bdText": document.title,
+            "bdUrl": window.location.href,
+            "bdDesc": $("meta[name='description']").attr("content"),
             "bdMini": "2",
             "bdMiniList": false,
             "bdPic": pic,
