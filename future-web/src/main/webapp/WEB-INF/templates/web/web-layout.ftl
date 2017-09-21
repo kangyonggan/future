@@ -64,7 +64,7 @@
 <script>
     var pic = "https://kangyonggan.com/static/app/images/600.png";
     if ($("img").length > 1) {
-        pic = $("img")[1].attr("src");
+        pic = "https://kangyonggan.com/" + $("img")[1].attr("src");
     }
     window._bd_share_config = {
         "common": {
