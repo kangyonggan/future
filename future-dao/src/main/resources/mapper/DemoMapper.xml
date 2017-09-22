@@ -14,4 +14,18 @@
         <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
         <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
     </resultMap>
+
+    <select id="selectAllTables" resultType="DbTable">
+      SELECT
+        table_name AS tableName, table_comment AS tableComment,table_rows AS tableRows, create_time AS createdTime, update_time AS updatedTime
+      FROM
+        information_schema.TABLES
+      WHERE
+        table_schema = 'future'
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="selectTableColumns" resultType="DbColumn">
+       SHOW FULL COLUMNS FROM ${tableName}
+    </select>
 </mapper>
