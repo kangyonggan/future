@@ -6,8 +6,8 @@ import javax.persistence.*;
 import lombok.Data;
 
 @Data
-@Table(name = "demo")
-public class Demo implements Serializable {
+@Table(name = "code")
+public class Code implements Serializable {
     /**
      * 主键, 自增
      */
@@ -16,24 +16,37 @@ public class Demo implements Serializable {
     private Long id;
 
     /**
-     * 字段1
+     * 表名称
      */
-    private String column1;
+    @Column(name = "table_name")
+    private String tableName;
 
     /**
-     * 字段2
+     * 菜单名称
      */
-    private String column2;
+    @Column(name = "menu_name")
+    private String menuName;
 
     /**
-     * 字段3
+     * 第一步
      */
-    private String column3;
+    private String step1;
 
     /**
-     * 字段4
+     * 第二步
      */
-    private String column4;
+    private String step2;
+
+    /**
+     * 第三步
+     */
+    private String step3;
+
+    /**
+     * 创建人
+     */
+    @Column(name = "created_username")
+    private String createdUsername;
 
     /**
      * 逻辑删除:{0:未删除, 1:已删除}

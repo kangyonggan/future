@@ -1,19 +1,28 @@
 package com.kangyonggan.app.future.web.controller.dashboard;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
+import com.kangyonggan.app.future.biz.service.CodeService;
+import com.kangyonggan.app.future.biz.service.MenuService;
 import com.kangyonggan.app.future.biz.service.TableService;
-import com.kangyonggan.app.future.model.vo.DbColumn;
-import com.kangyonggan.app.future.model.vo.DbTable;
+import com.kangyonggan.app.future.biz.service.UserService;
+import com.kangyonggan.app.future.model.dto.Step1;
+import com.kangyonggan.app.future.model.dto.Step2;
+import com.kangyonggan.app.future.model.dto.Step3;
+import com.kangyonggan.app.future.model.vo.*;
 import com.kangyonggan.app.future.web.controller.BaseController;
 import lombok.extern.log4j.Log4j2;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author kangyonggan
@@ -25,46 +34,176 @@ import java.util.List;
 public class DashboardToolCodeController extends BaseController {
 
     @Autowired
+    private CodeService codeService;
+
+    @Autowired
     private TableService tableService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private MenuService menuService;
+
     /**
-     * 列表
+     * 代码列表
      *
+     * @param pageNum
+     * @param tableName
+     * @param menuName
      * @param model
      * @return
      */
     @RequestMapping(method = RequestMethod.GET)
     @RequiresPermissions("TOOL_CODE")
-    public String list(Model model) {
+    public String list(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNum,
+                       @RequestParam(value = "tableName", required = false, defaultValue = "") String tableName,
+                       @RequestParam(value = "menuName", required = false, defaultValue = "") String menuName,
+                       Model model) {
+        List<Code> codes = codeService.searchCodes(pageNum, tableName, menuName);
+        PageInfo<Code> page = new PageInfo(codes);
+
+        model.addAttribute("page", page);
+        return getPathList();
+    }
+
+    /**
+     * 新增
+     *
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "create", method = RequestMethod.GET)
+    @RequiresPermissions("TOOL_CODE")
+    public String create(Model model) {
         List<DbTable> tables = tableService.findAllTables();
+        List<Menu> menus = menuService.findAllMenus();
 
         model.addAttribute("tables", tables);
-        return getPathList();
+        model.addAttribute("menus", menus);
+        return getPathFormModal();
+    }
+
+    /**
+     * 保存代码
+     *
+     * @param code
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "save", method = RequestMethod.POST)
+    @ResponseBody
+    @RequiresPermissions("TOOL_CODE")
+    public Map<String, Object> save(@ModelAttribute("code") @Valid Code code, BindingResult result) {
+        Map<String, Object> resultMap = getResultMap();
+        ShiroUser shiroUser = userService.getShiroUser();
+
+        if (!result.hasErrors()) {
+            code.setCreatedUsername(shiroUser.getUsername());
+            codeService.saveCode(code);
+        } else {
+            setResultMapFailure(resultMap);
+        }
+
+        return resultMap;
     }
 
     /**
      * 生成向导
      *
-     * @param tableName
+     * @param id
      * @param model
      * @return
      */
-    @RequestMapping(value = "{tableName:[\\w]+}/generate", method = RequestMethod.GET)
+    @RequestMapping(value = "{id:[\\d]+}", method = RequestMethod.GET)
     @RequiresPermissions("TOOL_CODE")
-    public String generate(@PathVariable("tableName") String tableName, Model model) {
+    public String generate(@PathVariable("id") Long id, Model model) {
         List<DbTable> tables = tableService.findAllTables();
-        DbTable table = getTable(tableName, tables);
-        List<DbColumn> columns = tableService.findTableColumns(tableName);
+        Code code = codeService.findCodeById(id);
+        List<DbColumn> columns = tableService.findTableColumns(code.getTableName());
+        JSONObject step1 = JSON.parseObject(code.getStep1());
+        JSONObject step2 = JSON.parseObject(code.getStep2());
+        JSONObject step3 = JSON.parseObject(code.getStep3());
 
-        model.addAttribute("table", table);
+        model.addAttribute("table", getTable(code.getTableName(), tables));
         model.addAttribute("columns", columns);
+        model.addAttribute("code", code);
+        model.addAttribute("step1", step1 == null ? new Object() : step1);
+        model.addAttribute("step2", step2 == null ? new Object() : step2);
+        model.addAttribute("step3", step3 == null ? new Object() : step3);
         return getPathRoot() + "/generate";
     }
 
-    private DbTable getTable(String tableName, List<DbTable> dbTables) {
-        for (DbTable dbTable : dbTables) {
-            if (tableName.equals(dbTable.getTableName())) {
-                return dbTable;
+    /**
+     * 提交第一步的表单
+     *
+     * @param step1
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "step1", method = RequestMethod.POST)
+    @ResponseBody
+    @RequiresPermissions("TOOL_CODE")
+    public Map<String, Object> step1(@ModelAttribute("step1") @Valid Step1 step1, BindingResult result) {
+        Map<String, Object> resultMap = getResultMap();
+
+        if (!result.hasErrors()) {
+            codeService.updateStep1(step1);
+        } else {
+            setResultMapFailure(resultMap);
+        }
+
+        return resultMap;
+    }
+
+    /**
+     * 提交第二步的表单
+     *
+     * @param step2
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "step2", method = RequestMethod.POST)
+    @ResponseBody
+    @RequiresPermissions("TOOL_CODE")
+    public Map<String, Object> step2(@ModelAttribute("step2") @Valid Step2 step2, BindingResult result) {
+        Map<String, Object> resultMap = getResultMap();
+
+        if (!result.hasErrors()) {
+            codeService.updateStep2(step2);
+        } else {
+            setResultMapFailure(resultMap);
+        }
+
+        return resultMap;
+    }
+
+    /**
+     * 提交第三步的表单
+     *
+     * @param step3
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "step3", method = RequestMethod.POST)
+    @ResponseBody
+    @RequiresPermissions("TOOL_CODE")
+    public Map<String, Object> step3(@ModelAttribute("step3") @Valid Step3 step3, BindingResult result) {
+        Map<String, Object> resultMap = getResultMap();
+
+        if (!result.hasErrors()) {
+            codeService.updateStep3(step3);
+        } else {
+            setResultMapFailure(resultMap);
+        }
+
+        return resultMap;
+    }
+
+    private DbTable getTable(String tableName, List<DbTable> tables) {
+        for (DbTable table : tables) {
+            if (tableName.equals(table.getTableName())) {
+                return table;
             }
         }
 

@@ -769,6 +769,39 @@ INSERT INTO role_menu (role_code, menu_code) VALUES
   ('ROLE_USER', 'TOOL'),
   ('ROLE_USER', 'TOOL_TEMPLATE');
 
+-- ----------------------------
+--  Table structure for code
+-- ----------------------------
+DROP TABLE
+IF EXISTS code;
+
+CREATE TABLE code
+(
+  id               BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键, 自增',
+  table_name       VARCHAR(64)                           NOT NULL
+  COMMENT '表名称',
+  menu_name        VARCHAR(32)                           NOT NULL                    DEFAULT ''
+  COMMENT '菜单名称',
+  step1            VARCHAR(1024)                         NOT NULL                    DEFAULT ''
+  COMMENT '第一步',
+  step2            VARCHAR(1024)                         NOT NULL                    DEFAULT ''
+  COMMENT '第二步',
+  step3            VARCHAR(1024)                         NOT NULL                    DEFAULT ''
+  COMMENT '第仨步',
+  created_username VARCHAR(20)                           NOT NULL
+  COMMENT '创建人',
+  is_deleted       TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
+  created_time     TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time     TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '代码生成表';
+CREATE INDEX id_created_time
+  ON code (created_time);
+
 INSERT INTO menu
 (code, name, pcode, url, sort, icon)
   VALUE
@@ -778,40 +811,4 @@ INSERT INTO role_menu (role_code, menu_code) VALUES
   ('ROLE_ADMIN', 'TOOL_CODE'),
   ('ROLE_USER', 'TOOL_CODE');
 
--- ----------------------------
---  Table structure for demo
--- ----------------------------
-DROP TABLE
-IF EXISTS demo;
-
-CREATE TABLE demo
-(
-  id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
-  COMMENT '主键, 自增',
-  column1      VARCHAR(64)                           NOT NULL                    DEFAULT ''
-  COMMENT '字段1',
-  column2      VARCHAR(64)                           NOT NULL                    DEFAULT ''
-  COMMENT '字段2',
-  column3      VARCHAR(64)                           NOT NULL                    DEFAULT ''
-  COMMENT '字段3',
-  column4      VARCHAR(64)                           NOT NULL                    DEFAULT ''
-  COMMENT '字段4',
-  is_deleted   TINYINT                               NOT NULL                    DEFAULT 0
-  COMMENT '逻辑删除:{0:未删除, 1:已删除}',
-  created_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
-  COMMENT '创建时间',
-  updated_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-  COMMENT '更新时间'
-)
-  COMMENT '例子表';
-CREATE INDEX id_created_time
-  ON demo (created_time);
-
-INSERT INTO demo (column1, column2, column3, column4, is_deleted)
-VALUES
-  ('一', '二', '三', '四', 1),
-  ('一', '二', '三', '四', 0),
-  ('一', '二', '三', '四', 1),
-  ('一', '二', '三', '四', 0),
-  ('一', '二', '三', '四', 1);
 
