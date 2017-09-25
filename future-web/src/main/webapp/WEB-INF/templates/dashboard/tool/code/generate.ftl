@@ -22,12 +22,12 @@
                     <div id="fuelux-wizard-container">
                         <div>
                             <ul class="steps">
-                                <li data-step="1" class="active">
+                                <li data-step="1">
                                     <span class="step">1</span>
                                     <span class="title">列表界面</span>
                                 </li>
 
-                                <li data-step="2">
+                                <li data-step="2" class="active">
                                     <span class="step">2</span>
                                     <span class="title">表单界面</span>
                                 </li>
@@ -83,38 +83,16 @@
 </div>
 
 <script>
-    // 是否需要添加按钮
-    var needAdd = false;
-    // 按钮模式
-    var addBtnType = "0";
-
-    <#if step1.needAdd??>
-    needAdd = true;
-    </#if>
-    <#if step1.addBtnType?? && step1.addBtnType=='1'>
-    addBtnType = "1";
-    </#if>
-
     // 表格的列
     var columns = [];
     var tempIndex = 0;
     <#list columns as column>
         <#if step1.columns??>
             <#if step1.columns?seq_contains(column.field)>
-                <#assign index=column.comment?index_of(":")/>
-                <#if index==-1>
-                columns[tempIndex++] = {"field": "${column.field}", "comment": "${column.comment}"};
-                <#else>
-                columns[tempIndex++] = {"field": "${column.field}", "comment": "${column.comment?substring(0, index)}"};
-                </#if>
+            columns[tempIndex++] = {"field": "${column.field}", "comment": "${column.comment}"};
             </#if>
         <#else>
-            <#assign index=column.comment?index_of(":")/>
-            <#if index==-1>
-            columns[tempIndex++] = {"field": "${column.field}", "comment": "${column.comment}"};
-            <#else>
-            columns[tempIndex++] = {"field": "${column.field}", "comment": "${column.comment?substring(0, index)}"};
-            </#if>
+        columns[tempIndex++] = {"field": "${column.field}", "comment": "${column.comment}"};
         </#if>
     </#list>
 
@@ -125,26 +103,23 @@
         <#if column.field != 'id' && column.field != 'is_deleted' && column.field != 'created_time' && column.field != 'updated_time'>
             <#if step1.searchColumns??>
                 <#if step1.searchColumns?seq_contains(column.field)>
-                    <#assign index=column.comment?index_of(":")/>
-                    <#if index==-1>
-                    searchColumns[tempIndex++] = {"field": "${column.field}", "comment": "${column.comment}"};
-                    <#else>
-                    searchColumns[tempIndex++] = {
-                        "field": "${column.field}",
-                        "comment": "${column.comment?substring(0, index)}"
-                    };
-                    </#if>
+                searchColumns[tempIndex++] = {"field": "${column.field}", "comment": "${column.comment}"};
+                </#if>
+            </#if>
+        </#if>
+    </#list>
+
+    // 表单的列
+    var formColumns = [];
+    tempIndex = 0;
+    <#list columns as column>
+        <#if column.field != 'id' && column.field != 'is_deleted' && column.field != 'created_time' && column.field != 'updated_time'>
+            <#if step2.formColumns??>
+                <#if step2.formColumns?seq_contains(column.field)>
+                    formColumns[tempIndex++] = {"field": "${column.field}", "comment": "${column.comment}"};
                 </#if>
             <#else>
-                <#assign index=column.comment?index_of(":")/>
-                <#if index==-1>
-                searchColumns[tempIndex++] = {"field": "${column.field}", "comment": "${column.comment}"};
-                <#else>
-                searchColumns[tempIndex++] = {
-                    "field": "${column.field}",
-                    "comment": "${column.comment?substring(0, index)}"
-                };
-                </#if>
+                formColumns[tempIndex++] = {"field": "${column.field}", "comment": "${column.comment}"};
             </#if>
         </#if>
     </#list>

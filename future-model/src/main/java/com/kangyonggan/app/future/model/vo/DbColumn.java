@@ -22,6 +22,11 @@ public class DbColumn implements Serializable {
     private String type;
 
     /**
+     * 默认值
+     */
+    private String Default;
+
+    /**
      * 字段备注
      */
     private String comment;

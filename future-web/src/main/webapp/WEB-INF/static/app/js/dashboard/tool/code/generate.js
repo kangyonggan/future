@@ -6,11 +6,10 @@ $(function () {
      */
     $('#fuelux-wizard-container').ace_wizard().on('actionclicked.fu.wizard', function (e, info) {
         if (info.step == 1) {
-            console.log("提交表单1");
             submitStep1();
         } else if (info.step == 2) {
-            console.log("提交表单2");
-
+            console.log(info);
+            submitStep2();
         }
     }).on('finished.fu.wizard', function (e) {
         console.log("finish");
@@ -26,6 +25,26 @@ $(function () {
             success: function (response) {
                 if (response.errCode == 'success') {
                     Message.success("第一步的配置已暂存");
+                } else {
+                    Message.error(response.errMsg);
+                }
+            },
+            error: function () {
+                Message.error("服务器内部错误，请稍后再试。");
+            }
+        });
+    }
+
+    /**
+     * 提交第二步的表单
+     */
+    function submitStep2() {
+        var form = $("#step2-form")[0];
+        $(form).ajaxSubmit({
+            dataType: 'json',
+            success: function (response) {
+                if (response.errCode == 'success') {
+                    Message.success("第二步的配置已暂存");
                 } else {
                     Message.error(response.errMsg);
                 }
@@ -55,33 +74,6 @@ $(function () {
     });
 
     /**
-     * 选择是否需要顶部按钮
-     */
-    $("#needAdd").click(function () {
-        updateNeedAdd(this.checked);
-    });
-
-    // 初始化
-    updateNeedAdd(needAdd);
-
-    /**
-     * 更新是否需要添加按钮
-     *
-     * @param needAdd
-     */
-    function updateNeedAdd(needAdd) {
-        if (needAdd) {
-            $(".btnNameDisp").removeClass("hidden");
-            $("#topBtnName").removeClass("hidden");
-            $("#topBtnType").removeClass("hidden");
-        } else {
-            $(".btnNameDisp").addClass("hidden");
-            $("#topBtnName").addClass("hidden");
-            $("#topBtnType").addClass("hidden");
-        }
-
-    }
-    /**
      * 选择是否需要分页功能
      */
     $("#needPage").click(function () {
@@ -93,7 +85,7 @@ $(function () {
     });
 
     /**
-     * 设置界面名称
+     * 设置添加按钮名称
      */
     $("#addBtnName").change(function () {
         var btnName = $(this).val();
@@ -143,12 +135,7 @@ $(function () {
     function reloadColumns() {
         $("#columns-header").empty();
         for (var i = 0; i < columns.length; i++) {
-            var index = columns[i].comment.indexOf(":");
-            if (index != -1) {
-                $("#columns-header").append('<th>' + columns[i].comment.substr(0, index) + '</th>');
-            } else {
-                $("#columns-header").append('<th>' + columns[i].comment + '</th>');
-            }
+            $("#columns-header").append('<th>' + columns[i].comment + '</th>');
         }
         $("#columns-header").append('<th>操作</th>');
     }
@@ -185,14 +172,71 @@ $(function () {
     function reloadSearchColumns() {
         $("#search-form").empty();
         for (var i = 0; i < searchColumns.length; i++) {
-            var index = searchColumns[i].comment.indexOf(":");
-            if (index != -1) {
-                $("#search-form").append('<div class="form-group mt-4"><input type="text" class="form-control" name="' + searchColumns[i].field + '" placeholder="' + searchColumns[i].comment.substr(0, index) + '"/></div> ');
-            } else {
-                $("#search-form").append('<div class="form-group mt-4"><input type="text" class="form-control" name="' + searchColumns[i].field + '" placeholder="' + searchColumns[i].comment + '"/></div> ');
+            $("#search-form").append('<div class="form-group mt-4"><input type="text" class="form-control" name="' + searchColumns[i].field + '" placeholder="' + searchColumns[i].comment + '"/></div> ');
+        }
+        if (searchColumns.length > 0) {
+            $("#search-form").append('<a href="javascript:" class="btn btn-sm btn-inverse mt-4">搜索<span class="ace-icon fa fa-search icon-on-right bigger-110"></span></a>');
+        }
+    }
+
+    /**
+     * 欲删除表单的列
+     */
+    $('#formColumns').on("select2-removing", function (e) {
+        if (formColumns.length == 1) {
+            e.preventDefault();
+            Message.warning("至少留下一个字段");
+        }
+    });
+
+    /**
+     * 删除表单的列
+     */
+    $('#formColumns').on("select2-removed", function (e) {
+        var item = e.choice;
+        for (var i = 0; i < formColumns.length; i++) {
+            if (item.id == formColumns[i].field) {
+                formColumns.splice(i, 1);
+                break;
             }
         }
-        $("#search-form").append('<a href="javascript:" class="btn btn-sm btn-inverse mt-4">搜索<span class="ace-icon fa fa-search icon-on-right bigger-110"></span></a>');
+
+        reloadFormColumns();
+    });
+
+    /**
+     * 添加表单的列
+     */
+    $('#formColumns').on("select2-selecting", function (e) {
+        var item = e.choice;
+        formColumns[formColumns.length] = {"field": item.id, "comment": item.text};
+
+        reloadFormColumns();
+    });
+
+    /**
+     * 重新加载表单的列
+     */
+    reloadFormColumns();
+    function reloadFormColumns() {
+        $("#form-container").empty();
+        for (var i = 0; i < formColumns.length; i++) {
+            var column = formColumns[i];
+            $("#form-container").append('<div class="form-group"> <label class="col-sm-3 control-label no-padding-right">' + column.comment + '</label> <div class="col-xs-12 col-sm-5"> <input type="text" class="form-control" name="' + column.field + '" placeholder="请输入' + column.comment + '"/> </div></div>');
+        }
     }
+
+    /**
+     * 设置提交按钮名称
+     */
+    $("#submitBtnName").change(function () {
+        var submitBtnName = $(this).val();
+
+        if (submitBtnName != '') {
+            $("#submitBtnNameDisp").html(submitBtnName);
+        } else {
+            $("#submitBtnNameDisp").html("提交");
+        }
+    });
 
 });

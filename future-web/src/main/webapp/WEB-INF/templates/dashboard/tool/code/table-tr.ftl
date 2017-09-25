@@ -9,7 +9,7 @@
     <td><@c.relative_date datetime=code.updatedTime/></td>
     <td>
         <div class="btn-group">
-            <a class="btn btn-xs btn-inverse" href="#tool/code/${code.id}">生成</a>
+            <a class="btn btn-xs btn-inverse" href="#tool/code/${code.id}">生成向导</a>
         </div>
     </td>
 </tr>
