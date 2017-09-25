@@ -30,7 +30,7 @@ public class FileUtil {
                 file.getParentFile().mkdirs();
             }
 
-            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8"));
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
             writer.write(fileContent);
             writer.flush();
         } catch (Exception e) {
@@ -38,6 +38,34 @@ public class FileUtil {
         } finally {
             if (writer != null) {
                 writer.close();
+            }
+        }
+    }
+
+    /**
+     * 读取文件内容
+     *
+     * @param filePath
+     * @throws Exception
+     */
+    public static String readFile(String filePath) throws Exception {
+        BufferedReader reader = null;
+        try {
+            File file = new File(filePath);
+
+            reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            return sb.toString();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            if (reader != null) {
+                reader.close();
             }
         }
     }

@@ -118,14 +118,13 @@ public class DashboardToolCodeController extends BaseController {
     @RequestMapping(value = "{id:[\\d]+}", method = RequestMethod.GET)
     @RequiresPermissions("TOOL_CODE")
     public String generate(@PathVariable("id") Long id, Model model) {
-        List<DbTable> tables = tableService.findAllTables();
         Code code = codeService.findCodeById(id);
         List<DbColumn> columns = tableService.findTableColumns(code.getTableName());
         JSONObject step1 = JSON.parseObject(code.getStep1());
         JSONObject step2 = JSON.parseObject(code.getStep2());
         JSONObject step3 = JSON.parseObject(code.getStep3());
 
-        model.addAttribute("table", getTable(code.getTableName(), tables));
+        model.addAttribute("table", tableService.findTableByName(code.getTableName()));
         model.addAttribute("columns", columns);
         model.addAttribute("code", code);
         model.addAttribute("step1", step1 == null ? new Object() : step1);
@@ -237,6 +236,7 @@ public class DashboardToolCodeController extends BaseController {
     public Map<String, Object> generate(@PathVariable("id") Long id) {
         Map<String, Object> resultMap = getResultMap();
 
+        codeService.generateCode(id);
 
         return resultMap;
     }
@@ -261,15 +261,5 @@ public class DashboardToolCodeController extends BaseController {
         codeService.updateCode(code);
 
         return resultMap;
-    }
-
-    private DbTable getTable(String tableName, List<DbTable> tables) {
-        for (DbTable table : tables) {
-            if (tableName.equals(table.getTableName())) {
-                return table;
-            }
-        }
-
-        return null;
     }
 }

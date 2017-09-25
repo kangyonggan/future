@@ -32,4 +32,16 @@ public class TableServiceImpl implements TableService {
         return tableMapper.selectTableColumns(tableName);
     }
 
+    @Override
+    public DbTable findTableByName(String tableName) {
+        List<DbTable> tables = findAllTables();
+        for (DbTable table : tables) {
+            if (tableName.equals(table.getTableName())) {
+                return table;
+            }
+        }
+
+        return null;
+    }
+
 }

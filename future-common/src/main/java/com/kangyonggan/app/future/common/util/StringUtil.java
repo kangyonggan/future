@@ -2,6 +2,7 @@ package com.kangyonggan.app.future.common.util;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.nio.charset.Charset;
 import java.util.regex.Pattern;
 
 /**
@@ -273,5 +274,39 @@ public class StringUtil {
         } catch (Exception e) {
             return data;
         }
+    }
+
+    /**
+     * 把tableName转为java类名
+     *
+     * @param tableName
+     * @return
+     */
+    public static String convertTableName(String tableName) {
+        boolean isLine = false;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < tableName.length(); i++) {
+            char ch = tableName.charAt(i);
+
+            // 首字母转大写
+            if (i == 0) {
+                sb.append(Character.toUpperCase(ch));
+            } else {
+                // 下划线后面的字母转大写
+                if (isLine) {
+                    sb.append(Character.toUpperCase(ch));
+                } else {
+                    sb.append(ch);
+                }
+            }
+
+            if (ch == '_') {
+                isLine = true;
+            } else  {
+                isLine = false;
+            }
+        }
+
+        return sb.toString();
     }
 }

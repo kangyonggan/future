@@ -66,4 +66,10 @@ public interface CodeService {
      */
     void updateCode(Code code);
 
+    /**
+     * 生成代码
+     *
+     * @param id
+     */
+    void generateCode(Long id);
 }

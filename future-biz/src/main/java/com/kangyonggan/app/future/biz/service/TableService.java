@@ -26,4 +26,12 @@ public interface TableService {
      */
     List<DbColumn> findTableColumns(String tableName);
 
+    /**
+     * 查找table
+     *
+     * @param tableName
+     * @return
+     */
+    DbTable findTableByName(String tableName);
+
 }
