@@ -200,6 +200,69 @@ public class DashboardToolCodeController extends BaseController {
         return resultMap;
     }
 
+    /**
+     * 提交完成的表单
+     *
+     * @param step3
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "finish", method = RequestMethod.POST)
+    @ResponseBody
+    @RequiresPermissions("TOOL_CODE")
+    public Map<String, Object> finish(@ModelAttribute("step3") @Valid Step3 step3, BindingResult result) {
+        Map<String, Object> resultMap = getResultMap();
+
+        if (!result.hasErrors()) {
+            Code code = new Code();
+            code.setId(step3.getCodeId());
+            code.setStatus("complete");
+            codeService.updateCode(code);
+        } else {
+            setResultMapFailure(resultMap);
+        }
+
+        return resultMap;
+    }
+
+    /**
+     * 生成代码
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "{id:[\\d]+}/generate", method = RequestMethod.GET)
+    @ResponseBody
+    @RequiresPermissions("TOOL_CODE")
+    public Map<String, Object> generate(@PathVariable("id") Long id) {
+        Map<String, Object> resultMap = getResultMap();
+
+
+        return resultMap;
+    }
+
+    /**
+     * 重置配置
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "{id:[\\d]+}/reset", method = RequestMethod.GET)
+    @ResponseBody
+    @RequiresPermissions("TOOL_CODE")
+    public Map<String, Object> reset(@PathVariable("id") Long id) {
+        Map<String, Object> resultMap = getResultMap();
+
+        Code code = new Code();
+        code.setId(id);
+        code.setStep1("");
+        code.setStep2("");
+        code.setStep3("");
+        codeService.updateCode(code);
+
+        return resultMap;
+    }
+
     private DbTable getTable(String tableName, List<DbTable> tables) {
         for (DbTable table : tables) {
             if (tableName.equals(table.getTableName())) {

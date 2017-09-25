@@ -8,11 +8,12 @@ $(function () {
         if (info.step == 1) {
             submitStep1();
         } else if (info.step == 2) {
-            console.log(info);
             submitStep2();
+        } else if (info.step == 3) {
+            submitStep3();
         }
     }).on('finished.fu.wizard', function (e) {
-        console.log("finish");
+        submitFinish();
     });
 
     /**
@@ -45,6 +46,46 @@ $(function () {
             success: function (response) {
                 if (response.errCode == 'success') {
                     Message.success("第二步的配置已暂存");
+                } else {
+                    Message.error(response.errMsg);
+                }
+            },
+            error: function () {
+                Message.error("服务器内部错误，请稍后再试。");
+            }
+        });
+    }
+
+    /**
+     * 提交第三步的表单
+     */
+    function submitStep3() {
+        var form = $("#step3-form")[0];
+        $(form).ajaxSubmit({
+            dataType: 'json',
+            success: function (response) {
+                if (response.errCode == 'success') {
+                    Message.success("第三步的配置已暂存");
+                } else {
+                    Message.error(response.errMsg);
+                }
+            },
+            error: function () {
+                Message.error("服务器内部错误，请稍后再试。");
+            }
+        });
+    }
+
+    /**
+     * 提交完成的表单
+     */
+    function submitFinish() {
+        var form = $("#finish-form")[0];
+        $(form).ajaxSubmit({
+            dataType: 'json',
+            success: function (response) {
+                if (response.errCode == 'success') {
+                    window.location.href = ctx + "/dashboard#tool/code";
                 } else {
                     Message.error(response.errMsg);
                 }
@@ -227,6 +268,19 @@ $(function () {
     }
 
     /**
+     * 设置表单界面名称
+     */
+    $("#formPageName").change(function () {
+        var formPageName = $(this).val();
+
+        if (formPageName != '') {
+            $("#formPageNameDisp").html(formPageName);
+        } else {
+            $("#formPageNameDisp").html("界面名称");
+        }
+    });
+
+    /**
      * 设置提交按钮名称
      */
     $("#submitBtnName").change(function () {
@@ -238,5 +292,65 @@ $(function () {
             $("#submitBtnNameDisp").html("提交");
         }
     });
+
+    /**
+     * 设置详情界面名称
+     */
+    $("#detailPageName").change(function () {
+        var detailPageName = $(this).val();
+
+        if (detailPageName != '') {
+            $("#detailPageNameDisp").html(detailPageName);
+        } else {
+            $("#detailPageNameDisp").html("界面名称");
+        }
+    });
+
+    /**
+     * 欲删除详情的列
+     */
+    $('#detailColumns').on("select2-removing", function (e) {
+        if (detailColumns.length == 1) {
+            e.preventDefault();
+            Message.warning("至少留下一个字段");
+        }
+    });
+
+    /**
+     * 删除详情的列
+     */
+    $('#detailColumns').on("select2-removed", function (e) {
+        var item = e.choice;
+        for (var i = 0; i < detailColumns.length; i++) {
+            if (item.id == detailColumns[i].field) {
+                detailColumns.splice(i, 1);
+                break;
+            }
+        }
+
+        reloadDetailColumns();
+    });
+
+    /**
+     * 添加详情的列
+     */
+    $('#detailColumns').on("select2-selecting", function (e) {
+        var item = e.choice;
+        detailColumns[detailColumns.length] = {"field": item.id, "comment": item.text};
+
+        reloadDetailColumns();
+    });
+
+    /**
+     * 重新加载详情的列
+     */
+    reloadDetailColumns();
+    function reloadDetailColumns() {
+        $("#detail-container").empty();
+        for (var i = 0; i < detailColumns.length; i++) {
+            var column = detailColumns[i];
+            $("#detail-container").append('<tr><td width="30%">' + column.comment + '</td><td width="70%"></td></tr>');
+        }
+    }
 
 });

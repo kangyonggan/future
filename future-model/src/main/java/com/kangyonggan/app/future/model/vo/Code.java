@@ -49,6 +49,11 @@ public class Code implements Serializable {
     private String createdUsername;
 
     /**
+     * 状态
+     */
+    private String status;
+
+    /**
      * 逻辑删除:{0:未删除, 1:已删除}
      */
     @Column(name = "is_deleted")

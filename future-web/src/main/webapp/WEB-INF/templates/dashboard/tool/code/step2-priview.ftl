@@ -11,8 +11,8 @@
             <div class="widget-main">
                 <div class="form-horizontal" role="form">
                     <div class="page-header">
-                        <h1>
-                        ${step1.addBtnName!'新增'}${table.tableComment?substring(0, table.tableComment?length-1)}
+                        <h1 id="formPageNameDisp">
+                        ${step2.formPageName!'新增${table.tableComment?substring(0, table.tableComment?length-1)}'}
                         </h1>
                     </div>
 

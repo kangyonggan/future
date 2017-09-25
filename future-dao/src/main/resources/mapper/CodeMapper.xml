@@ -12,6 +12,7 @@
         <result column="step2" jdbcType="VARCHAR" property="step2"/>
         <result column="step3" jdbcType="VARCHAR" property="step3"/>
         <result column="created_username" jdbcType="VARCHAR" property="createdUsername"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
         <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
         <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
         <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>

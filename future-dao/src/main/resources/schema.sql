@@ -791,6 +791,8 @@ CREATE TABLE code
   COMMENT '第仨步',
   created_username VARCHAR(20)                           NOT NULL
   COMMENT '创建人',
+  status           VARCHAR(20)                           NOT NULL                    DEFAULT 'temp'
+  COMMENT '状态',
   is_deleted       TINYINT                               NOT NULL                    DEFAULT 0
   COMMENT '逻辑删除:{0:未删除, 1:已删除}',
   created_time     TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP

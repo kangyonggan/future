@@ -82,4 +82,10 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
 
         myMapper.updateByPrimaryKeySelective(code);
     }
+
+    @Override
+    @LogTime
+    public void updateCode(Code code) {
+        myMapper.updateByPrimaryKeySelective(code);
+    }
 }

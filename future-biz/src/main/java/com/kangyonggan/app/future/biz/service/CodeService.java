@@ -58,4 +58,12 @@ public interface CodeService {
      * @param step3
      */
     void updateStep3(Step3 step3);
+
+    /**
+     * 更新代码
+     *
+     * @param code
+     */
+    void updateCode(Code code);
+
 }

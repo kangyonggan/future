@@ -14,6 +14,8 @@ public class Step2 implements Serializable {
 
     private Long codeId;
 
+    private String formPageName;
+
     private String submitBtnName;
 
     private List<String> formColumns;
