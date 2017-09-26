@@ -1,7 +1,7 @@
 ${'<'}#assign modal_title="${'$'}{${modelName?uncap_first}.id???string('编辑', '${step1.addBtnName}')}<#include "include/table-comment.ftl"/>" /${'>'}
 
 ${'<'}@override name="modal-body"${'>'}
-<form class="form-horizontal" role="form" id="modal-form" method="post"
+<form class="form-horizontal" role="form" id="${code.tableName}-form" method="post"
       action="${'$'}{ctx}/dashboard/${code.menuName?lower_case?replace('_', '/')}/${'$'}{${modelName?uncap_first}.id???string('update', 'save')}">
     ${'<'}#if ${modelName?uncap_first}.id??${'>'}
         <input type="hidden" name="id" value="${'$'}{${modelName?uncap_first}.id}"/>
@@ -29,7 +29,7 @@ ${'<'}@override name="modal-footer">
     </button>
 
 <button class="btn btn-sm btn-inverse" id="submit" data-loading-text="正在${'<'}@s.message "app.button.save"/${'>'}..." data-toggle="form-submit"
-        data-target="#modal-form">
+        data-target="#${code.tableName}-form">
     <i class="ace-icon fa fa-check"></i>
     ${'<'}@s.message "app.button.save"/${'>'}
 

@@ -71,25 +71,6 @@ public class Dashboard<#assign list=code.menuName?lower_case?split("_")/><#list 
     }
 
     /**
-     * 逻辑删除/恢复
-     *
-     * @param id
-     * @param isDeleted
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "{id:[\\d]+}/{isDeleted:\\bundelete\\b|\\bdelete\\b}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
-    @RequiresPermissions("${code.menuName}")
-    public String delete(@PathVariable("id") Long id, @PathVariable("isDeleted") String isDeleted, Model model) {
-        ${modelName} ${modelName?uncap_first} = ${modelName?uncap_first}Service.get${modelName}(id);
-        ${modelName?uncap_first}.setIsDeleted((byte) (isDeleted.equals("delete") ? 1 : 0));
-        ${modelName?uncap_first}Service.update${modelName}(${modelName?uncap_first});
-
-        model.addAttribute("${modelName?uncap_first}", ${modelName?uncap_first});
-        return getPathTableTr();
-    }
-
-    /**
      * 保存
      *
      * @param ${modelName?uncap_first}
@@ -112,6 +93,25 @@ public class Dashboard<#assign list=code.menuName?lower_case?split("_")/><#list 
     }
 
     /**
+     * 逻辑删除/恢复
+     *
+     * @param id
+     * @param isDeleted
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "{id:[\\d]+}/{isDeleted:\\bundelete\\b|\\bdelete\\b}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
+    @RequiresPermissions("${code.menuName}")
+    public String delete(@PathVariable("id") Long id, @PathVariable("isDeleted") String isDeleted, Model model) {
+        ${modelName} ${modelName?uncap_first} = ${modelName?uncap_first}Service.get${modelName}(id);
+        ${modelName?uncap_first}.setIsDeleted((byte) (isDeleted.equals("delete") ? 1 : 0));
+        ${modelName?uncap_first}Service.update${modelName}(${modelName?uncap_first});
+
+        model.addAttribute("${modelName?uncap_first}", ${modelName?uncap_first});
+        return getPathTableTr();
+    }
+
+    /**
      * 编辑
      *
      * @param id
@@ -127,20 +127,6 @@ public class Dashboard<#assign list=code.menuName?lower_case?split("_")/><#list 
         <#else>
         return getPathForm();
         </#if>
-    }
-
-    /**
-     * 物理删除
-     *
-     * @param id
-     * @return
-     */
-    @RequestMapping(value = "{id:[\\d]+}/remove", method = RequestMethod.GET)
-    @RequiresPermissions("${code.menuName}")
-    @ResponseBody
-    public Map<String, Object> remove(@PathVariable("id") Long id) {
-        ${modelName?uncap_first}Service.delete${modelName}(id);
-        return super.getResultMap();
     }
 
     /**
@@ -163,6 +149,34 @@ public class Dashboard<#assign list=code.menuName?lower_case?split("_")/><#list 
         }
 
         return resultMap;
+    }
+
+    /**
+     * 物理删除
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "{id:[\\d]+}/remove", method = RequestMethod.GET)
+    @RequiresPermissions("${code.menuName}")
+    @ResponseBody
+    public Map<String, Object> remove(@PathVariable("id") Long id) {
+        ${modelName?uncap_first}Service.delete${modelName}(id);
+        return super.getResultMap();
+    }
+
+    /**
+     * 详情
+     *
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "{id:[\\d]+}", method = RequestMethod.GET)
+    @RequiresPermissions("${code.menuName}")
+    public String detail(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("${modelName?uncap_first}", ${modelName?uncap_first}Service.get${modelName}(id));
+        return super.getPathDetailModal();
     }
 
 }

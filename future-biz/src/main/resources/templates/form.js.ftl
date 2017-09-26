@@ -20,7 +20,11 @@ $(function () {
                 dataType: 'json',
                 success: function (response) {
                     if (response.errCode == 'success') {
+                        <#if step1.addBtnType=='1'>
+                        window.location.reload();
+                        <#else>
                         window.location.href = ctx + "/dashboard#${code.menuName?lower_case?replace('_', '/')}";
+                        </#if>
                     } else {
                         Message.error(response.errMsg);
                     }
