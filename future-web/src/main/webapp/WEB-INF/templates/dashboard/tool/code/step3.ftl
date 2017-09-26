@@ -15,17 +15,6 @@
                         <input name="codeId" value="${code.id}" type="hidden"/>
 
                         <div class="form-group">
-                            <label class="col-xs-12 col-sm-4 control-label no-padding-right">界面名称<span
-                                    class="red">*</span></label>
-
-                            <div class="col-xs-12 col-sm-8">
-                                <input type="text" id="detailPageName" name="detailPageName" class="form-control"
-                                       value="${step3.detailPageName!'${table.tableComment?substring(0, table.tableComment?length-1)}详情'}"
-                                       placeholder="请输入界面名称">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label class="col-xs-12 col-sm-4 control-label no-padding-right">选择显示字段
                                 <span class="red">*</span>
                             </label>

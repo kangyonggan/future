@@ -10,8 +10,8 @@
         <div class="widget-body">
             <div class="widget-main">
                 <div class="page-header">
-                    <h1 id="detailPageNameDisp">
-                    ${step3.detailPageName!'${table.tableComment?substring(0, table.tableComment?length-1)}详情'}
+                    <h1>
+                    ${table.tableComment?substring(0, table.tableComment?length-1)}详情
                     </h1>
                 </div>
 

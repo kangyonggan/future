@@ -268,45 +268,6 @@ $(function () {
     }
 
     /**
-     * 设置表单界面名称
-     */
-    $("#formPageName").change(function () {
-        var formPageName = $(this).val();
-
-        if (formPageName != '') {
-            $("#formPageNameDisp").html(formPageName);
-        } else {
-            $("#formPageNameDisp").html("界面名称");
-        }
-    });
-
-    /**
-     * 设置提交按钮名称
-     */
-    $("#submitBtnName").change(function () {
-        var submitBtnName = $(this).val();
-
-        if (submitBtnName != '') {
-            $("#submitBtnNameDisp").html(submitBtnName);
-        } else {
-            $("#submitBtnNameDisp").html("提交");
-        }
-    });
-
-    /**
-     * 设置详情界面名称
-     */
-    $("#detailPageName").change(function () {
-        var detailPageName = $(this).val();
-
-        if (detailPageName != '') {
-            $("#detailPageNameDisp").html(detailPageName);
-        } else {
-            $("#detailPageNameDisp").html("界面名称");
-        }
-    });
-
-    /**
      * 欲删除详情的列
      */
     $('#detailColumns').on("select2-removing", function (e) {

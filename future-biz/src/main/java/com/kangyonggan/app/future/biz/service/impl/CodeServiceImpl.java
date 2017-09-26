@@ -131,6 +131,8 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
         log.info("Service.java的包名为：{}", servicePackage);
         String serviceImplPackage = code.getPackageName() + ".biz.service.impl";
         log.info("ServiceImpl.java的包名为：{}", serviceImplPackage);
+        String controllerPackage = code.getPackageName() + ".web.controller.dashboard";
+        log.info("Controller.java的包名为：{}", controllerPackage);
 
         // 准备数据
         Map<String, Object> rootMap = new HashMap();
@@ -140,6 +142,7 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
         rootMap.put("mapperXmlPackage", mapperXmlPackage);
         rootMap.put("servicePackage", servicePackage);
         rootMap.put("serviceImplPackage", serviceImplPackage);
+        rootMap.put("controllerPackage", controllerPackage);
         rootMap.put("author", "Generator");
         rootMap.put("code", code);
         rootMap.put("table", table);
@@ -157,13 +160,88 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
         // 生成ServiceImpl.java
         generateServiceImpl(baseBir, rootMap);
 
-        // TODO 生成Controller.java
+        // 生成Controller.java
+        generateController(baseBir, rootMap);
 
         // 生成list.ftl及包含的ftl和对应的js
         generateList(baseBir, rootMap);
 
-        // TODO 生成form-model.ftl及包含的ftl和对应的js
-        // TODO 生成detail-model.ftl及包含的ftl和对应的js
+        // 生成form.ftl及包含的ftl和对应的js
+        generateForm(baseBir, rootMap);
+
+        // 生成detail-modal.ftl及包含的ftl和对应的js
+        generateDetailModal(baseBir, rootMap);
+    }
+
+    /**
+     * 生成Controller.java
+     *
+     * @param baseBir
+     * @param rootMap
+     */
+    private void generateController(String baseBir, Map<String, Object> rootMap) {
+        try {
+            String controllerContent = generate("Controller.java.ftl", rootMap);
+            Code code = (Code) rootMap.get("code");
+            String prePath = code.getMenuName().substring(0, code.getMenuName().lastIndexOf("_")).toLowerCase();
+            prePath = StringUtil.convertTableName(prePath);
+
+            String controllerPackage = (String) rootMap.get("controllerPackage");
+            String modelName = (String) rootMap.get("modelName");
+            String fileName = baseBir + "-web/src/main/java/" + controllerPackage.replaceAll("\\.", "/") + "/Dashboard" + prePath + modelName + "Controller.java";
+            FileUtil.writeTextToFile(fileName, controllerContent);
+            log.info("{}已经生成完毕", fileName);
+        } catch (Exception e) {
+            log.warn("生成Controller.java异常", e);
+        }
+    }
+
+    /**
+     * 生成detail-modal.ftl及包含的ftl和对应的js
+     *
+     * @param baseBir
+     * @param rootMap
+     */
+    private void generateDetailModal(String baseBir, Map<String, Object> rootMap) {
+        try {
+            // detail-modal.ftl
+            String detailContent = generate("detail-modal.ftl.ftl", rootMap);
+            Code code = (Code) rootMap.get("code");
+            String fileName = baseBir + "-web/src/main/webapp/WEB-INF/templates/dashboard/" + code.getMenuName().toLowerCase().replaceAll("_", "/") + "/detail-modal.ftl";
+            FileUtil.writeTextToFile(fileName, detailContent);
+            log.info("{}已经生成完毕", fileName);
+        } catch (Exception e) {
+            log.warn("生成detail-modal.ftl异常", e);
+        }
+    }
+
+    /**
+     * 生成form.ftl及包含的ftl和对应的js
+     *
+     * @param baseBir
+     * @param rootMap
+     */
+    private void generateForm(String baseBir, Map<String, Object> rootMap) {
+        try {
+            // 判断是form.ftl还是form-modal.ftl, 根据新增按钮类型
+            Step1 step1 = (Step1) rootMap.get("step1");
+            String formName = step1.getAddBtnType().equals("0") ? "form" : "form-modal";
+
+            // list.ftl
+            String formContent = generate(formName + ".ftl.ftl", rootMap);
+            Code code = (Code) rootMap.get("code");
+            String fileName = baseBir + "-web/src/main/webapp/WEB-INF/templates/dashboard/" + code.getMenuName().toLowerCase().replaceAll("_", "/") + "/" + formName + ".ftl";
+            FileUtil.writeTextToFile(fileName, formContent);
+            log.info("{}已经生成完毕", fileName);
+
+            // form.js
+            String formJsContent = generate("form.js.ftl", rootMap);
+            fileName = baseBir + "-web/src/main/webapp/WEB-INF/static/app/js/dashboard/" + code.getMenuName().toLowerCase().replaceAll("_", "/") + "/" + formName + ".js";
+            FileUtil.writeTextToFile(fileName, formJsContent);
+            log.info("{}已经生成完毕", fileName);
+        } catch (Exception e) {
+            log.warn("生成form.ftl异常", e);
+        }
     }
 
     /**
@@ -199,7 +277,7 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
             FileUtil.writeTextToFile(fileName, listJsContent);
             log.info("{}已经生成完毕", fileName);
         } catch (Exception e) {
-            log.warn("生成ServiceImpl.java异常", e);
+            log.warn("生成list.ftl异常", e);
         }
     }
 
@@ -237,7 +315,6 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
             String fileName = baseBir + "-biz/src/main/java/" + servicePackage.replaceAll("\\.", "/") + "/" + modelName + "Service.java";
             FileUtil.writeTextToFile(fileName, serviceContent);
             log.info("{}已经生成完毕", fileName);
-
         } catch (Exception e) {
             log.warn("生成Service.java异常", e);
         }

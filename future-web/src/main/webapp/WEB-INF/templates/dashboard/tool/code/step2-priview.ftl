@@ -11,8 +11,8 @@
             <div class="widget-main">
                 <div class="form-horizontal" role="form">
                     <div class="page-header">
-                        <h1 id="formPageNameDisp">
-                        ${step2.formPageName!'新增${table.tableComment?substring(0, table.tableComment?length-1)}'}
+                        <h1>
+                        ${step1.addBtnName}${table.tableComment?substring(0, table.tableComment?length-1)}
                         </h1>
                     </div>
 
@@ -21,7 +21,7 @@
                     <div class="center">
                         <button class="btn btn-sm btn-inverse">
                             <i class="ace-icon fa fa-check"></i>
-                            <span id="submitBtnNameDisp">${step2.submitBtnName!'提交'}</span>
+                            <span><@s.message "app.button.save"/></span>
                         </button>
                     </div>
                 </div>

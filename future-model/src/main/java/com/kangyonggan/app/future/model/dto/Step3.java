@@ -14,8 +14,6 @@ public class Step3 implements Serializable {
 
     private Long codeId;
 
-    private String detailPageName;
-
     private List<String> detailColumns;
 
 }

@@ -1,10 +1,15 @@
 ${'<'}#assign ctx="${'$'}{(rca.contextPath)!''}"${'>'}
 
 <tr id="${code.tableName}-${'$'}{${modelName?uncap_first}.id}">
-    <td>${'$'}{${modelName?uncap_first}.code}</td>
-    <td>${'$'}{${modelName?uncap_first}.name}</td>
+<#list step1.columns as columnName>
+    <#if columnName=='is_deleted'>
     <td>${'<'}#include "delete.ftl"/${'>'}</td>
-    <td>${'<'}@c.relative_date datetime=role.createdTime/></td>
+    <#elseif columnName?ends_with('_time')>
+    <td>${'<'}@c.relative_date datetime=${modelName?uncap_first}.<#include "include/field-name.ftl"/>/></td>
+    <#else>
+    <td>${'$'}{${modelName?uncap_first}.<#include "include/field-name.ftl"/>}</td>
+    </#if>
+</#list>
     <td>
         <div class="btn-group">
             <a data-toggle="modal" class="btn btn-xs btn-inverse" href="${'$'}{ctx}/dashboard/${code.menuName?lower_case?replace('_', '/')}/${'$'}{${modelName?uncap_first}.id}"
