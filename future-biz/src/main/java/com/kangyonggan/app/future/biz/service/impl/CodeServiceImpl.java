@@ -183,12 +183,11 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
         try {
             String controllerContent = generate("Controller.java.ftl", rootMap);
             Code code = (Code) rootMap.get("code");
-            String prePath = code.getMenuName().substring(0, code.getMenuName().lastIndexOf("_")).toLowerCase();
+            String prePath = code.getMenuName().toLowerCase();
             prePath = StringUtil.convertTableName(prePath);
 
             String controllerPackage = (String) rootMap.get("controllerPackage");
-            String modelName = (String) rootMap.get("modelName");
-            String fileName = baseBir + "-web/src/main/java/" + controllerPackage.replaceAll("\\.", "/") + "/Dashboard" + prePath + modelName + "Controller.java";
+            String fileName = baseBir + "-web/src/main/java/" + controllerPackage.replaceAll("\\.", "/") + "/Dashboard" + prePath + "Controller.java";
             FileUtil.writeTextToFile(fileName, controllerContent);
             log.info("{}已经生成完毕", fileName);
         } catch (Exception e) {
