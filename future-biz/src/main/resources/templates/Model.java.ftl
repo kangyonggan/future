@@ -1,13 +1,14 @@
 package ${modelPackage};
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.*;
 import lombok.Data;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
+
 /**
-* ${table.tableComment}
-*/
+ * ${table.tableComment}
+ */
 @Data
 @Table(name = "${code.tableName}")
 public class ${modelName} implements Serializable {
@@ -16,9 +17,14 @@ public class ${modelName} implements Serializable {
     /**
      * ${column.comment}
      */
+    <#if column.field=='id'>
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    </#if>
+    <#if column.field?contains("_")>
+    @Column(name = "${column.field}")
+    </#if>
+    private <#include "type.ftl"/> <#include "fieldName.ftl"/>;
     </#list>
 
     private static final long serialVersionUID = 1L;

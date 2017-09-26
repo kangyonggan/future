@@ -301,6 +301,7 @@ public class StringUtil {
             }
 
             if (ch == '_') {
+                sb.deleteCharAt(sb.lastIndexOf("_"));
                 isLine = true;
             } else  {
                 isLine = false;

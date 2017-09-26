@@ -156,19 +156,35 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
             log.info("Mapper.xml的包名为：{}", mapperXmlPackage);
             String mapperPackage = context.element("javaClientGenerator").attributeValue("targetPackage");
             log.info("Mapper.java的包名为：{}", mapperPackage);
+            String modelName = StringUtil.convertTableName(code.getTableName());
+
+            // 准备数据
+            Map<String, Object> rootMap = new HashMap();
+            rootMap.put("modelName", modelName);
+            rootMap.put("modelPackage", modelPackage);
+            rootMap.put("mapperPackage", mapperPackage);
+            rootMap.put("mapperXmlPackage", mapperXmlPackage);
+            rootMap.put("code", code);
+            rootMap.put("table", table);
+            rootMap.put("columns", columns);
 
             // 生成Model.java
-            Map<String, Object> modelMap = new HashMap();
-            String modelName = StringUtil.convertTableName(code.getTableName());
-            modelMap.put("modelName", modelName);
-            modelMap.put("modelPackage", modelPackage);
-            modelMap.put("code", code);
-            modelMap.put("table", table);
-            modelMap.put("columns", columns);
-            String modelContent = generate("Model.java.ftl", modelMap);
-            modelName = baseBir + appName + "-model/src/main/java/" + modelPackage.replaceAll("\\.", "/") + "/" + modelName + ".java";
-            FileUtil.writeTextToFile(modelName, modelContent);
-            log.info("{}已经生成完毕", modelName);
+            String modelContent = generate("Model.java.ftl", rootMap);
+            String fileName = baseBir + appName + "-model/src/main/java/" + modelPackage.replaceAll("\\.", "/") + "/" + modelName + ".java";
+            FileUtil.writeTextToFile(fileName, modelContent);
+            log.info("{}已经生成完毕", fileName);
+
+            // 生成Mapper.java
+            String mapperContent = generate("Mapper.java.ftl", rootMap);
+            fileName = baseBir + appName + "-dao/src/main/java/" + mapperPackage.replaceAll("\\.", "/") + "/" + modelName + "Mapper.java";
+            FileUtil.writeTextToFile(fileName, mapperContent);
+            log.info("{}已经生成完毕", fileName);
+
+            // 生成Mapper.xml
+            String mapperXmlContent = generate("Mapper.xml.ftl", rootMap);
+            fileName = baseBir + appName + "-dao/src/main/resources/" + mapperXmlPackage.replaceAll("\\.", "/") + "/" + modelName + "Mapper.xml";
+            FileUtil.writeTextToFile(fileName, mapperXmlContent);
+            log.info("{}已经生成完毕", fileName);
         } catch (Exception e) {
             log.warn("生成MBG异常", e);
         }

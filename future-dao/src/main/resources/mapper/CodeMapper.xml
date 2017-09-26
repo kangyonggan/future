@@ -1,20 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.kangyonggan.app.future.mapper.CodeMapper">
     <resultMap id="BaseResultMap" type="com.kangyonggan.app.future.model.vo.Code">
-        <!--
-          WARNING - @mbggenerated
-        -->
-        <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="table_name" jdbcType="VARCHAR" property="tableName"/>
-        <result column="menu_name" jdbcType="VARCHAR" property="menuName"/>
-        <result column="step1" jdbcType="VARCHAR" property="step1"/>
-        <result column="step2" jdbcType="VARCHAR" property="step2"/>
-        <result column="step3" jdbcType="VARCHAR" property="step3"/>
-        <result column="created_username" jdbcType="VARCHAR" property="createdUsername"/>
-        <result column="status" jdbcType="VARCHAR" property="status"/>
-        <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
-        <result column="created_time" jdbcType="TIMESTAMP" property="createdTime"/>
-        <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime"/>
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="table_name" property="tableName" jdbcType="VARCHAR"/>
+        <result column="menu_name" property="menuName" jdbcType="VARCHAR"/>
+        <result column="step1" property="step1" jdbcType="VARCHAR"/>
+        <result column="step2" property="step2" jdbcType="VARCHAR"/>
+        <result column="step3" property="step3" jdbcType="VARCHAR"/>
+        <result column="created_username" property="createdUsername" jdbcType="VARCHAR"/>
+        <result column="is_deleted" property="isDeleted" jdbcType="TINYINT"/>
+        <result column="created_time" property="createdTime" jdbcType="TIMESTAMP"/>
+        <result column="updated_time" property="updatedTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
     </resultMap>
 </mapper>
