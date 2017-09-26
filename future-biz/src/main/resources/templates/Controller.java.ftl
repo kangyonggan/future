@@ -122,7 +122,11 @@ public class Dashboard<#assign list=code.menuName?lower_case?split("_")/><#list 
     @RequiresPermissions("${code.menuName}")
     public String edit(@PathVariable("id") Long id, Model model) {
         model.addAttribute("${modelName?uncap_first}", ${modelName?uncap_first}Service.get${modelName}(id));
+        <#if step1.addBtnType=='1'>
         return getPathFormModal();
+        <#else>
+        return getPathForm();
+        </#if>
     }
 
     /**
