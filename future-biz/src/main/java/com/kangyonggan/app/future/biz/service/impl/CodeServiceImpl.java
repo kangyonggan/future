@@ -182,11 +182,22 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
             log.info("{}已经生成完毕", fileName);
 
             // table-tr.ftl
+            String tableTrContent = generate("table-tr.ftl.ftl", rootMap);
+            fileName = baseBir + "-web/src/main/webapp/WEB-INF/templates/dashboard/" + code.getMenuName().toLowerCase().replaceAll("_", "/") + "/table-tr.ftl";
+            FileUtil.writeTextToFile(fileName, tableTrContent);
+            log.info("{}已经生成完毕", fileName);
 
-            // deleted.ftl
+            // delete.ftl
+            String deleteContent = generate("delete.ftl.ftl", rootMap);
+            fileName = baseBir + "-web/src/main/webapp/WEB-INF/templates/dashboard/" + code.getMenuName().toLowerCase().replaceAll("_", "/") + "/delete.ftl";
+            FileUtil.writeTextToFile(fileName, deleteContent);
+            log.info("{}已经生成完毕", fileName);
 
             // list.js
-
+            String listJsContent = generate("list.js.ftl", rootMap);
+            fileName = baseBir + "-web/src/main/webapp/WEB-INF/static/app/js/dashboard/" + code.getMenuName().toLowerCase().replaceAll("_", "/") + "/list.js";
+            FileUtil.writeTextToFile(fileName, listJsContent);
+            log.info("{}已经生成完毕", fileName);
         } catch (Exception e) {
             log.warn("生成ServiceImpl.java异常", e);
         }
