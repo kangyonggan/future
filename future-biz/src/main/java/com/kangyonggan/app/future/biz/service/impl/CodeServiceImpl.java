@@ -129,7 +129,7 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
         log.info("Mapper.xml的包名为：{}", mapperXmlPackage);
         String servicePackage = code.getPackageName() + ".biz.service";
         log.info("Service.java的包名为：{}", servicePackage);
-        String serviceImplPackage = code.getPackageName() + ".biz.service";
+        String serviceImplPackage = code.getPackageName() + ".biz.service.impl";
         log.info("ServiceImpl.java的包名为：{}", serviceImplPackage);
 
         // 准备数据
@@ -154,11 +154,33 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
         // 生成Service.java
         generateService(baseBir, rootMap);
 
-        // TODO 生成ServiceImpl.java
+        // 生成ServiceImpl.java
+        generateServiceImpl(baseBir, rootMap);
+
         // TODO 生成Controller.java
         // TODO 生成list.ftl及包含的ftl和对应的js
         // TODO 生成form-model.ftl及包含的ftl和对应的js
         // TODO 生成detail-model.ftl及包含的ftl和对应的js
+    }
+
+    /**
+     * 生成ServiceImpl.java
+     *
+     * @param baseBir
+     * @param rootMap
+     */
+    private void generateServiceImpl(String baseBir, Map<String, Object> rootMap) {
+        try {
+            String serviceContent = generate("ServiceImpl.java.ftl", rootMap);
+            String serviceImplPackage = (String) rootMap.get("serviceImplPackage");
+            String modelName = (String) rootMap.get("modelName");
+            String fileName = baseBir + "-biz/src/main/java/" + serviceImplPackage.replaceAll("\\.", "/") + "/" + modelName + "ServiceImpl.java";
+            FileUtil.writeTextToFile(fileName, serviceContent);
+            log.info("{}已经生成完毕", fileName);
+
+        } catch (Exception e) {
+            log.warn("生成ServiceImpl.java异常", e);
+        }
     }
 
     /**

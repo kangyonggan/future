@@ -44,16 +44,16 @@ public interface ${modelName}Service {
     /**
      * 保存<#include "include/table-comment.ftl"/>，只保存不为null的字段
      *
-     * @param ${modelName?cap_first} <#include "include/table-comment.ftl"/>
+     * @param ${modelName?uncap_first} <#include "include/table-comment.ftl"/>
      */
-    void save${modelName}(${modelName} ${modelName?cap_first});
+    void save${modelName}(${modelName} ${modelName?uncap_first});
 
     /**
      * 更新<#include "include/table-comment.ftl"/>，只更新不为null的字段
      *
-     * @param ${modelName?cap_first} <#include "include/table-comment.ftl"/>
+     * @param ${modelName?uncap_first} <#include "include/table-comment.ftl"/>
      */
-    void update${modelName}(${modelName} ${modelName?cap_first});
+    void update${modelName}(${modelName} ${modelName?uncap_first});
 
     /**
      * 删除<#include "include/table-comment.ftl"/>

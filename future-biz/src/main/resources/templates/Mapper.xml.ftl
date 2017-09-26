@@ -3,6 +3,7 @@
 <mapper namespace="${mapperPackage}.${modelName}Mapper">
     <resultMap id="BaseResultMap" type="${modelPackage}.${modelName}">
         <#list columns as column>
+            <#assign columnName=column.field/>
             <#if column.field=='id'>
         <id column="id" property="id" jdbcType="BIGINT"/>
             <#else>
