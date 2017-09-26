@@ -22,7 +22,7 @@
                     <li>
                         <a href="javascript:" data-role="code-tr" title="生成代码"
                            data-url="${ctx}/dashboard/tool/code/${code.id}/generate">
-                            生成代码
+                            一键生成
                         </a>
                     </li>
                 <#else>

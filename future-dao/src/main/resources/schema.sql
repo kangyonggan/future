@@ -815,4 +815,38 @@ INSERT INTO role_menu (role_code, menu_code) VALUES
   ('ROLE_ADMIN', 'TOOL_CODE'),
   ('ROLE_USER', 'TOOL_CODE');
 
+-- ----------------------------
+--  Table structure for demo
+-- ----------------------------
+DROP TABLE
+IF EXISTS demo;
+
+CREATE TABLE demo
+(
+  id           BIGINT(20) PRIMARY KEY AUTO_INCREMENT NOT NULL
+  COMMENT '主键',
+  name         VARCHAR(64)                           NOT NULL
+  COMMENT '表名称',
+  sort         INT(11)                               NOT NULL                    DEFAULT 0
+  COMMENT '排序',
+  is_deleted   TINYINT                               NOT NULL                    DEFAULT 0
+  COMMENT '逻辑删除',
+  created_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP
+  COMMENT '创建时间',
+  updated_time TIMESTAMP                             NOT NULL                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  COMMENT '更新时间'
+)
+  COMMENT '例子表';
+CREATE INDEX id_created_time
+  ON demo (created_time);
+
+INSERT INTO menu
+(code, name, pcode, url, sort, icon)
+  VALUE
+  ('TOOL_DEMO', '例子管理', 'TOOL', 'tool/demo', 2, '');
+
+INSERT INTO role_menu (role_code, menu_code) VALUES
+  ('ROLE_ADMIN', 'TOOL_DEMO'),
+  ('ROLE_USER', 'TOOL_DEMO');
+
 

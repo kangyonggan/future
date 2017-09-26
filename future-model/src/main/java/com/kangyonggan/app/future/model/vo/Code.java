@@ -8,6 +8,8 @@ import java.util.Date;
 
 /**
  * 代码生成表
+ *
+ * @author Generator
  */
 @Data
 @Table(name = "code")

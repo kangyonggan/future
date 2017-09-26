@@ -6,7 +6,7 @@
             <#if column.field=='id'>
         <id column="id" property="id" jdbcType="BIGINT"/>
             <#else>
-        <result column="${column.field}" property="<#include "fieldName.ftl"/>" jdbcType="<#include "jdbcType.ftl"/>"/>
+        <result column="${column.field}" property="<#include "include/field-name.ftl"/>" jdbcType="<#include "include/jdbc-type.ftl"/>"/>
             </#if>
         </#list>
     </resultMap>

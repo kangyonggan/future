@@ -109,12 +109,50 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
     @LogTime
     public void generateCode(Long id) {
         Code code = myMapper.selectByPrimaryKey(id);
+        String tableName = code.getTableName();
+        DbTable table = tableService.findTableByName(code.getTableName());
+        List<DbColumn> columns = tableService.findTableColumns(code.getTableName());
+        log.info("正在生成{}表对应的MBG", tableName);
+
+        // 获取项目路径及项目名
+        String bizDir = System.getProperty("user.dir");
+        String baseBir = bizDir.substring(0, bizDir.lastIndexOf("/"));
+        baseBir += bizDir.substring(bizDir.lastIndexOf("/"), bizDir.lastIndexOf("-"));
+        String modelName = StringUtil.convertTableName(code.getTableName());
+
+        // 各个包名
+        String modelPackage = code.getPackageName() + ".model.vo";
+        log.info("Model.java的包名为：{}", modelPackage);
+        String mapperPackage = code.getPackageName() + ".mapper";
+        log.info("Mapper.java的包名为：{}", mapperPackage);
+        String mapperXmlPackage = "mapper";
+        log.info("Mapper.xml的包名为：{}", mapperXmlPackage);
+        String servicePackage = code.getPackageName() + ".biz.service";
+        log.info("Service.java的包名为：{}", servicePackage);
+        String serviceImplPackage = code.getPackageName() + ".biz.service";
+        log.info("ServiceImpl.java的包名为：{}", serviceImplPackage);
+
+        // 准备数据
+        Map<String, Object> rootMap = new HashMap();
+        rootMap.put("modelName", modelName);
+        rootMap.put("modelPackage", modelPackage);
+        rootMap.put("mapperPackage", mapperPackage);
+        rootMap.put("mapperXmlPackage", mapperXmlPackage);
+        rootMap.put("servicePackage", servicePackage);
+        rootMap.put("serviceImplPackage", serviceImplPackage);
+        rootMap.put("author", "Generator");
+        rootMap.put("code", code);
+        rootMap.put("table", table);
+        rootMap.put("columns", columns);
+        rootMap.put("step1", JSON.parseObject(code.getStep1(), Step1.class));
+        rootMap.put("step2", JSON.parseObject(code.getStep2(), Step2.class));
+        rootMap.put("step3", JSON.parseObject(code.getStep3(), Step3.class));
 
         // 生成Model.java、Mapper.java、Mapper.xml
-        generateMBG(code);
+        generateMBG(baseBir, rootMap);
 
         // 生成Service.java
-        generateService(code);
+        generateService(baseBir, rootMap);
 
         // TODO 生成ServiceImpl.java
         // TODO 生成Controller.java
@@ -126,10 +164,17 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
     /**
      * 生成Service.java
      *
-     * @param code
+     * @param baseBir
+     * @param rootMap
      */
-    private void generateService(Code code) {
+    private void generateService(String baseBir, Map<String, Object> rootMap) {
         try {
+            String serviceContent = generate("Service.java.ftl", rootMap);
+            String servicePackage = (String) rootMap.get("servicePackage");
+            String modelName = (String) rootMap.get("modelName");
+            String fileName = baseBir + "-biz/src/main/java/" + servicePackage.replaceAll("\\.", "/") + "/" + modelName + "Service.java";
+            FileUtil.writeTextToFile(fileName, serviceContent);
+            log.info("{}已经生成完毕", fileName);
 
         } catch (Exception e) {
             log.warn("生成Service.java异常", e);
@@ -139,54 +184,30 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
     /**
      * 生成MBG
      *
-     * @param code
+     * @param baseBir
+     * @param rootMap
      */
-    private void generateMBG(Code code) {
-        DbTable table = tableService.findTableByName(code.getTableName());
-        List<DbColumn> columns = tableService.findTableColumns(code.getTableName());
+    private void generateMBG(String baseBir, Map<String, Object> rootMap) {
         try {
-            String tableName = code.getTableName();
-            log.info("正在生成{}表对应的MBG", tableName);
-
-            // 获取项目路径及项目名
-            String bizDir = System.getProperty("user.dir");
-            String baseBir = bizDir.substring(0, bizDir.lastIndexOf("/"));
-            String appName = bizDir.substring(bizDir.lastIndexOf("/"), bizDir.lastIndexOf("-"));
-            String modelName = StringUtil.convertTableName(code.getTableName());
-
-            // 各个包名
-            String modelPackage = code.getPackageName() + ".model.vo";
-            log.info("Model.java的包名为：{}", modelPackage);
-            String mapperPackage = code.getPackageName() + ".mapper";
-            log.info("Mapper.java的包名为：{}", mapperPackage);
-            String mapperXmlPackage = "mapper";
-            log.info("Mapper.xml的包名为：{}", mapperXmlPackage);
-
-            // 准备数据
-            Map<String, Object> rootMap = new HashMap();
-            rootMap.put("modelName", modelName);
-            rootMap.put("modelPackage", modelPackage);
-            rootMap.put("mapperPackage", mapperPackage);
-            rootMap.put("mapperXmlPackage", mapperXmlPackage);
-            rootMap.put("code", code);
-            rootMap.put("table", table);
-            rootMap.put("columns", columns);
-
             // 生成Model.java
             String modelContent = generate("Model.java.ftl", rootMap);
-            String fileName = baseBir + appName + "-model/src/main/java/" + modelPackage.replaceAll("\\.", "/") + "/" + modelName + ".java";
+            String modelPackage = (String) rootMap.get("modelPackage");
+            String modelName = (String) rootMap.get("modelName");
+            String fileName = baseBir + "-model/src/main/java/" + modelPackage.replaceAll("\\.", "/") + "/" + modelName + ".java";
             FileUtil.writeTextToFile(fileName, modelContent);
             log.info("{}已经生成完毕", fileName);
 
             // 生成Mapper.java
             String mapperContent = generate("Mapper.java.ftl", rootMap);
-            fileName = baseBir + appName + "-dao/src/main/java/" + mapperPackage.replaceAll("\\.", "/") + "/" + modelName + "Mapper.java";
+            String mapperPackage = (String) rootMap.get("mapperPackage");
+            fileName = baseBir + "-dao/src/main/java/" + mapperPackage.replaceAll("\\.", "/") + "/" + modelName + "Mapper.java";
             FileUtil.writeTextToFile(fileName, mapperContent);
             log.info("{}已经生成完毕", fileName);
 
             // 生成Mapper.xml
             String mapperXmlContent = generate("Mapper.xml.ftl", rootMap);
-            fileName = baseBir + appName + "-dao/src/main/resources/" + mapperXmlPackage.replaceAll("\\.", "/") + "/" + modelName + "Mapper.xml";
+            String mapperXmlPackage = (String) rootMap.get("mapperXmlPackage");
+            fileName = baseBir + "-dao/src/main/resources/" + mapperXmlPackage.replaceAll("\\.", "/") + "/" + modelName + "Mapper.xml";
             FileUtil.writeTextToFile(fileName, mapperXmlContent);
             log.info("{}已经生成完毕", fileName);
         } catch (Exception e) {

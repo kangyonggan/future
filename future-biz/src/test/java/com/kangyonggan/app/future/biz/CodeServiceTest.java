@@ -15,7 +15,7 @@ public class CodeServiceTest extends AbstractServiceTest {
 
     @Test
     public void tesGenerate() {
-        codeService.generateCode(1L);
+        codeService.generateCode(2L);
     }
 
 }

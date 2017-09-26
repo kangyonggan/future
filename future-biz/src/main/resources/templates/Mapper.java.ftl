@@ -4,7 +4,9 @@ import ${modelPackage}.${modelName};
 import org.springframework.stereotype.Repository;
 
 /**
- * ${table.tableComment}
+ * <#include "include/table-comment.ftl"/>相关的数据访问接口定义
+ *
+ * @author ${author}
  */
 @Repository
 public interface ${modelName}Mapper extends MyMapper<${modelName}> {
