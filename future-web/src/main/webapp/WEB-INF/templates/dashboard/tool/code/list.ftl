@@ -18,7 +18,9 @@
         <th>ID</th>
         <th>表名称</th>
         <th>菜单名称</th>
+        <th>基础包名</th>
         <th>创建人</th>
+        <th>状态</th>
         <th>创建时间</th>
         <th>更新时间</th>
         <th>操作</th>

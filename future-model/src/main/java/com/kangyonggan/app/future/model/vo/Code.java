@@ -33,6 +33,12 @@ public class Code implements Serializable {
     private String menuName;
 
     /**
+     * 包名
+     */
+    @Column(name = "package_name")
+    private String packageName;
+
+    /**
      * 第一步
      */
     private String step1;
@@ -54,6 +60,11 @@ public class Code implements Serializable {
     private String createdUsername;
 
     /**
+     * 状态
+     */
+    private String status;
+
+    /**
      * 逻辑删除:{0:未删除, 1:已删除}
      */
     @Column(name = "is_deleted")
@@ -70,11 +81,6 @@ public class Code implements Serializable {
      */
     @Column(name = "updated_time")
     private Date updatedTime;
-
-    /**
-     * 状态
-     */
-    private String status;
 
     private static final long serialVersionUID = 1L;
 }

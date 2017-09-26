@@ -18,14 +18,10 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.dom4j.Document;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
-import java.io.File;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -117,12 +113,27 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
         // 生成Model.java、Mapper.java、Mapper.xml
         generateMBG(code);
 
-        // TODO 生成Service.java
+        // 生成Service.java
+        generateService(code);
+
         // TODO 生成ServiceImpl.java
         // TODO 生成Controller.java
         // TODO 生成list.ftl及包含的ftl和对应的js
         // TODO 生成form-model.ftl及包含的ftl和对应的js
         // TODO 生成detail-model.ftl及包含的ftl和对应的js
+    }
+
+    /**
+     * 生成Service.java
+     *
+     * @param code
+     */
+    private void generateService(Code code) {
+        try {
+
+        } catch (Exception e) {
+            log.warn("生成Service.java异常", e);
+        }
     }
 
     /**
@@ -141,22 +152,15 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
             String bizDir = System.getProperty("user.dir");
             String baseBir = bizDir.substring(0, bizDir.lastIndexOf("/"));
             String appName = bizDir.substring(bizDir.lastIndexOf("/"), bizDir.lastIndexOf("-"));
-
-            // 获取mbg的配置文件
-            String generatorConfigPath = baseBir + appName + "-dao/src/main/resources/generatorConfig.xml";
-            log.info("generatorConfig配置文件路径：{}", generatorConfigPath);
-
-            // 读取mbg配置文件中的包路径，以便写文件
-            SAXReader reader = new SAXReader();
-            Document doc = reader.read(new File(generatorConfigPath));
-            Element context = doc.getRootElement().element("context");
-            String modelPackage = context.element("javaModelGenerator").attributeValue("targetPackage");
-            log.info("Model.java的包名为：{}", modelPackage);
-            String mapperXmlPackage = context.element("sqlMapGenerator").attributeValue("targetPackage");
-            log.info("Mapper.xml的包名为：{}", mapperXmlPackage);
-            String mapperPackage = context.element("javaClientGenerator").attributeValue("targetPackage");
-            log.info("Mapper.java的包名为：{}", mapperPackage);
             String modelName = StringUtil.convertTableName(code.getTableName());
+
+            // 各个包名
+            String modelPackage = code.getPackageName() + ".model.vo";
+            log.info("Model.java的包名为：{}", modelPackage);
+            String mapperPackage = code.getPackageName() + ".mapper";
+            log.info("Mapper.java的包名为：{}", mapperPackage);
+            String mapperXmlPackage = "mapper";
+            log.info("Mapper.xml的包名为：{}", mapperXmlPackage);
 
             // 准备数据
             Map<String, Object> rootMap = new HashMap();

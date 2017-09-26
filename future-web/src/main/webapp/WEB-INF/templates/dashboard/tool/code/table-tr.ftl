@@ -4,7 +4,9 @@
     <td>${code.id}</td>
     <td>${code.tableName}</td>
     <td>${code.menuName}</td>
+    <td>${code.packageName}</td>
     <td>${code.createdUsername}</td>
+    <td><#include "status.ftl"/></td>
     <td><@c.relative_date datetime=code.createdTime/></td>
     <td><@c.relative_date datetime=code.updatedTime/></td>
     <td>

@@ -783,6 +783,8 @@ CREATE TABLE code
   COMMENT '表名称',
   menu_name        VARCHAR(32)                           NOT NULL                    DEFAULT ''
   COMMENT '菜单名称',
+  package_name     VARCHAR(256)                          NOT NULL                    DEFAULT ''
+  COMMENT '包名',
   step1            VARCHAR(1024)                         NOT NULL                    DEFAULT ''
   COMMENT '第一步',
   step2            VARCHAR(1024)                         NOT NULL                    DEFAULT ''

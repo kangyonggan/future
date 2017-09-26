@@ -32,6 +32,16 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="row form-group">
+            <div class="col-md-3 control-label">
+                <label>基础包名<span class="red">*</span></label>
+            </div>
+            <div class="col-md-7 controls">
+                <input type="text" name="packageName" value="${packageName!''}" class="form-control" placeholder="请输入基础包名"/>
+            </div>
+        </div>
+    </div>
 </form>
 </@override>
 

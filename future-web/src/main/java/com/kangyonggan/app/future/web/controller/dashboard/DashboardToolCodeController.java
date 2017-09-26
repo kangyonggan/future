@@ -79,8 +79,13 @@ public class DashboardToolCodeController extends BaseController {
         List<DbTable> tables = tableService.findAllTables();
         List<Menu> menus = menuService.findAllMenus();
 
+        String name = this.getClass().getName();
+        name = name.substring(0, name.indexOf(".controller"));
+        name = name.substring(0, name.lastIndexOf("."));
+
         model.addAttribute("tables", tables);
         model.addAttribute("menus", menus);
+        model.addAttribute("packageName", name);
         return getPathFormModal();
     }
 

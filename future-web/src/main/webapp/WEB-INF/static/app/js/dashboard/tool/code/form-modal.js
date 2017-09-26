@@ -7,6 +7,12 @@ $(function () {
         rules: {
             tableName: {
                 required: true
+            },
+            menuName: {
+                required: true
+            },
+            packageName: {
+                required: true
             }
         },
         submitHandler: function (form, event) {
