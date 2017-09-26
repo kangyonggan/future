@@ -16,8 +16,6 @@ public class Step1 implements Serializable {
 
     private String pageName;
 
-    private String needAdd;
-
     private String addBtnName;
 
     private String addBtnType;

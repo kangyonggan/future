@@ -158,9 +158,38 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
         generateServiceImpl(baseBir, rootMap);
 
         // TODO 生成Controller.java
-        // TODO 生成list.ftl及包含的ftl和对应的js
+
+        // 生成list.ftl及包含的ftl和对应的js
+        generateList(baseBir, rootMap);
+
         // TODO 生成form-model.ftl及包含的ftl和对应的js
         // TODO 生成detail-model.ftl及包含的ftl和对应的js
+    }
+
+    /**
+     * 生成list.ftl及包含的ftl和对应的js
+     *
+     * @param baseBir
+     * @param rootMap
+     */
+    private void generateList(String baseBir, Map<String, Object> rootMap) {
+        try {
+            // list.ftl
+            String listContent = generate("list.ftl.ftl", rootMap);
+            Code code = (Code) rootMap.get("code");
+            String fileName = baseBir + "-web/src/main/webapp/WEB-INF/templates/dashboard/" + code.getMenuName().toLowerCase().replaceAll("_", "/") + "/list.ftl";
+            FileUtil.writeTextToFile(fileName, listContent);
+            log.info("{}已经生成完毕", fileName);
+
+            // table-tr.ftl
+
+            // deleted.ftl
+
+            // list.js
+
+        } catch (Exception e) {
+            log.warn("生成ServiceImpl.java异常", e);
+        }
     }
 
     /**
