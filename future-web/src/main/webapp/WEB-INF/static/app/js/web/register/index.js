@@ -77,7 +77,7 @@ $(function () {
 
             $.post(ctx + "/sms/send", {
                 mobile: mobile,
-                type: "register"
+                type: "REGISTER"
             }, function (response) {
                 if (response.errCode == "success") {
                     Message.error("短信发送失败,请稍后重试");

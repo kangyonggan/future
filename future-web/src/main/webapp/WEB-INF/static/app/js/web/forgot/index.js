@@ -81,7 +81,7 @@ $(function () {
 
             $.post(ctx + "/sms/send", {
                 mobile: mobile,
-                type: "forgot"
+                type: "FORGOT"
             }, function (response) {
                 if (response.errCode == "success") {
                     Message.error("短信发送失败,请稍后重试");
