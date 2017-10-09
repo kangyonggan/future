@@ -71,6 +71,10 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     transition: box-shadow 200ms cubic-bezier(0.4,0.0,0.2,1);
 }
 
+#main .search form input:hover {
+    box-shadow: 0 4px 4px 1px rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+}
+
 #main .search .hot {
     margin: 0 auto;
     width: 700px;
