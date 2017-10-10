@@ -6,6 +6,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
@@ -322,14 +325,30 @@ public class Excel {
      * @throws Exception
      */
     public static void exportExcel(String path, List<String[]> dataList) throws Exception {
-        HSSFWorkbook wb = new HSSFWorkbook();
-        HSSFSheet sheet = wb.createSheet();
-        for (int i = 0; i < dataList.size(); i++) {
-            String[] data = dataList.get(i);
-            HSSFRow row = sheet.createRow(i);
-            for (int j = 0; j < data.length; j++) {
-                HSSFCell cell = row.createCell(j);
-                cell.setCellValue(data[j]);
+        String extension = getFileExtension(path);
+
+        org.apache.poi.ss.usermodel.Workbook wb;
+        if ("xlsx".equals(extension)) {
+            wb = new XSSFWorkbook();
+            XSSFSheet sheet = ((XSSFWorkbook) wb).createSheet();
+            for (int i = 0; i < dataList.size(); i++) {
+                String[] data = dataList.get(i);
+                XSSFRow row = sheet.createRow(i);
+                for (int j = 0; j < data.length; j++) {
+                    XSSFCell cell = row.createCell(j);
+                    cell.setCellValue(data[j]);
+                }
+            }
+        } else {
+            wb = new HSSFWorkbook();
+            HSSFSheet sheet = ((HSSFWorkbook) wb).createSheet();
+            for (int i = 0; i < dataList.size(); i++) {
+                String[] data = dataList.get(i);
+                HSSFRow row = sheet.createRow(i);
+                for (int j = 0; j < data.length; j++) {
+                    HSSFCell cell = row.createCell(j);
+                    cell.setCellValue(data[j]);
+                }
             }
         }
 
