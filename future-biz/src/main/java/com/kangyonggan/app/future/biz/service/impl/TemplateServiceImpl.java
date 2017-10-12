@@ -7,9 +7,10 @@ import com.kangyonggan.app.future.biz.service.TemplateService;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.Collections3;
 import com.kangyonggan.app.future.common.util.FileUtil;
-import com.kangyonggan.app.future.model.annotation.LogTime;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Template;
+import com.kangyonggan.methodlogger.MethodLogger;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.template.Configuration;
 import lombok.extern.log4j.Log4j2;
@@ -30,7 +31,7 @@ import java.util.List;
 public class TemplateServiceImpl extends BaseService<Template> implements TemplateService {
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<String> findTypes(String username) {
         Example example = new Example(Template.class);
 
@@ -48,7 +49,7 @@ public class TemplateServiceImpl extends BaseService<Template> implements Templa
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Template> searchTemplates(int pageNum, String name, String type, String username) {
         Example example = new Example(Template.class);
 
@@ -71,7 +72,7 @@ public class TemplateServiceImpl extends BaseService<Template> implements Templa
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void saveTemplate(Template template) throws Exception {
         template.setDataSource("");
         myMapper.insertSelective(template);
@@ -81,13 +82,13 @@ public class TemplateServiceImpl extends BaseService<Template> implements Templa
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Template findTemplateById(Long id) {
         return myMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void updateTemplate(Template template) throws Exception {
         myMapper.updateByPrimaryKeySelective(template);
 
@@ -98,13 +99,13 @@ public class TemplateServiceImpl extends BaseService<Template> implements Templa
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void deleteTemplateById(Long id) {
         myMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public String generate(String name, String dataSource) {
         try {
             Configuration cfg = new Configuration();
@@ -124,7 +125,7 @@ public class TemplateServiceImpl extends BaseService<Template> implements Templa
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public boolean existsTemplateName(String name) {
         Template template = new Template();
         template.setName(name);
@@ -133,7 +134,7 @@ public class TemplateServiceImpl extends BaseService<Template> implements Templa
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Template findTemplateByName(String name) {
         Template template = new Template();
         template.setIsDeleted(AppConstants.IS_DELETED_NO);

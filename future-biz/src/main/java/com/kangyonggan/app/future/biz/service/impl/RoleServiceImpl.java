@@ -2,14 +2,15 @@ package com.kangyonggan.app.future.biz.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.RoleService;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.mapper.RoleMapper;
 import com.kangyonggan.app.future.model.annotation.CacheDelete;
 import com.kangyonggan.app.future.model.annotation.CacheDeleteAll;
 import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
-import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Role;
+import com.kangyonggan.methodlogger.MethodLogger;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,14 +30,14 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
     private RoleMapper roleMapper;
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     @CacheGetOrSave("role:username:{0}")
     public List<Role> findRolesByUsername(String username) {
         return roleMapper.selectRolesByUsername(username);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public boolean existsRoleCode(String code) {
         Role role = new Role();
         role.setCode(code);
@@ -45,7 +46,7 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     @CacheGetOrSave("role:all")
     public List<Role> findAllRoles() {
         Role role = new Role();
@@ -73,20 +74,20 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void saveRole(Role role) {
         myMapper.insertSelective(role);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     @CacheGetOrSave("role:id:{0}")
     public Role findRoleById(Long id) {
         return myMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     @CacheDelete("role:id:{0:id}||role:all")
     @CacheDeleteAll("role:username||menu:username")
     public void updateRole(Role role) {
@@ -94,7 +95,7 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     @CacheDelete("menu:role:{0}")
     @CacheDeleteAll("menu:username")
     public void updateRoleMenus(String code, String menuCodes) {
@@ -106,7 +107,7 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     @CacheDelete("role:id:{0:id}||role:all")
     @CacheDeleteAll("role:username||menu:username")
     public void deleteRoleById(Long id) {

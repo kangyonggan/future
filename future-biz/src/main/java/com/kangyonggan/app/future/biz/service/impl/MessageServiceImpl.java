@@ -5,11 +5,12 @@ import com.kangyonggan.app.future.biz.service.MessageService;
 import com.kangyonggan.app.future.biz.service.UserService;
 import com.kangyonggan.app.future.common.util.Collections3;
 import com.kangyonggan.app.future.common.util.DateUtil;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.mapper.MessageMapper;
-import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Message;
 import com.kangyonggan.app.future.model.vo.User;
+import com.kangyonggan.methodlogger.MethodLogger;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,7 +56,7 @@ public class MessageServiceImpl extends BaseService<Message> implements MessageS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void save(Message message, String usernames) {
         myMapper.insertSelective(message);
 
@@ -68,19 +69,19 @@ public class MessageServiceImpl extends BaseService<Message> implements MessageS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Message findMessageById(Long id) {
         return myMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void updateMessage(Message message) {
         myMapper.updateByPrimaryKeySelective(message);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void deleteMessageById(Long id) {
         myMapper.deleteByPrimaryKey(id);
 
@@ -89,13 +90,13 @@ public class MessageServiceImpl extends BaseService<Message> implements MessageS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public int findMessageCount(String username) {
         return messageMapper.selectMessageCount(username);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Message> findMessagesByUsername(String username) {
         return messageMapper.selectMessagesByUsername(username, DateUtil.plusDays(-30L));
     }
@@ -115,25 +116,25 @@ public class MessageServiceImpl extends BaseService<Message> implements MessageS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Message findReplyMessage(Long id) {
         return messageMapper.selectReplyMessage(id);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void updateMessageUser4Reply(Long id, String username, Long replyMessageId) {
         messageMapper.updateMessageUser4Reply(id, username, replyMessageId);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void updateMessageUsers4Read(String username) {
         messageMapper.updateMessageUsers4Read(username);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void deleteMessageUser(Long messageId, String username) {
         messageMapper.deleteMessageUser(messageId, username);
     }

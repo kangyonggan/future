@@ -4,11 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.GuestbookService;
 import com.kangyonggan.app.future.common.util.DateUtil;
 import com.kangyonggan.app.future.common.util.IPUtil;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.common.util.MarkdownUtil;
-import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.constants.ArticleStatus;
 import com.kangyonggan.app.future.model.vo.Guestbook;
+import com.kangyonggan.methodlogger.MethodLogger;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class GuestbookServiceImpl extends BaseService<Guestbook> implements Gues
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void saveGuestbook(Guestbook guestbook) {
         guestbook.setStatus(ArticleStatus.WAITING.getStatus().toLowerCase());
         guestbook.setReplyMessage("");
@@ -52,19 +53,19 @@ public class GuestbookServiceImpl extends BaseService<Guestbook> implements Gues
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void updateGuestbook(Guestbook guestbook) {
         myMapper.updateByPrimaryKeySelective(guestbook);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void deleteGuestbookById(Long id) {
         myMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Guestbook findGuestbookById(Long id) {
         return myMapper.selectByPrimaryKey(id);
     }
@@ -97,7 +98,7 @@ public class GuestbookServiceImpl extends BaseService<Guestbook> implements Gues
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public boolean isQuickWrite(String ip) {
         Example example = new Example(Guestbook.class);
         example.createCriteria().andEqualTo("ip", ip).andGreaterThan("createdTime", DateUtil.plusMinutes(-3));
@@ -106,7 +107,7 @@ public class GuestbookServiceImpl extends BaseService<Guestbook> implements Gues
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void updateGuestbookIpInfo(Long id, String ip) {
         new Thread() {
             public void run() {
@@ -128,7 +129,7 @@ public class GuestbookServiceImpl extends BaseService<Guestbook> implements Gues
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Guestbook findPrevGuestbook(Long id) {
         Example example = new Example(Guestbook.class);
         Example.Criteria criteria = example.createCriteria();
@@ -144,7 +145,7 @@ public class GuestbookServiceImpl extends BaseService<Guestbook> implements Gues
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Guestbook findNextGuestbook(Long id) {
         Example example = new Example(Guestbook.class);
         Example.Criteria criteria = example.createCriteria();

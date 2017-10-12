@@ -2,11 +2,12 @@ package com.kangyonggan.app.future.biz.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.MusicService;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.common.util.StringUtil;
-import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.constants.ArticleStatus;
 import com.kangyonggan.app.future.model.vo.Music;
+import com.kangyonggan.methodlogger.MethodLogger;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -22,7 +23,7 @@ import java.util.Map;
 public class MusicServiceImpl extends BaseService<Music> implements MusicService {
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Music> searchMusics(int pageNum, String name, String singer, String uploadUsername) {
         Example example = new Example(Music.class);
         Example.Criteria criteria = example.createCriteria();
@@ -46,7 +47,7 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Music> searchMusics4Admin(int pageNum, String name, String singer, String uploadUsername, String status, String isStick, String isDeleted) {
         Example example = new Example(Music.class);
         Example.Criteria criteria = example.createCriteria();
@@ -76,7 +77,7 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void save(Map<String, Object> resultMap) {
         Music music = new Music();
         music.setName((String) resultMap.get("name"));
@@ -91,25 +92,25 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Music findMusicById(Long id) {
         return myMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void updateMusic(Music music) {
         myMapper.updateByPrimaryKeySelective(music);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void deleteMusicById(Long id) {
         myMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Music> findMusicsByPage(int pageNum, int pageSize) {
         Example example = new Example(Music.class);
         Example.Criteria criteria = example.createCriteria();
@@ -123,7 +124,7 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public int findMusicCount() {
         Music music = new Music();
         music.setStatus(ArticleStatus.COMPLETE.getStatus());

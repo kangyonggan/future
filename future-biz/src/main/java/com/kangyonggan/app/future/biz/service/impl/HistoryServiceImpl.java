@@ -5,10 +5,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kangyonggan.app.future.biz.service.HistoryService;
 import com.kangyonggan.app.future.common.util.HttpUtil;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.mapper.HistoryMapper;
-import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.History;
+import com.kangyonggan.methodlogger.MethodLogger;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class HistoryServiceImpl extends BaseService<History> implements HistoryS
     private HistoryMapper historyMapper;
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<History> findHistories(int month, int day) {
         Example example = new Example(History.class);
         example.createCriteria().andEqualTo("isDeleted", AppConstants.IS_DELETED_NO)
@@ -44,7 +45,7 @@ public class HistoryServiceImpl extends BaseService<History> implements HistoryS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void saveHistories() {
         for (int month = 1; month <= 12; month++) {

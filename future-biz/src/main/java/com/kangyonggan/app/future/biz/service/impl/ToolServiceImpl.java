@@ -2,12 +2,9 @@ package com.kangyonggan.app.future.biz.service.impl;
 
 import com.alibaba.druid.sql.SQLUtils;
 import com.kangyonggan.app.future.biz.service.ToolService;
-import com.kangyonggan.app.future.common.util.CalendarUtil;
-import com.kangyonggan.app.future.common.util.DestinyUtil;
-import com.kangyonggan.app.future.common.util.PropertiesUtil;
-import com.kangyonggan.app.future.common.util.XmlUtil;
-import com.kangyonggan.app.future.model.annotation.LogTime;
+import com.kangyonggan.app.future.common.util.*;
 import com.kangyonggan.app.future.model.constants.Dialect;
+import com.kangyonggan.methodlogger.MethodLogger;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +24,7 @@ import java.util.Set;
 public class ToolServiceImpl implements ToolService {
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public String formatXml(String data) throws Exception {
         if (StringUtils.isEmpty(data)) {
             return "xml不能为空";
@@ -37,7 +34,7 @@ public class ToolServiceImpl implements ToolService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public String formatSql(String data, String dialect) throws Exception {
         if (StringUtils.isEmpty(data)) {
             return "sql不能为空";

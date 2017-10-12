@@ -3,9 +3,10 @@ package com.kangyonggan.app.future.biz.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.TokenService;
 import com.kangyonggan.app.future.common.util.DateUtil;
-import com.kangyonggan.app.future.model.annotation.LogTime;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Token;
+import com.kangyonggan.methodlogger.MethodLogger;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,13 @@ import java.util.List;
 public class TokenServiceImpl extends BaseService<Token> implements TokenService {
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void saveToken(Token token) {
         myMapper.insertSelective(token);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Token findTokenByMobileAndType(String mobile, String type) {
         Example example = new Example(Token.class);
         example.createCriteria().andEqualTo("mobile", mobile)
@@ -46,7 +47,7 @@ public class TokenServiceImpl extends BaseService<Token> implements TokenService
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Token findTokenByCodeAndType(String code, String type) {
         Token token = new Token();
         token.setCode(code);
@@ -61,7 +62,7 @@ public class TokenServiceImpl extends BaseService<Token> implements TokenService
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void deleteTokenById(Long id) {
         Token token = new Token();
         token.setId(id);
@@ -88,7 +89,7 @@ public class TokenServiceImpl extends BaseService<Token> implements TokenService
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void deleteTokensByMobileAndType(String mobile, String type) {
         Token token = new Token();
         token.setType(type);
@@ -98,7 +99,7 @@ public class TokenServiceImpl extends BaseService<Token> implements TokenService
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Token> searchTokens(int pageNum, String type, String mobile) {
         Example example = new Example(Token.class);
 

@@ -21,8 +21,8 @@ import java.lang.reflect.Method;
  * @since 2016/11/30
  */
 @Log4j2
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class LogAspect {
 
     /**

@@ -6,10 +6,11 @@ import com.kangyonggan.app.future.biz.service.RedisService;
 import com.kangyonggan.app.future.biz.service.SectionService;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.HtmlUtil;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
-import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Section;
+import com.kangyonggan.methodlogger.MethodLogger;
 import lombok.extern.log4j.Log4j2;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -51,7 +52,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public boolean updateBookSections(int code) {
         Object flag = redisService.get(prefix + SECTION_UPDATE_FLAG);
@@ -261,7 +262,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     @CacheGetOrSave("section:code:{0}")
     public Section findSectionByCode(int code) {
         Section section = new Section();
@@ -271,7 +272,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Section> findBookSections(int code, int pageNum) {
         Example example = new Example(Section.class);
         example.createCriteria().andEqualTo("bookCode", code);
@@ -284,7 +285,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Section findBookFirstSection(int bookCode) {
         Example example = new Example(Section.class);
 

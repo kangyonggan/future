@@ -7,6 +7,7 @@ import com.kangyonggan.app.future.biz.service.RedisService;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.FileUtil;
 import com.kangyonggan.app.future.common.util.HtmlUtil;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.mapper.BookMapper;
 import com.kangyonggan.app.future.model.annotation.CacheDelete;
 import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
@@ -15,6 +16,7 @@ import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.constants.CategoryType;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Category;
+import com.kangyonggan.methodlogger.MethodLogger;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
@@ -57,7 +59,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public boolean updateBooksByCode(final int code) {
         Object flag = redisService.get(prefix + BOOK_UPDATE_FLAG);
