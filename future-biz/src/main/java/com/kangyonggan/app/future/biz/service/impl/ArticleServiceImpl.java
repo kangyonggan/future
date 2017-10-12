@@ -113,7 +113,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void saveArticle(Article article) {
         myMapper.insertSelective(article);
     }
@@ -189,7 +189,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Article findActiveArticleById(Long id) {
         Article article = new Article();
         article.setId(id);
@@ -200,7 +200,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void genBlogRss(String username) {
         Example example = new Example(Article.class);
         example.createCriteria().andEqualTo("username", username)
