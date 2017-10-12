@@ -11,7 +11,6 @@ import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.mapper.BookMapper;
 import com.kangyonggan.app.future.model.annotation.CacheDelete;
 import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
-import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.constants.CategoryType;
 import com.kangyonggan.app.future.model.vo.Book;
@@ -91,7 +90,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, String isFinished, String isHot, String isAutoUpdate) {
         Example example = new Example(Book.class);
         Example.Criteria criteria = example.createCriteria();
@@ -125,7 +124,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     @CacheGetOrSave("book:code:{0}")
     public Book findBookByCode(int code) {
         Book book = new Book();
@@ -135,7 +134,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     @CacheDelete("book:code:{0:code}")
     public void updateBook(Book book) {
         Example example = new Example(Book.class);
@@ -145,7 +144,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Book findLastBook() {
         Example example = new Example(Book.class);
         example.setOrderByClause("code desc");
@@ -157,13 +156,13 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Category> findAllCategoryWithBookCount() {
         return bookMapper.selectAllCategoryWithBookCount();
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Book> findHotBooks(int pageNum, int pageSize) {
         Example example = new Example(Book.class);
         example.createCriteria().andEqualTo("isHot", 1);
@@ -214,7 +213,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Book> searchBooks(String key) {
         Example example = new Example(Book.class);
         example.createCriteria().andEqualTo("name", key);
@@ -226,7 +225,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Book> findBooksByCategoryCode(int pageNum, String code) {
         Example example = new Example(Book.class);
         example.createCriteria().andEqualTo("categoryCode", code);
@@ -237,7 +236,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Book> findAutoUpdateBooks() {
         Book book = new Book();
         book.setIsAutoUpdate((byte) 1);

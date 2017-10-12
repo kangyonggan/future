@@ -8,7 +8,6 @@ import com.kangyonggan.app.future.common.util.DateUtil;
 import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.common.util.MarkdownUtil;
 import com.kangyonggan.app.future.common.util.StringUtil;
-import com.kangyonggan.app.future.model.annotation.LogTime;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.constants.ArticleStatus;
 import com.kangyonggan.app.future.model.vo.Article;
@@ -64,7 +63,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Article> searchArticles(int pageNum, String categoryCode, String key) {
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();
@@ -95,19 +94,19 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Article findArticleById(Long id) {
         return myMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void updateArticle(Article article) {
         myMapper.updateByPrimaryKeySelective(article);
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public void deleteArticleById(Long id) {
         myMapper.deleteByPrimaryKey(id);
     }
@@ -119,7 +118,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Article findPrevArticle(Long id, String username) {
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();
@@ -138,7 +137,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Article findPrevArticle(Long id) {
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();
@@ -154,7 +153,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Article findNextArticle(Long id, String username) {
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();
@@ -173,7 +172,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @LogTime
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Article findNextArticle(Long id) {
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();
