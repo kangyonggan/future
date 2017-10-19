@@ -23,7 +23,7 @@ import java.util.Map;
 public class MusicServiceImpl extends BaseService<Music> implements MusicService {
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+//    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Music> searchMusics(int pageNum, String name, String singer, String uploadUsername) {
         Example example = new Example(Music.class);
         Example.Criteria criteria = example.createCriteria();
@@ -47,7 +47,7 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+//    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Music> searchMusics4Admin(int pageNum, String name, String singer, String uploadUsername, String status, String isStick, String isDeleted) {
         Example example = new Example(Music.class);
         Example.Criteria criteria = example.createCriteria();
@@ -110,7 +110,7 @@ public class MusicServiceImpl extends BaseService<Music> implements MusicService
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+//    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Music> findMusicsByPage(int pageNum, int pageSize) {
         Example example = new Example(Music.class);
         Example.Criteria criteria = example.createCriteria();

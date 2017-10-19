@@ -56,7 +56,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+//    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<User> searchUsers(int pageNum, String username, String realname, String email) {
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();

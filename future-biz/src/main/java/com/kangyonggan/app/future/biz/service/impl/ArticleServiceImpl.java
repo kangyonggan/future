@@ -37,7 +37,6 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     private UserService userService;
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Article> searchArticles(int pageNum, String username, String categoryCode, String status, String title) {
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();

@@ -49,7 +49,7 @@ public class TemplateServiceImpl extends BaseService<Template> implements Templa
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+//    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Template> searchTemplates(int pageNum, String name, String type, String username) {
         Example example = new Example(Template.class);
 

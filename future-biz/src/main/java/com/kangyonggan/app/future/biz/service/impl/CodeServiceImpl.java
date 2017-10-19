@@ -40,7 +40,7 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
     private TableService tableService;
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+//    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Code> searchCodes(int pageNum, String tableName, String menuName) {
         Example example = new Example(Code.class);
 

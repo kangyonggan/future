@@ -29,7 +29,7 @@ public class DictionaryServiceImpl extends BaseService<Dictionary> implements Di
     private DictionaryMapper dictionaryMapper;
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+//    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Dictionary> searchDictionsries(int pageNum, String type, String value) {
         Example example = new Example(Dictionary.class);
         Example.Criteria criteria = example.createCriteria();
