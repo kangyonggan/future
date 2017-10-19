@@ -90,7 +90,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+//    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, String isFinished, String isHot, String isAutoUpdate) {
         Example example = new Example(Book.class);
         Example.Criteria criteria = example.createCriteria();
