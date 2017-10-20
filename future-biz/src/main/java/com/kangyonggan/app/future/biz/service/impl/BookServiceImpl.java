@@ -90,7 +90,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-//    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Book> searchBooks(int pageNum, String bookCode, String bookName, String author, String categoryCode, String isFinished, String isHot, String isAutoUpdate) {
         Example example = new Example(Book.class);
         Example.Criteria criteria = example.createCriteria();
@@ -162,7 +162,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-//    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Book> findHotBooks(int pageNum, int pageSize) {
         Example example = new Example(Book.class);
         example.createCriteria().andEqualTo("isHot", 1);
@@ -225,7 +225,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     }
 
     @Override
-//    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Book> findBooksByCategoryCode(int pageNum, String code) {
         Example example = new Example(Book.class);
         example.createCriteria().andEqualTo("categoryCode", code);

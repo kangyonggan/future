@@ -129,7 +129,7 @@ public class GuestbookServiceImpl extends BaseService<Guestbook> implements Gues
     }
 
     @Override
-//    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Guestbook findPrevGuestbook(Long id) {
         Example example = new Example(Guestbook.class);
         Example.Criteria criteria = example.createCriteria();
@@ -145,7 +145,7 @@ public class GuestbookServiceImpl extends BaseService<Guestbook> implements Gues
     }
 
     @Override
-//    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Guestbook findNextGuestbook(Long id) {
         Example example = new Example(Guestbook.class);
         Example.Criteria criteria = example.createCriteria();

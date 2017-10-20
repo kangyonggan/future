@@ -29,7 +29,7 @@ public class TokenServiceImpl extends BaseService<Token> implements TokenService
     }
 
     @Override
-//    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Token findTokenByMobileAndType(String mobile, String type) {
         Example example = new Example(Token.class);
         example.createCriteria().andEqualTo("mobile", mobile)
@@ -99,7 +99,7 @@ public class TokenServiceImpl extends BaseService<Token> implements TokenService
     }
 
     @Override
-//    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Token> searchTokens(int pageNum, String type, String mobile) {
         Example example = new Example(Token.class);
 

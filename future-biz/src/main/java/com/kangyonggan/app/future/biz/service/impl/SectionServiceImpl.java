@@ -272,7 +272,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
     }
 
     @Override
-//    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public List<Section> findBookSections(int code, int pageNum) {
         Example example = new Example(Section.class);
         example.createCriteria().andEqualTo("bookCode", code);
@@ -285,7 +285,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
     }
 
     @Override
-//    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @MethodLogger(Log4j2MethodLoggerHandler.class)
     public Section findBookFirstSection(int bookCode) {
         Example example = new Example(Section.class);
 
