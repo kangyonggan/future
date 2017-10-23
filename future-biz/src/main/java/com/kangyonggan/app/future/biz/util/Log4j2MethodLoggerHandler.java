@@ -1,4 +1,4 @@
-package com.kangyonggan.app.future.common.util;
+package com.kangyonggan.app.future.biz.util;
 
 import com.kangyonggan.methodlogger.ConsoleMethodLoggerHandler;
 import lombok.extern.log4j.Log4j2;

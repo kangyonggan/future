@@ -1,7 +1,7 @@
 package com.kangyonggan.app.future.biz.service.impl;
 
 import com.kangyonggan.app.future.biz.service.MenuService;
-import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
+import com.kangyonggan.app.future.biz.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.mapper.MenuMapper;
 import com.kangyonggan.app.future.model.annotation.CacheDelete;
 import com.kangyonggan.app.future.model.annotation.CacheDeleteAll;

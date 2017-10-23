@@ -1,7 +1,7 @@
 package com.kangyonggan.app.future.biz.service.impl;
 
 import com.kangyonggan.app.future.biz.service.CategoryService;
-import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
+import com.kangyonggan.app.future.biz.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Category;
