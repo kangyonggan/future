@@ -4,7 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.BookService;
 import com.kangyonggan.app.future.biz.service.CategoryService;
 import com.kangyonggan.app.future.biz.service.RedisService;
-import com.kangyonggan.app.future.biz.util.Log4j2MethodLoggerHandler;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.FileUtil;
 import com.kangyonggan.app.future.common.util.HtmlUtil;
@@ -47,7 +47,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     @Autowired
     private RedisService redisService;
 
-    private boolean isUpdatedFinished;
+    private boolean isUpdatedFinished = true;
 
     private String prefix = PropertiesUtil.getProperties("redis.prefix") + ":";
 
@@ -188,7 +188,11 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
     @Override
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void updateBookIsFinished() {
-        isUpdatedFinished = true;
+        if (!isUpdatedFinished) {
+            return;
+        }
+
+        isUpdatedFinished = false;
         Book book = findLastBook();
         if (book == null) {
             return;
@@ -209,7 +213,7 @@ public class BookServiceImpl extends BaseService<Book> implements BookService {
                 log.warn("更新小说是否完结异常", e);
             }
         }
-        isUpdatedFinished = false;
+        isUpdatedFinished = true;
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.kangyonggan.app.future.biz.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.RoleService;
-import com.kangyonggan.app.future.biz.util.Log4j2MethodLoggerHandler;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.mapper.RoleMapper;
 import com.kangyonggan.app.future.model.annotation.CacheDelete;

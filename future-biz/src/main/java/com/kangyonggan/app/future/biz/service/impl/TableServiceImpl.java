@@ -1,7 +1,7 @@
 package com.kangyonggan.app.future.biz.service.impl;
 
 import com.kangyonggan.app.future.biz.service.TableService;
-import com.kangyonggan.app.future.biz.util.Log4j2MethodLoggerHandler;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.mapper.TableMapper;
 import com.kangyonggan.app.future.model.vo.DbColumn;
 import com.kangyonggan.app.future.model.vo.DbTable;

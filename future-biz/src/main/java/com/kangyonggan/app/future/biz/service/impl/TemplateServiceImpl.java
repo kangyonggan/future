@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.TemplateService;
-import com.kangyonggan.app.future.biz.util.Log4j2MethodLoggerHandler;
+import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.Collections3;
 import com.kangyonggan.app.future.common.util.FileUtil;

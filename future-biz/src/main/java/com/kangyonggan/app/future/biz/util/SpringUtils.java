@@ -3,6 +3,7 @@ package com.kangyonggan.app.future.biz.util;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 /**
  * Spring辅助类
@@ -10,14 +11,9 @@ import org.springframework.context.ApplicationContextAware;
  * @author kangyonggan
  * @since 2016/12/6
  */
-public final class SpringUtils implements ApplicationContextAware {
-    private ApplicationContext context;
-
-    private static SpringUtils INSTANCE;
-
-    private SpringUtils() {
-        INSTANCE = this;
-    }
+@Component
+public class SpringUtils implements ApplicationContextAware {
+    private static ApplicationContext context;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -25,14 +21,14 @@ public final class SpringUtils implements ApplicationContextAware {
     }
 
     public static void autowire(Object bean) {
-        INSTANCE.context.getAutowireCapableBeanFactory().autowireBean(bean);
+        context.getAutowireCapableBeanFactory().autowireBean(bean);
     }
 
     public static Object getBean(String beanName) {
-        return INSTANCE.context.getBean(beanName);
+        return context.getBean(beanName);
     }
 
     public static <T> T getBean(Class<T> clzz) {
-        return INSTANCE.context.getBean(clzz);
+        return context.getBean(clzz);
     }
 }
