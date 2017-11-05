@@ -4,11 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.DictionaryService;
 import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.mapper.DictionaryMapper;
-import com.kangyonggan.app.future.model.annotation.CacheDelete;
-import com.kangyonggan.app.future.model.annotation.CacheDeleteAll;
-import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Dictionary;
+import com.kangyonggan.extra.core.annotation.Cache;
+import com.kangyonggan.extra.core.annotation.CacheDel;
 import com.kangyonggan.extra.core.annotation.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,22 +48,21 @@ public class DictionaryServiceImpl extends BaseService<Dictionary> implements Di
 
     @Override
     @Log
-    @CacheGetOrSave("dictionary:id:{0}")
+    @Cache(key = "dictionary:id:${id}")
     public Dictionary findDictionaryById(Long id) {
         return myMapper.selectByPrimaryKey(id);
     }
 
     @Override
     @Log
-    @CacheDelete("dictionary:id:{0:id}")
-    @CacheDeleteAll("dictionary:type||dictionary:type:*:id")
+    @CacheDel(key = "dictionary:id:${dictionary.id}||dictionary:type*||dictionary:type:*:id*")
     public void updateDictionary(Dictionary dictionary) {
         myMapper.updateByPrimaryKeySelective(dictionary);
     }
 
     @Override
     @Log
-    @CacheDeleteAll("dictionary:type")
+    @CacheDel(key = "dictionary:type*")
     public void saveDictionary(Dictionary dictionary) {
         myMapper.insertSelective(dictionary);
     }
@@ -80,7 +78,7 @@ public class DictionaryServiceImpl extends BaseService<Dictionary> implements Di
 
     @Override
     @Log
-    @CacheGetOrSave("dictionary:type:{0}")
+    @Cache(key = "dictionary:type:${type}")
     public List<Dictionary> findDictionariesByType(String type) {
         Example example = new Example(Dictionary.class);
         example.createCriteria().andEqualTo("type", type).andEqualTo("isDeleted", AppConstants.IS_DELETED_NO);
@@ -91,7 +89,7 @@ public class DictionaryServiceImpl extends BaseService<Dictionary> implements Di
 
     @Override
     @Log
-    @CacheGetOrSave("dictionary:type:{0}:code:{1}")
+    @Cache(key = "dictionary:type:${type}:code:${code}")
     public Dictionary findDictionaryByTypeAndCode(String type, String code) {
         Dictionary dictionary = new Dictionary();
         dictionary.setType(type);
@@ -103,8 +101,7 @@ public class DictionaryServiceImpl extends BaseService<Dictionary> implements Di
 
     @Override
     @Log
-    @CacheDelete("dictionary:id:{0:id}")
-    @CacheDeleteAll("dictionary:type||dictionary:type:*:id")
+    @CacheDel(key = "dictionary:id:${id}||dictionary:type*||dictionary:type:*:id*")
     public void deleteDictionaryById(Long id) {
         myMapper.deleteByPrimaryKey(id);
     }

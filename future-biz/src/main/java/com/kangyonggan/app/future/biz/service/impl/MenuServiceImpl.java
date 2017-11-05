@@ -3,9 +3,9 @@ package com.kangyonggan.app.future.biz.service.impl;
 import com.kangyonggan.app.future.biz.service.MenuService;
 import com.kangyonggan.app.future.mapper.MenuMapper;
 import com.kangyonggan.app.future.model.annotation.CacheDelete;
-import com.kangyonggan.app.future.model.annotation.CacheDeleteAll;
-import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.vo.Menu;
+import com.kangyonggan.extra.core.annotation.Cache;
+import com.kangyonggan.extra.core.annotation.CacheDel;
 import com.kangyonggan.extra.core.annotation.Log;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class MenuServiceImpl extends BaseService<Menu> implements MenuService {
 
     @Override
     @Log
-    @CacheGetOrSave("menu:username:{0}")
+    @Cache(key = "menu:username:${username}")
     public List<Menu> findMenusByUsername(String username) {
         List<Menu> menus = menuMapper.selectMenusByUsername(username);
         List<Menu> wrapList = new ArrayList();
@@ -37,7 +37,7 @@ public class MenuServiceImpl extends BaseService<Menu> implements MenuService {
 
     @Override
     @Log
-    @CacheGetOrSave("menu:role:{0}")
+    @Cache(key = "menu:role:${code}")
     public List<Menu> findMenus4Role(String code) {
         return menuMapper.selectMenus4Role(code);
     }
@@ -53,7 +53,7 @@ public class MenuServiceImpl extends BaseService<Menu> implements MenuService {
 
     @Override
     @Log
-    @CacheGetOrSave("menu:all")
+    @Cache(key = "menu:all")
     public List<Menu> findAllMenus() {
         Example example = new Example(Menu.class);
         example.setOrderByClause("sort asc");
@@ -73,7 +73,7 @@ public class MenuServiceImpl extends BaseService<Menu> implements MenuService {
 
     @Override
     @Log
-    @CacheGetOrSave("menu:id:{0}")
+    @Cache(key = "menu:id:${id}")
     public Menu findMenuById(Long id) {
         return myMapper.selectByPrimaryKey(id);
     }
@@ -89,16 +89,14 @@ public class MenuServiceImpl extends BaseService<Menu> implements MenuService {
 
     @Override
     @Log
-    @CacheDelete("menu:id:{0:id}||menu:all")
-    @CacheDeleteAll("menu:username||menu:role")
+    @CacheDel(key = "menu:id:${menu.id}||menu:all||menu:username*||menu:role*")
     public void updateMenu(Menu menu) {
         myMapper.updateByPrimaryKeySelective(menu);
     }
 
     @Override
     @Log
-    @CacheDelete("menu:id:{0:id}||menu:all")
-    @CacheDeleteAll("menu:username||menu:role")
+    @CacheDel(key = "menu:id:${menu.id}||menu:all||menu:username*||menu:role*")
     public void deleteMenu(Menu menu) {
         myMapper.deleteByPrimaryKey(menu);
     }

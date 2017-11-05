@@ -27,8 +27,8 @@ import java.util.regex.Pattern;
  * @since 2016/11/30
  */
 @Log4j2
-@Component
-@Aspect
+//@Component
+//@Aspect
 public class CacheAspect {
 
     @Autowired

@@ -4,11 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.RoleService;
 import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.mapper.RoleMapper;
-import com.kangyonggan.app.future.model.annotation.CacheDelete;
-import com.kangyonggan.app.future.model.annotation.CacheDeleteAll;
-import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Role;
+import com.kangyonggan.extra.core.annotation.Cache;
+import com.kangyonggan.extra.core.annotation.CacheDel;
 import com.kangyonggan.extra.core.annotation.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
     @Override
     @Log
-    @CacheGetOrSave("role:username:{0}")
+    @Cache(key = "role:username:${username}")
     public List<Role> findRolesByUsername(String username) {
         return roleMapper.selectRolesByUsername(username);
     }
@@ -46,7 +45,7 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
     @Override
     @Log
-    @CacheGetOrSave("role:all")
+    @Cache(key = "role:all")
     public List<Role> findAllRoles() {
         Role role = new Role();
         role.setIsDeleted(AppConstants.IS_DELETED_NO);
@@ -80,23 +79,21 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
     @Override
     @Log
-    @CacheGetOrSave("role:id:{0}")
+    @Cache(key = "role:id:${id}")
     public Role findRoleById(Long id) {
         return myMapper.selectByPrimaryKey(id);
     }
 
     @Override
     @Log
-    @CacheDelete("role:id:{0:id}||role:all")
-    @CacheDeleteAll("role:username||menu:username")
+    @CacheDel(key = "role:id:${role.id}||role:all||role:username*||menu:username*")
     public void updateRole(Role role) {
         myMapper.updateByPrimaryKeySelective(role);
     }
 
     @Override
     @Log
-    @CacheDelete("menu:role:{0}")
-    @CacheDeleteAll("menu:username")
+    @CacheDel(key = "menu:role:${code}||menu:username*")
     public void updateRoleMenus(String code, String menuCodes) {
         deleteRoleMenus(code);
 
@@ -107,8 +104,7 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
     @Override
     @Log
-    @CacheDelete("role:id:{0:id}||role:all")
-    @CacheDeleteAll("role:username||menu:username")
+    @CacheDel(key = "role:id:${id}||role:all||role:username*||menu:username*")
     public void deleteRoleById(Long id) {
         myMapper.deleteByPrimaryKey(id);
     }

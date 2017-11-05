@@ -7,11 +7,11 @@ import com.kangyonggan.app.future.common.util.Encodes;
 import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.mapper.RoleMapper;
 import com.kangyonggan.app.future.mapper.UserMapper;
-import com.kangyonggan.app.future.model.annotation.CacheDelete;
-import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.ShiroUser;
 import com.kangyonggan.app.future.model.vo.User;
+import com.kangyonggan.extra.core.annotation.Cache;
+import com.kangyonggan.extra.core.annotation.CacheDel;
 import com.kangyonggan.extra.core.annotation.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -43,7 +43,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Override
     @Log
-    @CacheGetOrSave("user:username:{0}")
+    @Cache(key = "user:username:${username}")
     public User findUserByUsername(String username) {
         if (StringUtils.isEmpty(username)) {
             return null;
@@ -94,7 +94,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Override
     @Log
-    @CacheDelete("user:username:{0:username}||role:username:{0:username}||menu:username:{0:username}")
+    @CacheDel(key = "user:username:${user.username}||role:username:${user.username}||menu:username:${user.username}")
     public void updateUserByUsername(User user) {
         if (StringUtils.isEmpty(user.getUsername())) {
             return;
@@ -112,7 +112,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Override
     @Log
-    @CacheDelete("user:username:{0:username}")
+    @CacheDel(key = "user:username:${user.username}")
     public void updateUserPassword(User user) {
         User tUser = new User();
         tUser.setUsername(user.getUsername());
@@ -126,7 +126,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Override
     @Log
-    @CacheDelete("role:username:{0}||menu:username:{0}")
+    @CacheDel(key = "role:username:${username}||menu:username:${username}")
     public void updateUserRoles(String username, String roleCodes) {
         roleMapper.deleteAllRolesByUsername(username);
 

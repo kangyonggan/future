@@ -2,6 +2,7 @@ package com.kangyonggan.app.future.biz.service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * redis服务接口
@@ -25,10 +26,21 @@ public interface RedisService {
      *
      * @param key
      * @param value
-     * @param value
+     * @param timeout
      * @return
      */
     boolean set(String key, Object value, long timeout);
+
+    /**
+     * set
+     *
+     * @param key
+     * @param value
+     * @param timeout
+     * @param unit
+     * @return
+     */
+    boolean set(String key, Object value, long timeout, TimeUnit unit);
 
     /**
      * get

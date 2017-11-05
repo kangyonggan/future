@@ -4,12 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.BookService;
 import com.kangyonggan.app.future.biz.service.RedisService;
 import com.kangyonggan.app.future.biz.service.SectionService;
-import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.HtmlUtil;
-import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.vo.Book;
 import com.kangyonggan.app.future.model.vo.Section;
+import com.kangyonggan.extra.core.annotation.Cache;
 import com.kangyonggan.extra.core.annotation.Log;
 import lombok.extern.log4j.Log4j2;
 import org.jsoup.nodes.Document;
@@ -263,7 +262,7 @@ public class SectionServiceImpl extends BaseService<Section> implements SectionS
 
     @Override
     @Log
-    @CacheGetOrSave("section:code:{0}")
+    @Cache(key = "section:code:${code}")
     public Section findSectionByCode(int code) {
         Section section = new Section();
         section.setCode(code);

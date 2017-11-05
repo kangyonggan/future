@@ -45,6 +45,20 @@ public class RedisServiceImpl implements RedisService {
     }
 
     /**
+     * set
+     *
+     * @param key
+     * @param value
+     * @param timeout
+     * @param unit
+     * @return
+     */
+    public boolean set(String key, Object value, long timeout, TimeUnit unit) {
+        redisTemplate.opsForValue().set(key, value, timeout, unit);
+        return Boolean.TRUE.booleanValue();
+    }
+
+    /**
      * get
      *
      * @param key
