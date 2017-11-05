@@ -13,7 +13,7 @@
             <h4 class="title">留言和订阅</h4>
             <ul>
                 <li><a href="#guestbook">留言板</a></li>
-                <li><a href="${ctx}/rss/blog-15121149571.xml" target="_blank">RSS订阅</a></li>
+                <li><a href="${ctx}/rss/blog-18521311137.xml" target="_blank">RSS订阅</a></li>
             </ul>
         </div>
         <div class="list">
