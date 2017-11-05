@@ -1,11 +1,10 @@
 package com.kangyonggan.app.future.biz.service.impl;
 
 import com.kangyonggan.app.future.biz.service.TableService;
-import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.mapper.TableMapper;
 import com.kangyonggan.app.future.model.vo.DbColumn;
 import com.kangyonggan.app.future.model.vo.DbTable;
-import com.kangyonggan.methodlogger.MethodLogger;
+import com.kangyonggan.extra.core.annotation.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +21,13 @@ public class TableServiceImpl implements TableService {
     private TableMapper tableMapper;
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public List<DbTable> findAllTables() {
         return tableMapper.selectAllTables();
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public List<DbColumn> findTableColumns(String tableName) {
         return tableMapper.selectTableColumns(tableName);
     }

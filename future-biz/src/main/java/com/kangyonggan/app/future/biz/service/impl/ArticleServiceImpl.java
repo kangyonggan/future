@@ -5,14 +5,13 @@ import com.kangyonggan.app.future.biz.service.ArticleService;
 import com.kangyonggan.app.future.biz.service.UserService;
 import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.DateUtil;
-import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.common.util.MarkdownUtil;
 import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.constants.ArticleStatus;
 import com.kangyonggan.app.future.model.vo.Article;
 import com.kangyonggan.app.future.model.vo.User;
-import com.kangyonggan.methodlogger.MethodLogger;
+import com.kangyonggan.extra.core.annotation.Log;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +61,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public List<Article> searchArticles(int pageNum, String categoryCode, String key) {
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();
@@ -93,31 +92,31 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public Article findArticleById(Long id) {
         return myMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public void updateArticle(Article article) {
         myMapper.updateByPrimaryKeySelective(article);
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public void deleteArticleById(Long id) {
         myMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public void saveArticle(Article article) {
         myMapper.insertSelective(article);
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public Article findPrevArticle(Long id, String username) {
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();
@@ -136,7 +135,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public Article findPrevArticle(Long id) {
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();
@@ -152,7 +151,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public Article findNextArticle(Long id, String username) {
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();
@@ -171,7 +170,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public Article findNextArticle(Long id) {
         Example example = new Example(Article.class);
         Example.Criteria criteria = example.createCriteria();
@@ -187,7 +186,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public Article findActiveArticleById(Long id) {
         Article article = new Article();
         article.setId(id);
@@ -198,7 +197,7 @@ public class ArticleServiceImpl extends BaseService<Article> implements ArticleS
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public void genBlogRss(String username) {
         Example example = new Example(Article.class);
         example.createCriteria().andEqualTo("username", username)

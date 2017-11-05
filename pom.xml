@@ -102,7 +102,7 @@
         <aliyun.sms>3.0.0-rc1</aliyun.sms>
         <jaudiotagger.version>2.0.3</jaudiotagger.version>
         <tika.version>1.16</tika.version>
-        <method-logger.version>1.4</method-logger.version>
+        <extra-core.version>1.0</extra-core.version>
     </properties>
 
     <build>
@@ -535,8 +535,8 @@
             </dependency>
             <dependency>
                 <groupId>com.kangyonggan</groupId>
-                <artifactId>method-logger</artifactId>
-                <version>${method-logger.version}</version>
+                <artifactId>extra-core</artifactId>
+                <version>${extra-core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

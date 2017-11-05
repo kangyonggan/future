@@ -8,10 +8,9 @@ import com.aliyuncs.sms.model.v20160927.SingleSendSmsRequest;
 import com.aliyuncs.sms.model.v20160927.SingleSendSmsResponse;
 import com.kangyonggan.app.future.biz.service.SmsService;
 import com.kangyonggan.app.future.biz.service.TokenService;
-import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.model.vo.Token;
-import com.kangyonggan.methodlogger.MethodLogger;
+import com.kangyonggan.extra.core.annotation.Log;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +49,7 @@ public class SmsServiceImpl implements SmsService {
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public void sendSms(String mobile, String type) {
         // 校验手机号是否正确
         if (!StringUtil.isMobile(mobile)) {

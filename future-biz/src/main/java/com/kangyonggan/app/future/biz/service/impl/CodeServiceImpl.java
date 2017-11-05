@@ -5,7 +5,6 @@ import com.github.pagehelper.PageHelper;
 import com.kangyonggan.app.future.biz.service.CodeService;
 import com.kangyonggan.app.future.biz.service.TableService;
 import com.kangyonggan.app.future.common.util.FileUtil;
-import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.dto.Step1;
@@ -14,7 +13,7 @@ import com.kangyonggan.app.future.model.dto.Step3;
 import com.kangyonggan.app.future.model.vo.Code;
 import com.kangyonggan.app.future.model.vo.DbColumn;
 import com.kangyonggan.app.future.model.vo.DbTable;
-import com.kangyonggan.methodlogger.MethodLogger;
+import com.kangyonggan.extra.core.annotation.Log;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.log4j.Log4j2;
@@ -40,7 +39,7 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
     private TableService tableService;
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public List<Code> searchCodes(int pageNum, String tableName, String menuName) {
         Example example = new Example(Code.class);
 
@@ -59,19 +58,19 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public void saveCode(Code code) {
         myMapper.insertSelective(code);
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public Code findCodeById(Long id) {
         return myMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public void updateStep1(Step1 step1) {
         Code code = new Code();
         code.setId(step1.getCodeId());
@@ -81,7 +80,7 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public void updateStep2(Step2 step2) {
         Code code = new Code();
         code.setId(step2.getCodeId());
@@ -91,7 +90,7 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public void updateStep3(Step3 step3) {
         Code code = new Code();
         code.setId(step3.getCodeId());
@@ -101,13 +100,13 @@ public class CodeServiceImpl extends BaseService<Code> implements CodeService {
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public void updateCode(Code code) {
         myMapper.updateByPrimaryKeySelective(code);
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     public void generateCode(Long id) {
         Code code = myMapper.selectByPrimaryKey(id);
         String tableName = code.getTableName();

@@ -1,11 +1,10 @@
 package com.kangyonggan.app.future.biz.service.impl;
 
 import com.kangyonggan.app.future.biz.service.CategoryService;
-import com.kangyonggan.app.future.common.util.Log4j2MethodLoggerHandler;
 import com.kangyonggan.app.future.model.annotation.CacheGetOrSave;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Category;
-import com.kangyonggan.methodlogger.MethodLogger;
+import com.kangyonggan.extra.core.annotation.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 public class CategoryServiceImpl extends BaseService<Category> implements CategoryService {
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     @CacheGetOrSave("category:type:{0}:code:{1}")
     public Category findCategoryByTypeAndCode(String type, String code) {
         Category category = new Category();
@@ -30,7 +29,7 @@ public class CategoryServiceImpl extends BaseService<Category> implements Catego
     }
 
     @Override
-    @MethodLogger(Log4j2MethodLoggerHandler.class)
+    @Log
     @CacheGetOrSave("category:type:{0}")
     public List<Category> findCategoriesByType(String type) {
         Category category = new Category();

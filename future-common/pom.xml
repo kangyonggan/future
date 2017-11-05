@@ -109,10 +109,6 @@
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.kangyonggan</groupId>
-            <artifactId>method-logger</artifactId>
-        </dependency>
     </dependencies>
 
 </project>
