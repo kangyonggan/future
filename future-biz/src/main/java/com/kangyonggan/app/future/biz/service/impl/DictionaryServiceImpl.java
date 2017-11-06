@@ -55,7 +55,7 @@ public class DictionaryServiceImpl extends BaseService<Dictionary> implements Di
 
     @Override
     @Log
-    @CacheDel(key = "dictionary:id:${dictionary.id}||dictionary:type*||dictionary:type:*:id*")
+    @CacheDel(key = {"dictionary:id:${dictionary.id}", "dictionary:type*", "dictionary:type:*:id*"})
     public void updateDictionary(Dictionary dictionary) {
         myMapper.updateByPrimaryKeySelective(dictionary);
     }
@@ -101,7 +101,7 @@ public class DictionaryServiceImpl extends BaseService<Dictionary> implements Di
 
     @Override
     @Log
-    @CacheDel(key = "dictionary:id:${id}||dictionary:type*||dictionary:type:*:id*")
+    @CacheDel(key = {"dictionary:id:${id}", "dictionary:type*", "dictionary:type:*:id*"})
     public void deleteDictionaryById(Long id) {
         myMapper.deleteByPrimaryKey(id);
     }

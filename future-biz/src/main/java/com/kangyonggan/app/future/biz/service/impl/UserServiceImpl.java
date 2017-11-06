@@ -94,7 +94,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Override
     @Log
-    @CacheDel(key = "user:username:${user.username}||role:username:${user.username}||menu:username:${user.username}")
+    @CacheDel(key = {"user:username:${user.username}", "role:username:${user.username}", "menu:username:${user.username}"})
     public void updateUserByUsername(User user) {
         if (StringUtils.isEmpty(user.getUsername())) {
             return;
@@ -126,7 +126,7 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Override
     @Log
-    @CacheDel(key = "role:username:${username}||menu:username:${username}")
+    @CacheDel(key = {"role:username:${username}", "menu:username:${username}"})
     public void updateUserRoles(String username, String roleCodes) {
         roleMapper.deleteAllRolesByUsername(username);
 

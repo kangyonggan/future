@@ -89,14 +89,14 @@ public class MenuServiceImpl extends BaseService<Menu> implements MenuService {
 
     @Override
     @Log
-    @CacheDel(key = "menu:id:${menu.id}||menu:all||menu:username*||menu:role*")
+    @CacheDel(key = {"menu:id:${menu.id}", "menu:all", "menu:username*", "menu:role*"})
     public void updateMenu(Menu menu) {
         myMapper.updateByPrimaryKeySelective(menu);
     }
 
     @Override
     @Log
-    @CacheDel(key = "menu:id:${menu.id}||menu:all||menu:username*||menu:role*")
+    @CacheDel(key = {"menu:id:${menu.id}", "menu:all", "menu:username*", "menu:role*"})
     public void deleteMenu(Menu menu) {
         myMapper.deleteByPrimaryKey(menu);
     }

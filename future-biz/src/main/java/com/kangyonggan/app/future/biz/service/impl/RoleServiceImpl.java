@@ -86,14 +86,14 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
     @Override
     @Log
-    @CacheDel(key = "role:id:${role.id}||role:all||role:username*||menu:username*")
+    @CacheDel(key = {"role:id:${role.id}", "role:all", "role:username*", "menu:username*"})
     public void updateRole(Role role) {
         myMapper.updateByPrimaryKeySelective(role);
     }
 
     @Override
     @Log
-    @CacheDel(key = "menu:role:${code}||menu:username*")
+    @CacheDel(key = {"menu:role:${code}", "menu:username*"})
     public void updateRoleMenus(String code, String menuCodes) {
         deleteRoleMenus(code);
 
@@ -104,7 +104,7 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
     @Override
     @Log
-    @CacheDel(key = "role:id:${id}||role:all||role:username*||menu:username*")
+    @CacheDel(key = {"role:id:${id}", "role:all", "role:username*", "menu:username*"})
     public void deleteRoleById(Long id) {
         myMapper.deleteByPrimaryKey(id);
     }
