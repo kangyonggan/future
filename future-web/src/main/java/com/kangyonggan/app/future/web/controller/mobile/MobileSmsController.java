@@ -43,7 +43,7 @@ public class MobileSmsController {
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-//    @Frequency(interval = 60000, interrupt = true)
+    @Frequency(key = "sms:${mobile}", interval = 60000, interrupt = true)
     public CommonResponse sendSms(@RequestParam("mobile") String mobile, @RequestParam("type") String type) {
         log.info("发短信请求入参:mobile:{}, type:{}", mobile, type);
         CommonResponse response = new CommonResponse();

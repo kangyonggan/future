@@ -1,14 +1,10 @@
 package com.kangyonggan.app.future.biz.handle;
 
 import com.kangyonggan.app.future.biz.service.RedisService;
-import com.kangyonggan.app.future.biz.util.PropertiesUtil;
 import com.kangyonggan.app.future.biz.util.SpringUtils;
 import com.kangyonggan.extra.exception.MethodCalledFrequencyException;
 import com.kangyonggan.extra.handle.FrequencyHandle;
 import lombok.extern.log4j.Log4j2;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author kangyonggan
@@ -17,13 +13,7 @@ import java.util.Map;
 @Log4j2
 public class RedisFrequencyHandle implements FrequencyHandle {
 
-    /**
-     * redis键的前缀
-     */
-    private String prefix = PropertiesUtil.getProperties("redis.prefix") + ":";
-
     public void limit(String key, long interval, boolean interrupt) {
-        key = prefix + key;
         boolean isLimited = this.isLimited(key, interval);
         if (isLimited) {
             String msg = String.format("Method %s called frequency during %sms times.", key, interval);
