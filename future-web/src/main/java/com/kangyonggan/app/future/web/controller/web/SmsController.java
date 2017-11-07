@@ -3,6 +3,7 @@ package com.kangyonggan.app.future.web.controller.web;
 import com.kangyonggan.app.future.biz.service.SmsService;
 import com.kangyonggan.app.future.biz.service.TokenService;
 import com.kangyonggan.app.future.model.vo.Token;
+import com.kangyonggan.extra.annotation.Frequency;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,7 @@ public class SmsController {
      * @return
      */
     @RequestMapping(value = "send", method = RequestMethod.POST)
+    @Frequency(key = "sms:${mobile}", interval = 60000, interrupt = true)
     public boolean sendSms(@RequestParam("mobile") String mobile, @RequestParam("type") String type) {
         if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(type)) {
             return false;
