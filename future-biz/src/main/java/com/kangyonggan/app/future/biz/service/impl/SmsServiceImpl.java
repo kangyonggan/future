@@ -10,7 +10,7 @@ import com.kangyonggan.app.future.biz.service.SmsService;
 import com.kangyonggan.app.future.biz.service.TokenService;
 import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.model.vo.Token;
-import com.kangyonggan.extra.core.annotation.Log;
+import com.kangyonggan.extra.annotation.Log;
 import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

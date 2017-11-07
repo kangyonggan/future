@@ -13,7 +13,7 @@ import com.kangyonggan.app.future.model.dto.Step3;
 import com.kangyonggan.app.future.model.vo.Code;
 import com.kangyonggan.app.future.model.vo.DbColumn;
 import com.kangyonggan.app.future.model.vo.DbTable;
-import com.kangyonggan.extra.core.annotation.Log;
+import com.kangyonggan.extra.annotation.Log;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.log4j.Log4j2;

@@ -9,7 +9,7 @@ import com.kangyonggan.app.future.mapper.MessageMapper;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Message;
 import com.kangyonggan.app.future.model.vo.User;
-import com.kangyonggan.extra.core.annotation.Log;
+import com.kangyonggan.extra.annotation.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

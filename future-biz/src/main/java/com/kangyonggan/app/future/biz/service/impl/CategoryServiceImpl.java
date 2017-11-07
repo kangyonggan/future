@@ -3,8 +3,8 @@ package com.kangyonggan.app.future.biz.service.impl;
 import com.kangyonggan.app.future.biz.service.CategoryService;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Category;
-import com.kangyonggan.extra.core.annotation.Cache;
-import com.kangyonggan.extra.core.annotation.Log;
+import com.kangyonggan.extra.annotation.Cache;
+import com.kangyonggan.extra.annotation.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
