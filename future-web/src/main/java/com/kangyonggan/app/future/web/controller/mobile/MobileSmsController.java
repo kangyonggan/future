@@ -1,12 +1,10 @@
 package com.kangyonggan.app.future.web.controller.mobile;
 
 import com.kangyonggan.app.future.biz.service.SmsService;
-import com.kangyonggan.app.future.biz.service.TokenService;
 import com.kangyonggan.app.future.biz.service.UserService;
 import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.constants.TokenType;
 import com.kangyonggan.app.future.model.dto.CommonResponse;
-import com.kangyonggan.app.future.model.vo.Token;
 import com.kangyonggan.app.future.model.vo.User;
 import com.kangyonggan.extra.annotation.Frequency;
 import lombok.extern.log4j.Log4j2;
@@ -28,9 +26,6 @@ public class MobileSmsController {
 
     @Autowired
     private SmsService smsService;
-
-    @Autowired
-    private TokenService tokenService;
 
     @Autowired
     private UserService userService;
@@ -70,14 +65,6 @@ public class MobileSmsController {
                     response.setRespMsg("该手机号尚未注册");
                     return response;
                 }
-            }
-
-            // 60s内不准重复发送
-            Token token = tokenService.findActiveTokenByMobileAndType(mobile, type);
-            if (token != null) {
-                response.setRespCo(Resp.FAILURE.getRespCo());
-                response.setRespMsg("请勿频繁发短信");
-                return response;
             }
 
             smsService.sendSms(mobile, type);

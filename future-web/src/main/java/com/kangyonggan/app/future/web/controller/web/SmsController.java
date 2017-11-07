@@ -1,8 +1,6 @@
 package com.kangyonggan.app.future.web.controller.web;
 
 import com.kangyonggan.app.future.biz.service.SmsService;
-import com.kangyonggan.app.future.biz.service.TokenService;
-import com.kangyonggan.app.future.model.vo.Token;
 import com.kangyonggan.extra.annotation.Frequency;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +20,6 @@ public class SmsController {
     @Autowired
     private SmsService smsService;
 
-    @Autowired
-    private TokenService tokenService;
-
     /**
      * 发送验证码
      *
@@ -36,12 +31,6 @@ public class SmsController {
     @Frequency(key = "sms:${mobile}", interval = 60000, interrupt = true)
     public boolean sendSms(@RequestParam("mobile") String mobile, @RequestParam("type") String type) {
         if (StringUtils.isEmpty(mobile) || StringUtils.isEmpty(type)) {
-            return false;
-        }
-
-        // 60s内不准重复发送
-        Token token = tokenService.findActiveTokenByMobileAndType(mobile, type);
-        if (token != null) {
             return false;
         }
 
