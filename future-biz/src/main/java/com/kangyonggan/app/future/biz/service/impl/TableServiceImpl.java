@@ -4,7 +4,7 @@ import com.kangyonggan.app.future.biz.service.TableService;
 import com.kangyonggan.app.future.mapper.TableMapper;
 import com.kangyonggan.app.future.model.vo.DbColumn;
 import com.kangyonggan.app.future.model.vo.DbTable;
-import com.kangyonggan.extra.annotation.Log;
+import com.kangyonggan.extra.core.annotation.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

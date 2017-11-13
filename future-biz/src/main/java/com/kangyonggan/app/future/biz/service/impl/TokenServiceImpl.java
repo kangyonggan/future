@@ -5,7 +5,7 @@ import com.kangyonggan.app.future.biz.service.TokenService;
 import com.kangyonggan.app.future.common.util.DateUtil;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Token;
-import com.kangyonggan.extra.annotation.Log;
+import com.kangyonggan.extra.core.annotation.Log;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;

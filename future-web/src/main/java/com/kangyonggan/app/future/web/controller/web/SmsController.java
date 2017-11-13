@@ -1,7 +1,7 @@
 package com.kangyonggan.app.future.web.controller.web;
 
 import com.kangyonggan.app.future.biz.service.SmsService;
-import com.kangyonggan.extra.annotation.Frequency;
+import com.kangyonggan.extra.core.annotation.Frequency;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -2,8 +2,8 @@ package com.kangyonggan.app.future.biz.handle;
 
 import com.kangyonggan.app.future.biz.service.RedisService;
 import com.kangyonggan.app.future.biz.util.SpringUtils;
-import com.kangyonggan.extra.exception.MethodCalledFrequencyException;
-import com.kangyonggan.extra.handle.FrequencyHandle;
+import com.kangyonggan.extra.core.exception.MethodCalledFrequencyException;
+import com.kangyonggan.extra.core.handle.FrequencyHandle;
 import lombok.extern.log4j.Log4j2;
 
 /**

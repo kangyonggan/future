@@ -146,7 +146,7 @@
         </dependency>
         <dependency>
             <groupId>com.kangyonggan</groupId>
-            <artifactId>extra</artifactId>
+            <artifactId>extra-core</artifactId>
         </dependency>
     </dependencies>
 

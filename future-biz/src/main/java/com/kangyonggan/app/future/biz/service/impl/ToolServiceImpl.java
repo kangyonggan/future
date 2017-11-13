@@ -7,7 +7,7 @@ import com.kangyonggan.app.future.common.util.DestinyUtil;
 import com.kangyonggan.app.future.common.util.PropertiesUtil;
 import com.kangyonggan.app.future.common.util.XmlUtil;
 import com.kangyonggan.app.future.model.constants.Dialect;
-import com.kangyonggan.extra.annotation.Log;
+import com.kangyonggan.extra.core.annotation.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 

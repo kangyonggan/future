@@ -8,7 +8,7 @@ import com.kangyonggan.app.future.common.util.HttpUtil;
 import com.kangyonggan.app.future.mapper.HistoryMapper;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.History;
-import com.kangyonggan.extra.annotation.Log;
+import com.kangyonggan.extra.core.annotation.Log;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -9,7 +9,7 @@ import com.kangyonggan.app.future.common.util.Collections3;
 import com.kangyonggan.app.future.common.util.FileUtil;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.vo.Template;
-import com.kangyonggan.extra.annotation.Log;
+import com.kangyonggan.extra.core.annotation.Log;
 import freemarker.cache.FileTemplateLoader;
 import freemarker.template.Configuration;
 import lombok.extern.log4j.Log4j2;

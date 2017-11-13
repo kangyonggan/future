@@ -6,7 +6,7 @@ import com.kangyonggan.app.future.model.constants.Resp;
 import com.kangyonggan.app.future.model.constants.TokenType;
 import com.kangyonggan.app.future.model.dto.CommonResponse;
 import com.kangyonggan.app.future.model.vo.User;
-import com.kangyonggan.extra.annotation.Frequency;
+import com.kangyonggan.extra.core.annotation.Frequency;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

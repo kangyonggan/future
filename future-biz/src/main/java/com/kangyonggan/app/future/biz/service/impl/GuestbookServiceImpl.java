@@ -8,7 +8,7 @@ import com.kangyonggan.app.future.common.util.MarkdownUtil;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.constants.ArticleStatus;
 import com.kangyonggan.app.future.model.vo.Guestbook;
-import com.kangyonggan.extra.annotation.Log;
+import com.kangyonggan.extra.core.annotation.Log;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;

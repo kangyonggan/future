@@ -6,7 +6,7 @@ import com.kangyonggan.app.future.common.util.StringUtil;
 import com.kangyonggan.app.future.model.constants.AppConstants;
 import com.kangyonggan.app.future.model.constants.ArticleStatus;
 import com.kangyonggan.app.future.model.vo.Music;
-import com.kangyonggan.extra.annotation.Log;
+import com.kangyonggan.extra.core.annotation.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
