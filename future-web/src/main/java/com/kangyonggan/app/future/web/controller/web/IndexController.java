@@ -8,6 +8,7 @@ import com.kangyonggan.app.future.model.constants.CategoryType;
 import com.kangyonggan.app.future.model.vo.Article;
 import com.kangyonggan.app.future.model.vo.Category;
 import com.kangyonggan.app.future.web.controller.BaseController;
+import com.kangyonggan.extra.core.annotation.Monitor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,6 +51,7 @@ public class IndexController extends BaseController {
      * @return
      */
     @RequestMapping(value = "index", method = RequestMethod.GET)
+    @Monitor(type = "article", description = "访问网站首页统计")
     public String index(@RequestParam(value = "p", required = false, defaultValue = "1") int pageNum, Model model) {
         List<Article> articles = articleService.searchArticles(pageNum, null, null);
         PageInfo<Article> page = new PageInfo(articles);
@@ -68,6 +70,7 @@ public class IndexController extends BaseController {
      * @return
      */
     @RequestMapping(value = "search", method = RequestMethod.GET)
+    @Monitor(type = "article", description = "搜索统计")
     public String search(@RequestParam(value = "key") String key,
                          @RequestParam(value = "p", required = false, defaultValue = "1") int pageNum,
                          Model model) {
@@ -92,6 +95,7 @@ public class IndexController extends BaseController {
      * @return
      */
     @RequestMapping(value = "category/{code:[\\w]+}", method = RequestMethod.GET)
+    @Monitor(type = "article", description = "按栏目查看文章统计")
     public String category(@PathVariable("code") String code, @RequestParam(value = "p", required = false, defaultValue = "1") int pageNum,
                            Model model) {
         List<Article> articles = articleService.searchArticles(pageNum, code, null);
@@ -112,7 +116,8 @@ public class IndexController extends BaseController {
      * @return
      */
     @RequestMapping(value = "article/{id:[\\d]+}", method = RequestMethod.GET)
-    public String search(@PathVariable("id") Long id, Model model) {
+    @Monitor(type = "article", description = "文章详情统计")
+    public String detail(@PathVariable("id") Long id, Model model) {
         Article article = articleService.findActiveArticleById(id);
 
         article.setContent(MarkdownUtil.markdownToHtml(article.getContent()));
@@ -131,6 +136,7 @@ public class IndexController extends BaseController {
      * @return
      */
     @RequestMapping(value = "article/{id:[\\d]+}/prev", method = RequestMethod.GET)
+    @Monitor(type = "article", description = "上一章统计")
     public String prevArticle(@PathVariable("id") Long id, Model model) {
         Article article = articleService.findPrevArticle(id);
         if (article == null) {
@@ -153,6 +159,7 @@ public class IndexController extends BaseController {
      * @return
      */
     @RequestMapping(value = "article/{id:[\\d]+}/next", method = RequestMethod.GET)
+    @Monitor(type = "article", description = "下一章统计")
     public String nextArticle(@PathVariable("id") Long id, Model model) {
         Article article = articleService.findNextArticle(id);
         if (article == null) {
