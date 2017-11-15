@@ -2,7 +2,6 @@ package com.kangyonggan.app.future.biz.service.impl;
 
 import com.kangyonggan.app.future.biz.service.MenuService;
 import com.kangyonggan.app.future.mapper.MenuMapper;
-import com.kangyonggan.app.future.model.annotation.CacheDelete;
 import com.kangyonggan.app.future.model.vo.Menu;
 import com.kangyonggan.extra.core.annotation.Cache;
 import com.kangyonggan.extra.core.annotation.CacheDel;
@@ -66,7 +65,7 @@ public class MenuServiceImpl extends BaseService<Menu> implements MenuService {
 
     @Override
     @Log
-    @CacheDelete("menu:all")
+    @CacheDel(key = "menu:all")
     public void saveMenu(Menu menu) {
         myMapper.insertSelective(menu);
     }
