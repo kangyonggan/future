@@ -1,15 +1,14 @@
 package com.kangyonggan.app.future.biz.shiro;
 
 import freemarker.template.SimpleHash;
-import org.springframework.stereotype.Component;
 
 /**
  * Shortcut for injecting the tags into Freemarker
  * <p>
  * <p>Usage: cfg.setSharedVeriable("shiro", new ShiroTags());</p>
  */
-@Component("shiroTags")
 public class ShiroTags extends SimpleHash {
+
     public ShiroTags() {
         put("authenticated", new AuthenticatedTag());
         put("guest", new GuestTag());
