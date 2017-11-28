@@ -79,7 +79,7 @@
                 </a>
             </div>
             <div>
-                <a href="#register" class="user-signup-link">
+                <a href="#index" class="user-signup-link">
                     记得密码？去登录
                     <i class="ace-icon fa fa-arrow-right"></i>
                 </a>
