@@ -2,10 +2,8 @@ package com.kangyonggan.app.future.biz.service.impl;
 
 import com.alibaba.druid.sql.SQLUtils;
 import com.kangyonggan.app.future.biz.service.ToolService;
-import com.kangyonggan.app.future.common.util.CalendarUtil;
-import com.kangyonggan.app.future.common.util.DestinyUtil;
-import com.kangyonggan.app.future.common.util.PropertiesUtil;
-import com.kangyonggan.app.future.common.util.XmlUtil;
+import com.kangyonggan.app.future.biz.util.NameUtil;
+import com.kangyonggan.app.future.common.util.*;
 import com.kangyonggan.app.future.model.constants.Dialect;
 import com.kangyonggan.extra.core.annotation.Log;
 import org.apache.commons.lang3.StringUtils;
@@ -136,6 +134,29 @@ public class ToolServiceImpl implements ToolService {
         result.append("运势：").append(yunshi).append("\n");
 
         return result.toString();
+    }
+
+    @Override
+    @Log
+    public List<String> getNames(String firstName, String secondName, String sex, String rand) {
+        List<String> names = new ArrayList<>();
+
+        // 性别和因子随机
+        for (int i = 0; i < 100; i++) {
+            if (StringUtil.isEmpty(secondName)) {
+                names.add(NameUtil.randomOneOrTwo());
+            } else {
+                names.add(NameUtil.randomOne());
+            }
+        }
+        // TODO
+
+        return names;
+    }
+
+    public static void main(String[] args) {
+        char ch = (char) (0x4e00 + (int) (Math.random() * (0x9fa5 - 0x4e00 + 1)));
+        System.out.println(ch);
     }
 
     /**

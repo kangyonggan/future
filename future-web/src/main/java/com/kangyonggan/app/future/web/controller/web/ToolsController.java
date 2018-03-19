@@ -389,6 +389,38 @@ public class ToolsController extends BaseController {
     }
 
     /**
+     * 在线起名
+     *
+     * @return
+     */
+    @RequestMapping(value = "name", method = RequestMethod.GET)
+    public String name() {
+        return getPathRoot() + "/name";
+    }
+
+    /**
+     * 在线起名
+     *
+     * @param firstName
+     * @param secondName
+     * @param sex
+     * @param rand
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "name", method = RequestMethod.POST)
+    public String name(@RequestParam("firstName") String firstName,
+                       @RequestParam(value = "secondName", required = false, defaultValue = "") String secondName,
+                       @RequestParam(value = "sex", required = false, defaultValue = "") String sex,
+                       @RequestParam(value = "rand", required = false, defaultValue = "") String rand,
+                       Model model) {
+        List<String> names = toolService.getNames(firstName, secondName, sex, rand);
+
+        model.addAttribute("names", names);
+        return getPathRoot() + "/name";
+    }
+
+    /**
      * 生成身份证
      *
      * @param model

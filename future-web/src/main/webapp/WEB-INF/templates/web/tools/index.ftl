@@ -71,6 +71,12 @@
         </a>
     </div>
     <div class="item">
+        <a href="#tools/name">
+            <img src="${ctx}/static/app/images/tools/name.png"/>
+            <p>在线起名</p>
+        </a>
+    </div>
+    <div class="item">
         <a href="#tools/idcard">
             <img src="${ctx}/static/app/images/tools/idcard.png"/>
             <p>身份证查询</p>

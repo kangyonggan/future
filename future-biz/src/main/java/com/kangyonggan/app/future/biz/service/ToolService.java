@@ -1,6 +1,7 @@
 package com.kangyonggan.app.future.biz.service;
 
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * @author kangyonggan
@@ -49,4 +50,16 @@ public interface ToolService {
      * @throws Exception
      */
     String getBaZi(String lunar, int year, int month, int day, int hour) throws Exception;
+
+    /**
+     * 生成名字
+     *
+     * @param firstName
+     * @param secondName
+     * @param sex
+     * @param rand
+     * @return
+     */
+    List<String> getNames(String firstName, String secondName, String sex, String rand);
+
 }
